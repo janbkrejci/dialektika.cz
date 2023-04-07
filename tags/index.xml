@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Témata na webu Dialektika</title>
+    <link>/tags/</link>
+    <description>Témata na webu Dialektika</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cs-CZ</language>
+    <lastBuildDate>Sun, 19 Mar 2023 19:00:00 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Argumentační fauly</title>
+      <link>/tags/argumenta%C4%8Dn%C3%AD-fauly/</link>
+      <pubDate>Sun, 19 Mar 2023 19:00:00 +0100</pubDate>
+      
+      <guid>/tags/argumenta%C4%8Dn%C3%AD-fauly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Politika a politici</title>
+      <link>/tags/politika-a-politici/</link>
+      <pubDate>Sun, 19 Mar 2023 19:00:00 +0100</pubDate>
+      
+      <guid>/tags/politika-a-politici/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pochvaly</title>
+      <link>/tags/pochvaly/</link>
+      <pubDate>Wed, 15 Mar 2023 18:00:00 +0100</pubDate>
+      
+      <guid>/tags/pochvaly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Společnost</title>
+      <link>/tags/spole%C4%8Dnost/</link>
+      <pubDate>Mon, 13 Mar 2023 15:00:00 +0100</pubDate>
+      
+      <guid>/tags/spole%C4%8Dnost/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kritika</title>
+      <link>/tags/kritika/</link>
+      <pubDate>Thu, 02 Mar 2023 10:00:00 +0100</pubDate>
+      
+      <guid>/tags/kritika/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

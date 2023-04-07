@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<link href="../../../../../css/main.css" rel="stylesheet" />
+<script src="../../../../../js/main.js" defer></script>
+<title>Opravdu to Byly Proruské Živly? | Dialektika</title>
+	<link rel="canonical" href="">
+	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='../../../../../blog/index.xml'>
+	<link rel="icon" href="../../../../../img/logo.svg">
+	<meta name="description" content="Tak jsme dnes zaslechli, při vší té hromadě práce, která se sama neudělá, že někdo demonstroval na Václaváku. A že někdo se snažil sundat ukrajinskou vlajku z Národního muzea. A že se tam někdo popral. A někdo někomu poničil auto. A koukáme se s vámi na video, kde tzv. „muž v hnědé kukle“ řekne něco policistům a ti pak jdou strkat do lidí, kteří se, jak se zdá, do té doby s nikým aktivně nepostrkují. Co si o tom myslíme?">
+	<meta name="keywords" content="Společnost">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="index, follow">
+	<meta charset="utf-8">
+  <script type='text/javascript'
+    src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+    async='async'></script>
+  <script>
+    if (sessionStorage.getItem("refresh") == "true") {
+      sessionStorage.removeItem("refresh"); window.location.reload()
+    }
+    function back() {
+      let target = document.referrer;
+      if (!target || target.match(window.location.href)) target = '/';
+      window.location.replace(target);
+    }
+    window.back = back;
+  </script>
+</head>
+<body x-data="user"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="../../../../../" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="../../../../../program">Program</a>
+      <a href="../../../../../stanovy">Stanovy</a>
+      <a href="../../../../../stanoviska">Přijatá stanoviska</a>
+      <a href="../../../../../blog">Blog</a>
+      
+      <a x-show="user_id" href="../../../../../aktivity">Aktivity</a>
+      <a x-show="user_id" href="../../../../../organizace">Organizace</a>
+      <a x-show="user_id" href="../../../../../lide">Lidé</a>
+      <a x-show="user_id" href="../../../../../ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
+          aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="../../../../../" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="../../../../../program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="../../../../../stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="../../../../../stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="../../../../../blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="../../../../../aktivity"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
+            <a href="../../../../../organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="../../../../../lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="../../../../../ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  
+  <a class="no-underline" href="../../../../../blog/posts/2023/03/pekne-pane-prezidente/"><div>&larr; Novější</div></a>
+  
+<a class="no-underline" href="../../../../../blog/posts/2023/03/kdyz-si-premier-plete-pojmy/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Opravdu to byly proruské živly?</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="../../../../../archive"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    13. března 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 4 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="../../../../../tags"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_společnost" href="../../../../../tags/spole%C4%8Dnost">Společnost</a></div>
+</div><p>Tak jsme dnes zaslechli, při vší té hromadě práce, která se sama neudělá, že někdo demonstroval na Václaváku. A že někdo se snažil sundat ukrajinskou vlajku z Národního muzea. A že se tam někdo popral. A někdo někomu poničil auto. A koukáme se s vámi na video, kde tzv. „muž v hnědé kukle“ řekne něco policistům a ti pak jdou strkat do lidí, kteří se, jak se zdá, do té doby s nikým aktivně nepostrkují. Co si o tom myslíme?</p>
+<p>Kromě výše řečeného také ještě čteme ve zprávách, že podle některých politiků demonstraci svolaly proruské živly (mimochodem, za takové „nálepkující“ prohlášení kritizoval jistý pan Středula jistého pana Fialu už před rokem [1]).</p>
+<p>Chce se nám zvolat: „Lidi, proboha, co blbnete? Zase vrtíme psem? Zase rozděláváme požáry? Zase se rozkřikne, že na jedné či druhé straně byl chudák někdo (student, policista) zbit? Nemáte dejá vu? 1989? Ne?“</p>
+<p>Co se třeba zkusit s klidem a rozvahou na chvíli zamyslet nad tím, co se nám to tu doopravdy děje?</p>
+<p>Proč chce někdo sundavat ukrajinskou vlajku z Národního muzea? Opravdu proto, že je to proruský podvratný a zcela zavrženíhodný „dezolát“? Zeptali jste se ho?</p>
+<p>Od teď budeme mluvit jen a jen za sebe - následující řádky nereprezentují názor nikoho jiného, než nás dvou.</p>
+<p><strong>Nesouhlasíme s napadením Ukrajiny Ruskem. Nevíme, proč přesně k němu došlo. Jsme přesvědčeni, že celou pravdu zná jen Rusko samo. My nejspíš ne. Nic to nemění na tom, že se nám to nelíbí.</strong></p>
+<p><strong>Cítíme solidaritu s lidem země, která se brání vpádu cizí armády. Osobně jsme finančně přispěli už v době, kdy to bylo celé ještě hodně čerstvé.</strong></p>
+<p><strong>Přejeme si, aby ta nesmyslná válka skončila co nejdřív.</strong></p>
+<p>A ZÁROVEŇ se nám strašně nelíbí vyvěšování ukrajinské vlajky na národní instituce ČR - pokusíme se vysvětlit proč.</p>
+<ol>
+<li>
+<p>jestli chce někdo vyvěsit vlajku Tibetu, Ukrajiny, Rwandy, nebo kteroukoli jinou NA SVÉM SOUKROMÉM OBJEKTU, tak s tím nemůžeme nic dělat. Může se nám to nelíbit, ale máme svobodu projevu a tečka.</p>
+</li>
+<li>
+<p>jestli ale někdo vyvěsí vlajku kteréhokoli jiného státu, než je Česká republika, na Pražský hrad, na libovolný státní úřad, nebo na národní kulturní instituci, tak to musí mít hodně dobrý důvod.</p>
+</li>
+</ol>
+<p>Důvodem pro vyvěšení cizí státní vlajky na veřejné objekty je podle našeho názoru návštěva vysoké státní delegace v daném objektu, konání nějaké společné akce obou zemí v objektu, nebo něco podobně explicitního a zřejmého.</p>
+<p>Solidarita s lidem, kterému je ubližováno, podle našeho názoru takovým důvodem není. Neztotožňujeme se s názorem, že modrožlutá vlajka je symbolem boje za svobodu, taková prohlášení nám připadají falešná a servilní.</p>
+<p>Jsme snad pro tento názor proruskými živly? Nemyslíme si&hellip; Necháme se rádi přesvědčit - jen nám prosím někdo zkuste vysvětlit, jak přesně a konkrétně takové gesto Ukrajině pomůže. My v tom nemáme jasno, žádný reálný přínos, než proklamaci bez obsahu v tom neumíme najít. Rádi se přesvědčíme, že se mýlíme. Jestli nám někdo dokáže, že díky tomu, že na českých veřejných budovách visí ukrajinská vlajka, válka skončí dřív, tak se s tím smíříme. Jestli ne, tak vězte, že nás to fakt štve a nepřejeme si to. A možná, že si to s námi nepřeje ani spousta jiných lidí, aniž by při tom byli zastánci ruského vpádu, nebo podporovatelé Ruska v probíhajícím konfliktu. Jenže ani nás, ani jich se nikdo neptá a prostě si vyhlásíme, že to tak je.</p>
+<p>Na videu z internetu vidíme strkanici vyvolanou lidmi, kteří vypadají jako pořádkové síly. A ano, někdo v článku [2] napsal, že na videu nevidíme všechno. A víte co? Nás to vlastně vůbec nezajímá.</p>
+<p>Co nás zajímá, a co by podle nás mělo zajímat i vás, je to, proč k celému tomu cirkusu došlo. Ve skutečnosti si myslíme, že konflikt nevyvolali ani demonstrující, ani policisté, ale ten, kdo na Národní muzeum vyvěsil cizí státní symbol, aniž by vzal v potaz to, že se nejedná o jeho soukromý majetek, a to, že jeho názor se nemusí vůbec shodovat s názorem někoho jiného.</p>
+<p>Lidi, prosím Vás, hlavou! A s rozumem!</p>
+<p>Hysterie a násilí mají vždycky tendenci eskalovat. A důvody a pohnutky se rády míchají a zaměňují. Nejdřív někdo vyvěsí vlajku, pak je poblíž demonstrace. Někdo z demonstrujících se rozhodne, že ho ta vlajka dráždí, pak se policie postrkuje s demonstranty, z nichž někteří možná přišli proto, že mají drahou elektřinu, bojí se inflace a mají existenční problémy. Pak někdo někomu poškodí auto s ukrajinskou SPZ&hellip;</p>
+<p>Jestli budeme takhle pokračovat, tak tu za chvíli uvidíme pogromy na naprosto nevinné Ukrajince i Rusy, kteří za nic nemůžou, jen chtějí normálně žít, pracovat, milovat se a vychovávat děti. A kvůli čemu?</p>
+<p>Díky&hellip;</p>
+
+  
+  Jan B. Krejčí a Jaroslava Krejčí
+  
+
+  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  <p>
+    <i>Použité zdroje:</i>
+  </p>
+  
+  <p>[1] https://www.ceskenoviny.cz/zpravy/fiala-demonstraci-v-praze-svolaly-sily-ktere-se-hlasi-k-proruske-orientaci/2251523</p>
+  
+  <p>[2] https://www.idnes.cz/zpravy/domaci/demonstrace-zasah-policie-obvineni-vytrznictvi-vlada-namesti.A230313_094108_domaci_lisv</p>
+  
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="../../../../../gdpr">Ochrana osobních údajů</a>
+</footer></body>
+</html>

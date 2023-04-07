@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<link href="../../../../../css/main.css" rel="stylesheet" />
+<script src="../../../../../js/main.js" defer></script>
+<title>Pěkně, Pane Prezidente | Dialektika</title>
+	<link rel="canonical" href="">
+	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='../../../../../blog/index.xml'>
+	<link rel="icon" href="../../../../../img/logo.svg">
+	<meta name="description" content="
+Prezident Petr Pavel se rozhodl podepsat vládní návrh na nižší růst penzí. Zároveň si ale přeje, aby zákon posoudil Ústavní soud. Pokud se na něj neobrátí opoziční ANO, udělal by to sám [1].
+">
+	<meta name="keywords" content="Politika a politici, Pochvaly">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="index, follow">
+	<meta charset="utf-8">
+  <script type='text/javascript'
+    src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+    async='async'></script>
+  <script>
+    if (sessionStorage.getItem("refresh") == "true") {
+      sessionStorage.removeItem("refresh"); window.location.reload()
+    }
+    function back() {
+      let target = document.referrer;
+      if (!target || target.match(window.location.href)) target = '/';
+      window.location.replace(target);
+    }
+    window.back = back;
+  </script>
+</head>
+<body x-data="user"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="../../../../../" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="../../../../../program">Program</a>
+      <a href="../../../../../stanovy">Stanovy</a>
+      <a href="../../../../../stanoviska">Přijatá stanoviska</a>
+      <a href="../../../../../blog">Blog</a>
+      
+      <a x-show="user_id" href="../../../../../aktivity">Aktivity</a>
+      <a x-show="user_id" href="../../../../../organizace">Organizace</a>
+      <a x-show="user_id" href="../../../../../lide">Lidé</a>
+      <a x-show="user_id" href="../../../../../ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
+          aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="../../../../../" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="../../../../../program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="../../../../../stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="../../../../../stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="../../../../../blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="../../../../../aktivity"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
+            <a href="../../../../../organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="../../../../../lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="../../../../../ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  
+  <a class="no-underline" href="../../../../../blog/posts/2023/03/ministersky-faul/"><div>&larr; Novější</div></a>
+  
+<a class="no-underline" href="../../../../../blog/posts/2023/03/opravdu-to-byly-proruske-zivly/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Pěkně, pane prezidente</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="../../../../../archive"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    15. března 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 3 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="../../../../../tags"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_politika a politici" href="../../../../../tags/politika-a-politici">Politika a Politici</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_pochvaly" href="../../../../../tags/pochvaly">Pochvaly</a></div>
+</div><blockquote>
+<p>Prezident Petr Pavel se rozhodl podepsat vládní návrh na nižší růst penzí. Zároveň si ale přeje, aby zákon posoudil Ústavní soud. Pokud se na něj neobrátí opoziční ANO, udělal by to sám [1].</p>
+</blockquote>
+<p>Přiznávám se Vám, pane prezidente Pavle, že jsem Vás já osobně nevolil. Důvody nejsou podstatné. Rozhodl jsem se Vás sice ve volbách nepodpořit, ale zároveň se s nadějí těším, že mě svými skutky přesvědčíte, že právě Vy jste byl tou správnou volbou a já že jsem se mýlil.</p>
+<p>Zatím musím s radostí konstatovat, že si, pane prezidente, vedete dobře.</p>
+<p>Dnešní brífink ohledně rozhodnutí podepsat zákon o snížení mimořádné valorizace byl z mého pohledu opravdu velmi slušnou předzvěstí toho, že možná přichází čas, kdy budu zase po dlouhé době hrdý na svého prezidenta.</p>
+<p>Ano, ztotožňuji se s názorem, že prezident není vykladač Ústavy.</p>
+<p>Ano, souhlasím s tím, že ten záměr, který nešikovně, sporným způsobem a dost - promiňte mi ten výraz - hulvátsky prosadila vládní koalice, je věcně v pořádku. A velice chválím Vaše prohlášení, že pokud onen sporný zákon nenapadne opozice, tak to uděláte Vy - skvělý a moudrý tah! Ať už Ústavní soud rozhodne jakkoli, budu se cítit komfortně, protože budu vědět, že demokracie nebyla pošlapána tak, jako tomu bylo v minulosti tolikrát.</p>
+<p>Dovolím si doporučit zapracovat na zpřesnění termínů. Valorizace podle stávajícího vzorce, jak jste řekl, by přinesla nejvíce těm, kdo aktuálně pobírají vyšší důchody. K podobným prohlášením je nutné vždy důsledně doplnit, že zde hovoříme o nárůstu důchodů <strong>V ABSOLUTNÍCH ČÁSTKÁCH</strong>. Musíme být precizní ve formulacích. V <strong>RELATIVNÍM</strong> vyjádření by přínos byl stejný pro každého. A já si myslím, že přesnost vyjadřování je klíčová k dosažení dlouhodobé spokojenosti a konsensu všech.</p>
+<p>Ano, souhlasím zcela a bez výhrad s tím, že důchodová reforma nesmí být jen ladění parametrů stávajícího nefunkčního systému.</p>
+<p>Ale ne, nesouhlasím s tím, že se na její tvorbě má podílet koalice spolu s opozicí. Tedy v podstatě souhlasím, ale něco podstatného mi tam chybí. Prosím, zamyslete se nad tím, že na diskuzi o takto zásadních problémech, respektive na hledání jejich trvale udržitelného řešení, se musí podílet úplně všichni občané této země. Nejen ti, kdo mají aktuálně zastoupení v parlamentu. Koalice má explicitní podporu cca 28 % právoplatných voličů (viz [2]), opozice o něco méně. Neměli bychom zapomínat na ty, kdo svou podporu ve volbách do Sněmovny nedali ani těm, ani oněm, protože buďto odevzdali hlas jiné straně, která se do Sněmovny nedostala, nebo k volbám vůbec nepřišli, čímž ale rovněž vyjádřili určitý názor. V posledních dekádách jsme si tak nějak potichu zvykli zaměňovat parlamentní většinu za většinu absolutní, a to není podle mého názoru v pořádku.</p>
+<p>Pane prezidente, přeji Vám moudrost, sílu a vytrvalost. Zatím jste si mě získal. A jistě nejen mě. Díky.</p>
+<p>S úctou</p>
+
+  
+  Jan B. Krejčí
+  
+
+  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  <p>
+    <i>Použité zdroje:</i>
+  </p>
+  
+  <p>[1] https://www.idnes.cz/zpravy/domaci/nizsi-rust-penzi-prezident-petr-pavel-schuzka-s-ano-schillerova-havlicek.A230315_043156_domaci_kop</p>
+  
+  <p>[2] https://dialektika.cz/n%C3%A1zory/kdyz-si-premier-plete-pojmy/</p>
+  
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="../../../../../gdpr">Ochrana osobních údajů</a>
+</footer></body>
+</html>

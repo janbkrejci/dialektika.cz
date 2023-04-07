@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<link href="../../../../../css/main.css" rel="stylesheet" />
+<script src="../../../../../js/main.js" defer></script>
+<title>Nehodí Se Do Krámu? | Dialektika</title>
+	<link rel="canonical" href="">
+	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='../../../../../blog/index.xml'>
+	<link rel="icon" href="../../../../../img/logo.svg">
+	<meta name="description" content="Nehodí se nám programové prohlášení do krámu? Tak si ho přepíšeme, ne? To tedy zírám&hellip;">
+	<meta name="keywords" content="Politika a politici, Kritika">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="index, follow">
+	<meta charset="utf-8">
+  <script type='text/javascript'
+    src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+    async='async'></script>
+  <script>
+    if (sessionStorage.getItem("refresh") == "true") {
+      sessionStorage.removeItem("refresh"); window.location.reload()
+    }
+    function back() {
+      let target = document.referrer;
+      if (!target || target.match(window.location.href)) target = '/';
+      window.location.replace(target);
+    }
+    window.back = back;
+  </script>
+</head>
+<body x-data="user"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="../../../../../" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="../../../../../program">Program</a>
+      <a href="../../../../../stanovy">Stanovy</a>
+      <a href="../../../../../stanoviska">Přijatá stanoviska</a>
+      <a href="../../../../../blog">Blog</a>
+      
+      <a x-show="user_id" href="../../../../../aktivity">Aktivity</a>
+      <a x-show="user_id" href="../../../../../organizace">Organizace</a>
+      <a x-show="user_id" href="../../../../../lide">Lidé</a>
+      <a x-show="user_id" href="../../../../../ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
+          aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="../../../../../" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="../../../../../program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="../../../../../stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="../../../../../stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="../../../../../blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="../../../../../aktivity"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
+            <a href="../../../../../organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="../../../../../lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="../../../../../ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="../../../../../login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  
+  <a class="no-underline" href="../../../../../blog/posts/2023/03/kdyz-si-premier-plete-pojmy/"><div>&larr; Novější</div></a>
+  
+</div>
+<h1>Nehodí se do krámu?</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="../../../../../archive"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    2. března 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 2 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="../../../../../tags"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_politika a politici" href="../../../../../tags/politika-a-politici">Politika a Politici</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_kritika" href="../../../../../tags/kritika">Kritika</a></div>
+</div><p>Nehodí se nám programové prohlášení do krámu? Tak si ho přepíšeme, ne? To tedy zírám&hellip;</p>
+<blockquote>
+<p>Vláda Petra Fialy schválila 6. ledna 2022 Programové prohlášení vlády České republiky. Jeho upravenou podobu schválil kabinet na jednání ve středu 1. března 2023. [1]</p>
+</blockquote>
+<p>Programové prohlášení strany nebo vlády je veřejný příslib voličům a partnerům - tohle budeme prosazovat, když nás zvolíte, když nám vyjádříte důvěru.</p>
+<p>Pominu-li, že jde většinou o nekonkrétní tlachání, které nejde měřit a kontrolovat, pořád zůstává fakt, že když něco slíbím, tak to mám dodržet. A když to nemůžu dodržet, tak odstoupím, nebo se to aspoň pokusím vysvětlit. Vyjednat. Obhájit. S omluvou. Nevysvětlím to zmateným žvaněním v televizi o tom, že jde o krok směrem k důchodové reformě, kterou svět neviděl (a nejspíš ani neuvidí, protože ladění parametrů nefungujícího systému není žádná reforma), ale argumenty. A otevřu veřejnou diskusi, abych zjistil, co na to ostatní.</p>
+<p>Mimochodem, není to prosím tak, že vláda na začátku své práce žádá o vyslovení důvěry na základě právě programového prohlášení?</p>
+<p>Cituji z preambule samotného programováho prohlášení vlády [1]:</p>
+<blockquote>
+<p>Nová vláda České republiky přichází požádat o důvěru Poslaneckou sněmovnu Parlamentu v době, která bez nadsázky patří mezi nejsložitější a nejnáročnější období naší novodobé historie.</p>
+</blockquote>
+<p>Tak doufám, že si to vláda s tou důvěrou půjde hezky zopakovat, když své prohlášení upravila. Snad se to nepokusí přejít se slovy „jsou to jen drobné úpravy“. Kdo umí posoudit, co je to drobná, a co je zásadní změna?</p>
+
+  
+  Jan B. Krejčí
+  
+
+  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  <p>
+    <i>Použité zdroje:</i>
+  </p>
+  
+  <p>[1] https://www.vlada.cz/cz/programove-prohlaseni-vlady-193547</p>
+  
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="../../../../../gdpr">Ochrana osobních údajů</a>
+</footer></body>
+</html>
