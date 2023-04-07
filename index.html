@@ -9,7 +9,6 @@
 	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='./blog/index.xml'>
 	<link rel="icon" href="./img/logo.svg">
 	<meta name="description" content="
-  Upozornění
   
     Tento web je ve vývoji.
     Spousta věcí zde může chybět nebo nemusí správně fungovat.
@@ -65,7 +64,7 @@ Toto jsou stránky dobrovolného sdružení občanů České republiky Dialektik
       <a x-show="user_id" href="./aktivity">Aktivity</a>
       <a x-show="user_id" href="./organizace">Organizace</a>
       <a x-show="user_id" href="./lide">Lidé</a>
-      <a x-show="user_id" href="./ja">Já</a>
+      <a x-show="user_id" href="./ja/">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
       <a x-show="!user_id" href="./login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
@@ -129,7 +128,6 @@ Toto jsou stránky dobrovolného sdružení občanů České republiky Dialektik
   </div>
 </header><main x-cloak>  
   <div class="alert error px-8 py-1 mb-8">
-  <p class="title">Upozornění</p>
   <p>
     Tento web je ve vývoji.<br/>
     Spousta věcí zde může chybět nebo nemusí správně fungovat.
@@ -171,6 +169,14 @@ Toto jsou stránky dobrovolného sdružení občanů České republiky Dialektik
 <p>Skvěle! Vše potřebné najdete ve stanovách.</p>
 <h1 id="přijatá-stanoviska">Přijatá stanoviska</h1>
 <p>Zde si můžete přečíst nejnovější odhlasovaná stanoviska Dialektiky. Kompletní seznam najdete pod odkazem nahoře v navigačním pruhu.</p>
+
+
+<div class="alert error px-8 py-1 mb-8">
+  <p>
+    Obsah této tabulky je pouze vzorový. Pracujeme na něm.
+  </p>
+</div>
+
 
 
 <div class="overflow-x-auto">

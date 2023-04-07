@@ -1224,6 +1224,9 @@ input:checked + .toggle-bg {
 .mr-1 {
   margin-right: 0.25rem;
 }
+.mt-16 {
+  margin-top: 4rem;
+}
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1496,6 +1499,9 @@ input:checked + .toggle-bg {
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-8 {
+  padding: 2rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -3139,36 +3145,36 @@ tbody tr:hover {
 }
 /* SVG icons */
 .separator {
-  -webkit-mask: url(../img/separator.svg) no-repeat center;
-  mask: url(../img/separator.svg) no-repeat center;
+  -webkit-mask: url(/img/separator.svg) no-repeat center;
+  mask: url(/img/separator.svg) no-repeat center;
 }
 .logo {
-  -webkit-mask: url(../img/logo.svg) no-repeat center;
-  mask: url(../img/logo.svg) no-repeat center;
+  -webkit-mask: url(/img/logo.svg) no-repeat center;
+  mask: url(/img/logo.svg) no-repeat center;
 }
 .rss {
-  -webkit-mask: url(../img/rss.svg) no-repeat center;
-  mask: url(../img/rss.svg) no-repeat center;
+  -webkit-mask: url(/img/rss.svg) no-repeat center;
+  mask: url(/img/rss.svg) no-repeat center;
 }
 .questionmark {
-  -webkit-mask: url(../img/questionmark.svg) no-repeat center;
-  mask: url(../img/questionmark.svg) no-repeat center;
+  -webkit-mask: url(/img/questionmark.svg) no-repeat center;
+  mask: url(/img/questionmark.svg) no-repeat center;
 }
 .clock {
-  -webkit-mask: url(../img/clock.svg) no-repeat center;
-  mask: url(../img/clock.svg) no-repeat center;
+  -webkit-mask: url(/img/clock.svg) no-repeat center;
+  mask: url(/img/clock.svg) no-repeat center;
 }
 .calendar {
-  -webkit-mask: url(../img/calendar.svg) no-repeat center;
-  mask: url(../img/calendar.svg) no-repeat center;
+  -webkit-mask: url(/img/calendar.svg) no-repeat center;
+  mask: url(/img/calendar.svg) no-repeat center;
 }
 .folder {
-  -webkit-mask: url(../img/folder.svg) no-repeat center;
-  mask: url(../img/folder.svg) no-repeat center;
+  -webkit-mask: url(/img/folder.svg) no-repeat center;
+  mask: url(/img/folder.svg) no-repeat center;
 }
 .tag {
-  -webkit-mask: url(../img/tag.svg) no-repeat center;
-  mask: url(../img/tag.svg) no-repeat center;
+  -webkit-mask: url(/img/tag.svg) no-repeat center;
+  mask: url(/img/tag.svg) no-repeat center;
 }
 /* buttons */
 .btn {
