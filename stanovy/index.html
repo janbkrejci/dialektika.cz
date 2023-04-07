@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<link href="../css/main.css" rel="stylesheet" />
-<script src="../js/main.js" defer></script>
+<link href="/css/main.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script>
 <title>Stanovy | Dialektika</title>
 	<link rel="canonical" href="">
-	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='../blog/index.xml'>
-	<link rel="icon" href="../img/logo.svg">
+	<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+	<link rel="icon" href="/img/logo.svg">
 	<meta name="description" content=" Tato stránka je v přípravě, prosíme o trpělivost. ">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,7 +30,7 @@
 <body x-data="user"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
   <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
     <div class="flex lg:flex-1">
-      <a href="../" class="-m-1.5 p-1.5">
+      <a href="/" class="-m-1.5 p-1.5">
         <span class="sr-only">Dialektika</span>
         <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
       </a>
@@ -47,18 +47,18 @@
       </button>
     </div>
     <div class="hidden lg:flex lg:gap-x-12">
-      <a href="../program">Program</a>
-      <a href="../stanovy">Stanovy</a>
-      <a href="../stanoviska">Přijatá stanoviska</a>
-      <a href="../blog">Blog</a>
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
       
-      <a x-show="user_id" href="../aktivity">Aktivity</a>
-      <a x-show="user_id" href="../organizace">Organizace</a>
-      <a x-show="user_id" href="../lide">Lidé</a>
-      <a x-show="user_id" href="../ja/">Já</a>
+      <a x-show="user_id" href="/aktivity">Aktivity</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja/">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a x-show="!user_id" href="../login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
+      <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
           aria-hidden="true">&rarr;</span></a>
       <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
         <span aria-hidden="true">&rarr;</span></a>
@@ -71,7 +71,7 @@
     <div focus="true"
       class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
       <div class="flex items-center justify-between">
-        <a href="../" class="-m-1.5 p-1.5 visible sm:invisible">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
           <span class="sr-only">Dialektika</span>
           <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
         </a>
@@ -86,29 +86,29 @@
       <div class="mt-6 flow-root">
         <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
           <div class="space-y-2 py-6">
-            <a href="../program"
+            <a href="/program"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
-            <a href="../stanovy"
+            <a href="/stanovy"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
-            <a href="../stanoviska"
+            <a href="/stanoviska"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
               stanoviska</a>
-            <a href="../blog"
+            <a href="/blog"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
           </div>
           
           <div x-show="user_id" class="space-y-2 py-6">
-            <a href="../aktivity"
+            <a href="/aktivity"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
-            <a href="../organizace"
+            <a href="/organizace"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
-            <a href="../lide"
+            <a href="/lide"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
-            <a href="../ja"
+            <a href="/ja"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
           </div>
           <div class="py-6">
-            <a x-show="!user_id" href="../login" @click.prevent="window.location.replace($el.href)"
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
               class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
             <a x-show="user_id" @click.prevent="logout"
               class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
@@ -133,6 +133,6 @@
   
   <div class="sharethis-inline-share-buttons grow"></div>
   
-  <a href="../gdpr">Ochrana osobních údajů</a>
+  <a href="/gdpr">Ochrana osobních údajů</a>
 </footer></body>
 </html>
