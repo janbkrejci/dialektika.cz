@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Naučné na webu Dialektika</title>
+    <link>/tags/nau%C4%8Dn%C3%A9/</link>
+    <description>Naučné na webu Dialektika</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cs-CZ</language>
+    <lastBuildDate>Fri, 07 Apr 2023 16:00:00 +0100</lastBuildDate><atom:link href="/tags/nau%C4%8Dn%C3%A9/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Management neboli řízení</title>
+      <link>/blog/posts/2023/04/management/</link>
+      <pubDate>Fri, 07 Apr 2023 16:00:00 +0100</pubDate>
+      
+      <guid>/blog/posts/2023/04/management/</guid>
+      <description>&lt;p&gt;Co je management? Management je vlastně úplně obyčejné řízení.&lt;/p&gt;
+&lt;p&gt;Jelikož celá lidská společnost je založená na spolupráci více jednotlivců, řízení má své důležité místo v každé činnosti a v každé spolupracující skupině - od nejmenší jednotky, kterou může být třeba malá rodina, přes malé podniky, až po vládu státu, nebo dokonce vládu větších, než národních celků.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
