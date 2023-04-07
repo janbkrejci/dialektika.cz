@@ -16,3 +16,4 @@ rm sitemap.xml
 cd ../frontend
 hugo
 cd ../pb_public
+./push.sh
