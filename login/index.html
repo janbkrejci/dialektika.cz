@@ -6,7 +6,7 @@
 <link rel="canonical" href="">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" ">
+<meta name="description" content=" Přihlášení Uživatel * Heslo * Přihlásit Storno Nemáte ještě účet? Registrujte se Ztratili jste heslo? Obnovte si ho ">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
@@ -14,27 +14,53 @@
 <script type='text/javascript'
   src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
   async='async'></script>
-<script>
-  if (sessionStorage.getItem("refresh") == "true") {
-    sessionStorage.removeItem("refresh"); window.location.reload()
-  }
-  function back() {
-    let target = document.referrer;
-    if (!target || target.match(window.location.href)) target = '/';
-    window.location.replace(target);
-  }
-  window.back = back;
-</script></head>
-<body x-data="user">
+</head>
+<body x-data="common">
 <main x-cloak class="grid place-content-center h-full">
   
 
-<script>
-  // return back if already logged in
-  if (localStorage.pocketbase_auth) {
-    back()
-  }
-</script>
+<div x-cloak @keyup.escape.window="history.back()" x-data="login" @keydown.enter.prevent="next"
+  class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
+  <div class="p-6 space-y-4">
+    <!-- title -->
+    <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+      Přihlášení
+    </h1>
+    <!-- form -->
+    <form class="space-y-4" @submit.prevent="">
+      <!-- results -->
+      <div x-show="errors.loginError" class="alert error p-2 text-sm" x-text="errors.loginError"></div>
+      <!-- inputs -->
+      <div>
+        <label for="alias">Uživatel *</label>
+        <input id="alias" :class="{'input': true, 'error': errors.aliasError}" type="text" x-model="fields.alias"
+          @input="fields.alias = $el.value">
+        <div class="error-text" x-text="errors.aliasError"></div>
+      </div>
+      <div>
+        <label for="password">Heslo *</label>
+        <input id="password" :class="{'input': true, 'error': errors.passwordError}" type="password"
+          x-model="fields.password" @input="fields.password = $el.value" />
+        <div class="error-text" x-text="errors.passwordError"></div>
+      </div>
+      <!-- submit buttons -->
+      <div class="flex items-center justify-between">
+        <button class="primary" :disabled="disabled" @click="doLogin">
+          Přihlásit
+        </button>
+        <button class="transparent" @click="history.back()">Storno</button>
+      </div>
+      <!-- form switchers -->
+      <div class="form-switch">
+        Nemáte ještě účet? <a href="/register" rel="noopener noreferrer" @click.prevent="window.location.replace('/register')">Registrujte se</a>
+      </div>
+      <div class="form-switch">
+        Ztratili jste heslo?
+        <a href="/forgotten-password" rel="noopener noreferrer" @click.prevent="window.location.replace('/forgotten-password')">Obnovte si ho</a>
+      </div>
+    </form>
+  </div>
+</div>
 
 
 </main>

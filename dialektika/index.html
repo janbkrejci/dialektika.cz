@@ -17,19 +17,9 @@ Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se stř�
 <script type='text/javascript'
   src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
   async='async'></script>
-<script>
-  if (sessionStorage.getItem("refresh") == "true") {
-    sessionStorage.removeItem("refresh"); window.location.reload()
-  }
-  function back() {
-    let target = document.referrer;
-    if (!target || target.match(window.location.href)) target = '/';
-    window.location.replace(target);
-  }
-  window.back = back;
-</script></head>
+</head>
 
-<body x-data="user"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
   <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
     <div class="flex lg:flex-1">
       <a href="/" class="-m-1.5 p-1.5">
@@ -57,10 +47,10 @@ Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se stř�
       <a x-show="user_id" href="/aktivity">Aktivity</a>
       <a x-show="user_id" href="/organizace">Organizace</a>
       <a x-show="user_id" href="/lide">Lidé</a>
-      <a x-show="user_id" href="/ja/">Já</a>
+      <a x-show="user_id" href="/ja">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)">Přihlášení <span
+      <a x-show="!user_id" href="/login">Přihlášení <span
           aria-hidden="true">&rarr;</span></a>
       <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
         <span aria-hidden="true">&rarr;</span></a>

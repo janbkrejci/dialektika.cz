@@ -10268,14 +10268,14 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   // <stdin>
   var import_lodash3 = __toESM(require_lodash());
 
-  // ns-hugo:/home/runner/goprt/frontend/assets/js/validators.js
+  // ns-hugo:/home/runner/dialektika/frontend/assets/js/validators.js
   var required = (val) => val ? null : "Povinn\xE9 pole";
   var validEmail = (val) => val.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ? null : "Neplatn\xFD e-mail";
   var minLength = (val, len, msg) => !!val && val.length >= len ? null : msg;
   var maxLength = (val, len, msg) => !!val && val.length <= len ? null : msg;
   var equalStrings = (val1, val2, msg) => val1 === val2 ? null : msg;
 
-  // ns-hugo:/home/runner/goprt/frontend/assets/js/utils.js
+  // ns-hugo:/home/runner/dialektika/frontend/assets/js/utils.js
   var DOMPurify = __toESM(require_purify());
 
   // node_modules/marked/lib/marked.esm.js
@@ -10506,7 +10506,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     const text = cap[1].replace(/\\([\[\]])/g, "$1");
     if (cap[0].charAt(0) !== "!") {
       lexer2.state.inLink = true;
-      const token = {
+      const token2 = {
         type: "link",
         raw: raw2,
         href,
@@ -10515,7 +10515,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         tokens: lexer2.inlineTokens(text)
       };
       lexer2.state.inLink = false;
-      return token;
+      return token2;
     }
     return {
       type: "image",
@@ -10772,7 +10772,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     html(src) {
       const cap = this.rules.block.html.exec(src);
       if (cap) {
-        const token = {
+        const token2 = {
           type: "html",
           raw: cap[0],
           pre: !this.options.sanitizer && (cap[1] === "pre" || cap[1] === "script" || cap[1] === "style"),
@@ -10780,11 +10780,11 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         };
         if (this.options.sanitize) {
           const text = this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]);
-          token.type = "paragraph";
-          token.text = text;
-          token.tokens = this.lexer.inline(text);
+          token2.type = "paragraph";
+          token2.text = text;
+          token2.tokens = this.lexer.inline(text);
         }
-        return token;
+        return token2;
       }
     }
     def(src) {
@@ -11341,92 +11341,92 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           return leading + "    ".repeat(tabs.length);
         });
       }
-      let token, lastToken, cutSrc, lastParagraphClipped;
+      let token2, lastToken, cutSrc, lastParagraphClipped;
       while (src) {
         if (this.options.extensions && this.options.extensions.block && this.options.extensions.block.some((extTokenizer) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
+          if (token2 = extTokenizer.call({ lexer: this }, src, tokens)) {
+            src = src.substring(token2.raw.length);
+            tokens.push(token2);
             return true;
           }
           return false;
         })) {
           continue;
         }
-        if (token = this.tokenizer.space(src)) {
-          src = src.substring(token.raw.length);
-          if (token.raw.length === 1 && tokens.length > 0) {
+        if (token2 = this.tokenizer.space(src)) {
+          src = src.substring(token2.raw.length);
+          if (token2.raw.length === 1 && tokens.length > 0) {
             tokens[tokens.length - 1].raw += "\n";
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
-        if (token = this.tokenizer.code(src)) {
-          src = src.substring(token.raw.length);
+        if (token2 = this.tokenizer.code(src)) {
+          src = src.substring(token2.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
-            lastToken.raw += "\n" + token.raw;
-            lastToken.text += "\n" + token.text;
+            lastToken.raw += "\n" + token2.raw;
+            lastToken.text += "\n" + token2.text;
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
-        if (token = this.tokenizer.fences(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.fences(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.heading(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.heading(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.hr(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.hr(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.blockquote(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.blockquote(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.list(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.list(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.html(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.html(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.def(src)) {
-          src = src.substring(token.raw.length);
+        if (token2 = this.tokenizer.def(src)) {
+          src = src.substring(token2.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
-            lastToken.raw += "\n" + token.raw;
-            lastToken.text += "\n" + token.raw;
+            lastToken.raw += "\n" + token2.raw;
+            lastToken.text += "\n" + token2.raw;
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-          } else if (!this.tokens.links[token.tag]) {
-            this.tokens.links[token.tag] = {
-              href: token.href,
-              title: token.title
+          } else if (!this.tokens.links[token2.tag]) {
+            this.tokens.links[token2.tag] = {
+              href: token2.href,
+              title: token2.title
             };
           }
           continue;
         }
-        if (token = this.tokenizer.table(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.table(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.lheading(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.lheading(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
         cutSrc = src;
@@ -11444,30 +11444,30 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             cutSrc = src.substring(0, startIndex + 1);
           }
         }
-        if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
+        if (this.state.top && (token2 = this.tokenizer.paragraph(cutSrc))) {
           lastToken = tokens[tokens.length - 1];
           if (lastParagraphClipped && lastToken.type === "paragraph") {
-            lastToken.raw += "\n" + token.raw;
-            lastToken.text += "\n" + token.text;
+            lastToken.raw += "\n" + token2.raw;
+            lastToken.text += "\n" + token2.text;
             this.inlineQueue.pop();
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           lastParagraphClipped = cutSrc.length !== src.length;
-          src = src.substring(token.raw.length);
+          src = src.substring(token2.raw.length);
           continue;
         }
-        if (token = this.tokenizer.text(src)) {
-          src = src.substring(token.raw.length);
+        if (token2 = this.tokenizer.text(src)) {
+          src = src.substring(token2.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && lastToken.type === "text") {
-            lastToken.raw += "\n" + token.raw;
-            lastToken.text += "\n" + token.text;
+            lastToken.raw += "\n" + token2.raw;
+            lastToken.text += "\n" + token2.text;
             this.inlineQueue.pop();
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
@@ -11489,7 +11489,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       return tokens;
     }
     inlineTokens(src, tokens = []) {
-      let token, lastToken, cutSrc;
+      let token2, lastToken, cutSrc;
       let maskedSrc = src;
       let match;
       let keepPrevChar, prevChar;
@@ -11516,75 +11516,75 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
         keepPrevChar = false;
         if (this.options.extensions && this.options.extensions.inline && this.options.extensions.inline.some((extTokenizer) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
+          if (token2 = extTokenizer.call({ lexer: this }, src, tokens)) {
+            src = src.substring(token2.raw.length);
+            tokens.push(token2);
             return true;
           }
           return false;
         })) {
           continue;
         }
-        if (token = this.tokenizer.escape(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.escape(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.tag(src)) {
-          src = src.substring(token.raw.length);
+        if (token2 = this.tokenizer.tag(src)) {
+          src = src.substring(token2.raw.length);
           lastToken = tokens[tokens.length - 1];
-          if (lastToken && token.type === "text" && lastToken.type === "text") {
-            lastToken.raw += token.raw;
-            lastToken.text += token.text;
+          if (lastToken && token2.type === "text" && lastToken.type === "text") {
+            lastToken.raw += token2.raw;
+            lastToken.text += token2.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
-        if (token = this.tokenizer.link(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.link(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.reflink(src, this.tokens.links)) {
-          src = src.substring(token.raw.length);
+        if (token2 = this.tokenizer.reflink(src, this.tokens.links)) {
+          src = src.substring(token2.raw.length);
           lastToken = tokens[tokens.length - 1];
-          if (lastToken && token.type === "text" && lastToken.type === "text") {
-            lastToken.raw += token.raw;
-            lastToken.text += token.text;
+          if (lastToken && token2.type === "text" && lastToken.type === "text") {
+            lastToken.raw += token2.raw;
+            lastToken.text += token2.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
-        if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.codespan(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.codespan(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.br(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.br(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.del(src)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.del(src)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (token = this.tokenizer.autolink(src, mangle)) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (token2 = this.tokenizer.autolink(src, mangle)) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
-        if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
-          src = src.substring(token.raw.length);
-          tokens.push(token);
+        if (!this.state.inLink && (token2 = this.tokenizer.url(src, mangle))) {
+          src = src.substring(token2.raw.length);
+          tokens.push(token2);
           continue;
         }
         cutSrc = src;
@@ -11602,18 +11602,18 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             cutSrc = src.substring(0, startIndex + 1);
           }
         }
-        if (token = this.tokenizer.inlineText(cutSrc, smartypants)) {
-          src = src.substring(token.raw.length);
-          if (token.raw.slice(-1) !== "_") {
-            prevChar = token.raw.slice(-1);
+        if (token2 = this.tokenizer.inlineText(cutSrc, smartypants)) {
+          src = src.substring(token2.raw.length);
+          if (token2.raw.slice(-1) !== "_") {
+            prevChar = token2.raw.slice(-1);
           }
           keepPrevChar = true;
           lastToken = tokens[tokens.length - 1];
           if (lastToken && lastToken.type === "text") {
-            lastToken.raw += token.raw;
-            lastToken.text += token.text;
+            lastToken.raw += token2.raw;
+            lastToken.text += token2.text;
           } else {
-            tokens.push(token);
+            tokens.push(token2);
           }
           continue;
         }
@@ -11818,18 +11818,18 @@ ${content}</tr>
       return parser2.parseInline(tokens);
     }
     parse(tokens, top2 = true) {
-      let out = "", i2, j, k, l22, l3, row, cell, header, body, token, ordered, start3, loose, itemBody, item, checked, task, checkbox, ret;
+      let out = "", i2, j, k, l22, l3, row, cell, header, body, token2, ordered, start3, loose, itemBody, item, checked, task, checkbox, ret;
       const l4 = tokens.length;
       for (i2 = 0; i2 < l4; i2++) {
-        token = tokens[i2];
-        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-          ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-          if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(token.type)) {
+        token2 = tokens[i2];
+        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token2.type]) {
+          ret = this.options.extensions.renderers[token2.type].call({ parser: this }, token2);
+          if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(token2.type)) {
             out += ret || "";
             continue;
           }
         }
-        switch (token.type) {
+        switch (token2.type) {
           case "space": {
             continue;
           }
@@ -11839,42 +11839,42 @@ ${content}</tr>
           }
           case "heading": {
             out += this.renderer.heading(
-              this.parseInline(token.tokens),
-              token.depth,
-              unescape(this.parseInline(token.tokens, this.textRenderer)),
+              this.parseInline(token2.tokens),
+              token2.depth,
+              unescape(this.parseInline(token2.tokens, this.textRenderer)),
               this.slugger
             );
             continue;
           }
           case "code": {
             out += this.renderer.code(
-              token.text,
-              token.lang,
-              token.escaped
+              token2.text,
+              token2.lang,
+              token2.escaped
             );
             continue;
           }
           case "table": {
             header = "";
             cell = "";
-            l22 = token.header.length;
+            l22 = token2.header.length;
             for (j = 0; j < l22; j++) {
               cell += this.renderer.tablecell(
-                this.parseInline(token.header[j].tokens),
-                { header: true, align: token.align[j] }
+                this.parseInline(token2.header[j].tokens),
+                { header: true, align: token2.align[j] }
               );
             }
             header += this.renderer.tablerow(cell);
             body = "";
-            l22 = token.rows.length;
+            l22 = token2.rows.length;
             for (j = 0; j < l22; j++) {
-              row = token.rows[j];
+              row = token2.rows[j];
               cell = "";
               l3 = row.length;
               for (k = 0; k < l3; k++) {
                 cell += this.renderer.tablecell(
                   this.parseInline(row[k].tokens),
-                  { header: false, align: token.align[k] }
+                  { header: false, align: token2.align[k] }
                 );
               }
               body += this.renderer.tablerow(cell);
@@ -11883,18 +11883,18 @@ ${content}</tr>
             continue;
           }
           case "blockquote": {
-            body = this.parse(token.tokens);
+            body = this.parse(token2.tokens);
             out += this.renderer.blockquote(body);
             continue;
           }
           case "list": {
-            ordered = token.ordered;
-            start3 = token.start;
-            loose = token.loose;
-            l22 = token.items.length;
+            ordered = token2.ordered;
+            start3 = token2.start;
+            loose = token2.loose;
+            l22 = token2.items.length;
             body = "";
             for (j = 0; j < l22; j++) {
-              item = token.items[j];
+              item = token2.items[j];
               checked = item.checked;
               task = item.task;
               itemBody = "";
@@ -11923,24 +11923,24 @@ ${content}</tr>
             continue;
           }
           case "html": {
-            out += this.renderer.html(token.text);
+            out += this.renderer.html(token2.text);
             continue;
           }
           case "paragraph": {
-            out += this.renderer.paragraph(this.parseInline(token.tokens));
+            out += this.renderer.paragraph(this.parseInline(token2.tokens));
             continue;
           }
           case "text": {
-            body = token.tokens ? this.parseInline(token.tokens) : token.text;
+            body = token2.tokens ? this.parseInline(token2.tokens) : token2.text;
             while (i2 + 1 < l4 && tokens[i2 + 1].type === "text") {
-              token = tokens[++i2];
-              body += "\n" + (token.tokens ? this.parseInline(token.tokens) : token.text);
+              token2 = tokens[++i2];
+              body += "\n" + (token2.tokens ? this.parseInline(token2.tokens) : token2.text);
             }
             out += top2 ? this.renderer.paragraph(body) : body;
             continue;
           }
           default: {
-            const errMsg = 'Token with "' + token.type + '" type was not found.';
+            const errMsg = 'Token with "' + token2.type + '" type was not found.';
             if (this.options.silent) {
               console.error(errMsg);
               return;
@@ -11954,44 +11954,44 @@ ${content}</tr>
     }
     parseInline(tokens, renderer) {
       renderer = renderer || this.renderer;
-      let out = "", i2, token, ret;
+      let out = "", i2, token2, ret;
       const l3 = tokens.length;
       for (i2 = 0; i2 < l3; i2++) {
-        token = tokens[i2];
-        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-          ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-          if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token.type)) {
+        token2 = tokens[i2];
+        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token2.type]) {
+          ret = this.options.extensions.renderers[token2.type].call({ parser: this }, token2);
+          if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token2.type)) {
             out += ret || "";
             continue;
           }
         }
-        switch (token.type) {
+        switch (token2.type) {
           case "escape": {
-            out += renderer.text(token.text);
+            out += renderer.text(token2.text);
             break;
           }
           case "html": {
-            out += renderer.html(token.text);
+            out += renderer.html(token2.text);
             break;
           }
           case "link": {
-            out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
+            out += renderer.link(token2.href, token2.title, this.parseInline(token2.tokens, renderer));
             break;
           }
           case "image": {
-            out += renderer.image(token.href, token.title, token.text);
+            out += renderer.image(token2.href, token2.title, token2.text);
             break;
           }
           case "strong": {
-            out += renderer.strong(this.parseInline(token.tokens, renderer));
+            out += renderer.strong(this.parseInline(token2.tokens, renderer));
             break;
           }
           case "em": {
-            out += renderer.em(this.parseInline(token.tokens, renderer));
+            out += renderer.em(this.parseInline(token2.tokens, renderer));
             break;
           }
           case "codespan": {
-            out += renderer.codespan(token.text);
+            out += renderer.codespan(token2.text);
             break;
           }
           case "br": {
@@ -11999,15 +11999,15 @@ ${content}</tr>
             break;
           }
           case "del": {
-            out += renderer.del(this.parseInline(token.tokens, renderer));
+            out += renderer.del(this.parseInline(token2.tokens, renderer));
             break;
           }
           case "text": {
-            out += renderer.text(token.text);
+            out += renderer.text(token2.text);
             break;
           }
           default: {
-            const errMsg = 'Token with "' + token.type + '" type was not found.';
+            const errMsg = 'Token with "' + token2.type + '" type was not found.';
             if (this.options.silent) {
               console.error(errMsg);
               return;
@@ -12114,17 +12114,17 @@ ${content}</tr>
         if (!tokens.length)
           return done();
         let pending = 0;
-        marked.walkTokens(tokens, function(token) {
-          if (token.type === "code") {
+        marked.walkTokens(tokens, function(token2) {
+          if (token2.type === "code") {
             pending++;
             setTimeout(() => {
-              highlight(token.text, token.lang, function(err, code) {
+              highlight(token2.text, token2.lang, function(err, code) {
                 if (err) {
                   return done(err);
                 }
-                if (code != null && code !== token.text) {
-                  token.text = code;
-                  token.escaped = true;
+                if (code != null && code !== token2.text) {
+                  token2.text = code;
+                  token2.escaped = true;
                 }
                 pending--;
                 if (pending === 0) {
@@ -12281,11 +12281,11 @@ ${content}</tr>
       }
       if (pack.walkTokens) {
         const walkTokens2 = marked.defaults.walkTokens;
-        opts.walkTokens = function(token) {
+        opts.walkTokens = function(token2) {
           let values = [];
-          values.push(pack.walkTokens.call(this, token));
+          values.push(pack.walkTokens.call(this, token2));
           if (walkTokens2) {
-            values = values.concat(walkTokens2.call(this, token));
+            values = values.concat(walkTokens2.call(this, token2));
           }
           return values;
         };
@@ -12295,14 +12295,14 @@ ${content}</tr>
   };
   marked.walkTokens = function(tokens, callback) {
     let values = [];
-    for (const token of tokens) {
-      values = values.concat(callback.call(marked, token));
-      switch (token.type) {
+    for (const token2 of tokens) {
+      values = values.concat(callback.call(marked, token2));
+      switch (token2.type) {
         case "table": {
-          for (const cell of token.header) {
+          for (const cell of token2.header) {
             values = values.concat(marked.walkTokens(cell.tokens, callback));
           }
-          for (const row of token.rows) {
+          for (const row of token2.rows) {
             for (const cell of row) {
               values = values.concat(marked.walkTokens(cell.tokens, callback));
             }
@@ -12310,16 +12310,16 @@ ${content}</tr>
           break;
         }
         case "list": {
-          values = values.concat(marked.walkTokens(token.items, callback));
+          values = values.concat(marked.walkTokens(token2.items, callback));
           break;
         }
         default: {
-          if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token.type]) {
-            marked.defaults.extensions.childTokens[token.type].forEach(function(childTokens) {
-              values = values.concat(marked.walkTokens(token[childTokens], callback));
+          if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token2.type]) {
+            marked.defaults.extensions.childTokens[token2.type].forEach(function(childTokens) {
+              values = values.concat(marked.walkTokens(token2[childTokens], callback));
             });
-          } else if (token.tokens) {
-            values = values.concat(marked.walkTokens(token.tokens, callback));
+          } else if (token2.tokens) {
+            values = values.concat(marked.walkTokens(token2.tokens, callback));
           }
         }
       }
@@ -12345,7 +12345,7 @@ ${content}</tr>
   var parser = Parser.parse;
   var lexer = Lexer.lex;
 
-  // ns-hugo:/home/runner/goprt/frontend/assets/js/utils.js
+  // ns-hugo:/home/runner/dialektika/frontend/assets/js/utils.js
   var import_lodash = __toESM(require_lodash());
   var utils_default = {
     boolToString(val, ifTrue, ifFalse, ifNil) {
@@ -13411,9 +13411,9 @@ ${content}</tr>
     }, Client;
   }();
 
-  // ns-hugo:/home/runner/goprt/frontend/assets/js/pocketbase.js
+  // ns-hugo:/home/runner/dialektika/frontend/assets/js/pocketbase.js
   var import_lodash2 = __toESM(require_lodash());
-  var BACKEND_SERVER = "https://dialektika-server.janbkrejci.repl.co";
+  var BACKEND_SERVER = "https://dialektika.janbkrejci.repl.co";
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
   async function subscribe(colName, filter = (x) => !!x, hooks = {}) {
@@ -17004,12 +17004,13 @@ ${content}</tr>
   window.Alpine = module_default;
   window.pb = pb;
   module_default.plugin(module_default2);
-  module_default.data("user", () => ({
+  module_default.data("common", () => ({
     user_showMenu: false,
     user_showSidebar: false,
     user_model: null,
     disabled: false,
     collections: {},
+    fields: {},
     errors: {},
     reset() {
       this.errors = {};
@@ -17037,37 +17038,100 @@ ${content}</tr>
       }, this);
     },
     async init() {
-      this.user_model = pb.authStore.model;
+      window.addEventListener("pageshow", this.onPageShow.bind(this));
       this.userName = utils_default.userName.bind(this);
-      this.subscribe = subscribe.bind(this);
-      this.subscribe("users");
-      try {
-        await pb.collection("users").authRefresh();
-      } catch (e2) {
-        pb.authStore.clear();
+      if (localStorage.getItem("pocketbase_auth")) {
+        try {
+          await pb.collection("users").authRefresh();
+        } catch (e2) {
+          pb.authStore.clear();
+        }
       }
       this.userName = utils_default.userName.bind(this);
       this.subscribe = subscribe.bind(this);
       this.subscribe("users");
     },
+    async onPageShow() {
+      this.user_model = pb.authStore.model;
+    },
+    backIfLoggedIn() {
+      if (localStorage.pocketbase_auth) {
+        history.back();
+      }
+    },
     logout() {
       pb.authStore.clear();
-      this.init();
+      this.onPageShow();
     }
   }));
   module_default.data("login", () => ({
-    form: "login",
-    fields: {},
-    switchForm(mode) {
-      this.reset();
-      this.form = mode;
-      this.$nextTick(() => {
-        if (mode !== "reset")
-          document.getElementById("alias").focus();
-        else
-          document.getElementById("email").focus();
-      });
+    validate(id = null) {
+      if (id) {
+        switch (id) {
+          case "alias":
+            this.errors.aliasError = required(this.fields.alias) || minLength(this.fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky");
+            break;
+          case "password":
+            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
+            break;
+          default:
+            break;
+        }
+      } else {
+        this.reset();
+        this.validate("alias");
+        this.validate("password");
+      }
+      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
     },
+    init() {
+      window.addEventListener("pageshow", this.backIfLoggedIn);
+      this.$focus.first();
+    },
+    next() {
+      const id = this.$focus.focused()?.id;
+      if (id) {
+        this.validate(id);
+      }
+      if ("password" === id) {
+        if (!this.disabled)
+          this.doLogin();
+      } else {
+        this.$focus.next();
+      }
+    },
+    focusFirstError() {
+      let first = null;
+      if (this.errors.aliasError) {
+        first = "alias";
+      } else if (this.errors.passwordError) {
+        first = "password";
+      }
+      if (first) {
+        this.$focus.focus(document.getElementById(first));
+      } else {
+        this.$focus.first();
+      }
+    },
+    async doLogin() {
+      this.disabled = true;
+      if (this.validate()) {
+        try {
+          await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
+          history.back();
+          this.disabled = false;
+        } catch (err) {
+          this.errors.loginError = "Ne\xFAsp\u011B\u0161n\xFD pokus o p\u0159ihl\xE1\u0161en\xED";
+          this.disabled = false;
+          this.$focus.first();
+        }
+      } else {
+        this.focusFirstError();
+        this.disabled = false;
+      }
+    }
+  }));
+  module_default.data("register", () => ({
     validate(id = null) {
       if (id) {
         switch (id) {
@@ -17110,30 +17174,16 @@ ${content}</tr>
     },
     init() {
       this.$focus.first();
+      window.addEventListener("pageshow", this.backIfLoggedIn);
     },
     next() {
       const id = this.$focus.focused()?.id;
       if (id) {
         this.validate(id);
       }
-      let last = null;
-      let functor = null;
-      switch (this.form) {
-        case "register":
-          last = "password2";
-          functor = this.doRegister;
-          break;
-        case "login":
-          last = "password";
-          functor = this.doLogin;
-          break;
-        default:
-          last = "email";
-          functor = this.doReset;
-      }
-      if (last === id) {
-        if (!this.disabled && functor)
-          functor.apply(this);
+      if ("password2" === id) {
+        if (!this.disabled)
+          this.doRegister();
       } else {
         this.$focus.next();
       }
@@ -17155,20 +17205,105 @@ ${content}</tr>
         this.$focus.first();
       }
     },
-    async doLogin() {
+    async doRegister() {
       this.disabled = true;
       if (this.validate()) {
         try {
+          await pb.collection("users").create({
+            username: this.fields.alias,
+            email: this.fields.email,
+            password: this.fields.password,
+            passwordConfirm: this.fields.password2
+          });
+          await pb.collection("users").requestVerification(this.fields.email);
           await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          window.location.replace(document.referrer);
-        } catch (err) {
-          this.errors.loginError = "Ne\xFAsp\u011B\u0161n\xFD pokus o p\u0159ihl\xE1\u0161en\xED";
+          history.back();
           this.disabled = false;
-          this.$focus.first();
+        } catch (err) {
+          this.errors.registrationError = "Ne\xFAsp\u011B\u0161n\xE1 registrace";
+          if (err.data.data.email) {
+            this.errors.emailError = "Neplatn\xFD nebo obsazen\xFD e-mail";
+          }
+          if (err.data.data.username) {
+            this.errors.aliasError = "Neplatn\xFD nebo obsazen\xFD u\u017Eivatel";
+          }
+          if (err.data.data.password) {
+            this.errors.passwordError = "Neplatn\xE9 heslo";
+          }
+          this.disabled = false;
+          this.focusFirstError();
         }
       } else {
-        this.focusFirstError();
         this.disabled = false;
+      }
+    }
+  }));
+  module_default.data("forgottenPassword", () => ({
+    validate(id = null) {
+      if (id) {
+        switch (id) {
+          case "alias":
+            this.errors.aliasError = required(this.fields.alias) || minLength(this.fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky");
+            break;
+          case "password":
+            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
+            break;
+          case "password2":
+            this.errors.password2Error = required(this.fields.password2) || equalStrings(this.fields.password, this.fields.password2, "Hesla se neshoduj\xED");
+            break;
+          case "email":
+            this.errors.emailError = required(this.fields.email) || validEmail(this.fields.email);
+            break;
+          default:
+            break;
+        }
+      } else {
+        this.reset();
+        switch (this.form) {
+          case "reset":
+            this.validate("email");
+            break;
+          case "login":
+            this.validate("alias");
+            this.validate("password");
+            break;
+          case "register":
+            this.validate("alias");
+            this.validate("email");
+            this.validate("password");
+            this.validate("password2");
+            break;
+          default:
+            break;
+        }
+      }
+      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
+    },
+    init() {
+      this.$focus.first();
+      window.addEventListener("pageshow", this.backIfLoggedIn);
+    },
+    next() {
+      const id = this.$focus.focused()?.id;
+      if (id) {
+        this.validate(id);
+      }
+      if ("email" === id) {
+        if (!this.disabled)
+          this.doReset();
+      } else {
+        this.$focus.next();
+      }
+    },
+    focusFirstError() {
+      let first = null;
+      if (this.errors.emailError) {
+        first = "email";
+      }
+      if (first) {
+        this.$focus.focus(document.getElementById(first));
+      } else {
+        this.$focus.first();
       }
     },
     async doReset() {
@@ -17188,41 +17323,9 @@ ${content}</tr>
         this.focusFirstError();
         this.disabled = false;
       }
-    },
-    async doRegister() {
-      this.disabled = true;
-      if (this.validate()) {
-        try {
-          await pb.collection("users").create({
-            username: this.fields.alias,
-            email: this.fields.email,
-            password: this.fields.password,
-            passwordConfirm: this.fields.password2
-          });
-          await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          window.location.replace(document.referrer);
-        } catch (err) {
-          this.errors.registrationError = "Ne\xFAsp\u011B\u0161n\xE1 registrace";
-          if (err.data.data.email) {
-            this.errors.emailError = "Neplatn\xFD nebo obsazen\xFD e-mail";
-          }
-          if (err.data.data.username) {
-            this.errors.aliasError = "Neplatn\xFD nebo obsazen\xFD u\u017Eivatel";
-          }
-          if (err.data.data.password) {
-            this.errors.passwordError = "Neplatn\xE9 heslo";
-          }
-          this.disabled = false;
-          this.focusFirstError();
-        }
-      } else {
-        this.focusFirstError();
-        this.disabled = false;
-      }
     }
   }));
   module_default.data("passwordReset", () => ({
-    fields: {},
     validate(id = null) {
       if (id) {
         switch (id) {
@@ -17243,8 +17346,9 @@ ${content}</tr>
       return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
     },
     init() {
-      this.fields.token = window.location.hash.substring(1);
-      if (this.fields.token === "") {
+      window.addEventListener("pageshow", this.backIfLoggedIn);
+      token = window.location.hash.substring(1);
+      if (token === "") {
         window.back();
       }
       this.$focus.first();
@@ -17279,7 +17383,7 @@ ${content}</tr>
       this.disabled = true;
       if (this.validate()) {
         try {
-          await pb.collection("users").confirmPasswordReset(this.fields.token, this.fields.password, this.fields.password2);
+          await pb.collection("users").confirmPasswordReset(token, this.fields.password, this.fields.password2);
           this.errors.resetSuccess = "Heslo bylo zm\u011Bn\u011Bno";
           this.disabled = false;
           this.$focus.first();
@@ -17295,6 +17399,23 @@ ${content}</tr>
       } else {
         this.focusFirstError();
         this.disabled = false;
+      }
+    }
+  }));
+  module_default.data("confirmEmail", () => ({
+    async init() {
+      token = window.location.hash.substring(1);
+      if (token === "") {
+        window.back();
+      }
+      try {
+        await pb.collection("users").confirmVerification(token);
+      } catch (err) {
+        console.log(err);
+        this.errors.confirmError = "E-mail se nepoda\u0159ilo ov\u011B\u0159it";
+        if (err.response.data.token) {
+          this.errors.confirmError = "Pou\u017Eit\xFD odkaz je neplatn\xFD nebo star\xFD";
+        }
       }
     }
   }));

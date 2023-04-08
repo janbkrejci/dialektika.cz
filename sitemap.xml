@@ -53,7 +53,13 @@
   </url><url>
     <loc>/404.html</loc>
   </url><url>
+    <loc>/forgotten-password/</loc>
+  </url><url>
+    <loc>/reset/</loc>
+  </url><url>
     <loc>/gdpr/</loc>
+  </url><url>
+    <loc>/verify/</loc>
   </url><url>
     <loc>/program/</loc>
   </url><url>
