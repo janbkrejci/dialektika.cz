@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+<link href="/css/main.min.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script><title>Aktivity | Dialektika</title>
+<link rel="canonical" href="">
+<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+<link rel="icon" href="/img/logo.svg">
+<meta name="description" content=" Hlasování ">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta charset="utf-8">
+<script type='text/javascript'
+  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+  async='async'></script>
+</head>
+
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
+      
+      <a x-show="user_id" href="/aktivity">Aktivity</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="/login">Přihlášení <span
+          aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="/program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="/stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="/stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="/blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="/aktivity"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
+            <a href="/organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="/lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="/ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+  <h1>Aktivity</h1>
+
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  
+  
+
+<div x-data="aktivity" x-show="user_id" x-effect="if (!user_id) {} else {window.history.back();}">
+   <!-- navigation -->
+  <div class="flex grow justify-between">
+    <a href="#state=hlasovani">Hlasování</a>
+    <a href="#state=vysledky" ">Výsledky</a>
+  </div>
+
+  <div class=" separator mt-8">
+  </div>
+
+  <!-- results -->
+  <div x-show="state === 'vysledky'">
+    <h2>Výsledky hlasování</h2>
+
+    <div x-show="!collections.votings" class="alert px-2 mb-8">
+      Nahrávám...
+    </div>
+    <div x-show="collections.votings && !closedItems().length" class="alert success px-2 mb-8">
+      V tuto chvíli zde žádná uzavřená témata nejsou.
+    </div>
+    <table class="table-fixed" x-show="closedItems().length">
+      <thead>
+        <tr>
+          <th class="w-32">Odhlasováno</th>
+          <th>Návrh</th>
+          <th class="w-48 text-center">Výsledek</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in closedItems">
+          <tr :id="item.id" @click="showDetail(item.id)">
+            <td x-text="utils.formatDate(item.votingClosed)"></td>
+            <td x-text="item.finalSubject" class="truncate"></td>
+            <td class="text-center">
+              <div x-show="item.votingResult" class="btn success w-32 mx-auto">Schváleno</div>
+              <div x-show="!item.votingResult" class="btn error w-32 mx-auto  ">Zamítnuto</div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <h2>Zamítnutá témata</h2>
+
+    <div x-show="!collections.votings" class="alert px-2 mb-8">
+      Nahrávám...
+    </div>
+    <div x-show="collections.votings && !rejectedItems().length" class="alert success px-2 mb-8">
+      V tuto chvíli zde žádná zamítnutá témata nejsou.
+    </div>
+    <table x-show="rejectedItems().length" class="table-fixed">
+      <thead>
+        <tr>
+          <th class="w-32">Zamítnuto</th>
+          <th>Předmět</th>
+          <th class="w-48 text-center">Akce</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in rejectedItems">
+          <tr :id="item.id" @click="showDetail(item.id)">
+            <td x-text="utils.formatDate(item.preselectionClosed)"></td>
+            <td x-text="item.subject" class="truncate"></td>
+            <td class="text-center">
+              <button class="btn primary" @click.stop="reOpen(item.id)">Znovu otevřít</button>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- voting -->
+  <div x-show="state === 'hlasovani'">
+    <h2>Moje hlasování</h2>
+
+    <div x-show="!collections.votings" class="alert px-2 mb-8">
+      Nahrávám...
+    </div>
+    <div x-show="collections.votings && !votingItems().length" class="alert success px-2 mb-8">
+      V tuto chvíli zde žádná hlasování nejsou.
+    </div>
+    <table x-show="votingItems().length" class="table-fixed">
+      <thead>
+        <tr>
+          <th class="w-32">Termín</th>
+          <th>Předmět</th>
+          <th class="text-center w-48">Hlasovat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in votingItems">
+          <tr :id="item.id" @click="showDetail(item.id)">
+            <td x-text="utils.formatDate(utils.addWeek(item.votingStarted))"></td>
+            <td x-text="item.finalSubject" class="truncate">
+            </td>
+            <td class="whitespace-nowrap">
+              <button :disabled="disabled" class="success w-20" @click.stop="vote(item, true)">PRO</button>
+              <button :disabled="disabled" class="error w-20" @click.stop="vote(item, false)">PROTI</button>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <h2>Témata v diskusi</h2>
+
+    <div x-show="!collections.votings" class="alert px-2 mb-8">
+      Nahrávám...
+    </div>
+    <div x-show="collections.votings && !elaboratingItems().length" class="alert success px-2 mb-8">
+      V tuto chvíli zde žádná diskuse neprobíhá.
+    </div>
+    <table x-show="elaboratingItems().length" class="table-fixed">
+      <thead>
+        <tr>
+          <th class="w-32">Termín</th>
+          <th>Předmět</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in elaboratingItems">
+          <tr :id="item.id" @click="showDetail(item.id)">
+            <td x-text="utils.formatDate(utils.addWeek(item.preselectionClosed))"></td>
+            <td x-text="item.subject" class="truncate"></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <h2>Navržená témata</h2>
+
+    <div x-show="!collections.votings" class="alert px-2 mb-8">
+      Nahrávám...
+    </div>
+    <div x-show="collections.votings && !suggestedItems().length" class="alert success px-2 mb-8">
+      V tuto chvíli zde žádná navržená témata nejsou.
+    </div>
+
+    <table x-show="suggestedItems().length" class="table-fixed">
+      <thead>
+        <tr>
+          <th class="w-32">Termín</th>
+          <th>Předmět</th>
+          <th class="text-center w-48">Propustit k diskusi?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="item in suggestedItems">
+          <tr :id="item.id" @click="showDetail(item.id)">
+            <td x-text="utils.formatDate(utils.addWeek(item.created))"></td>
+            <td x-text="item.subject" class="truncate"></td>
+            <td class="whitespace-nowrap">
+              <button :disabled="disabled" class="success w-20" @click.stop="vote(item, true)">PRO</button>
+              <button :disabled="disabled" class="error w-20" @click.stop="vote(item, false)">PROTI</button>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <button class="primary mt-8" @click="showDetail(null)">Navrhnout téma</button>
+  </div>
+
+  <!-- detail -->
+  <div x-show="state === 'detail'" @keyup.escape.window="hideDetail()" @keydown.enter.prevent="next">
+    <button class="primary" @click="hideDetail()">&lt;&lt; Zpět</button>
+    <h2 class="mt-4">
+      <span x-show="selectedItem.state === 'closed'">Uzavřené hlasování</span>
+      <span x-show="selectedItem.state === 'voting'">Probíhající hlasování</span>
+      <span x-show="selectedItem.state === 'elaborating'">Téma v diskusi</span>
+      <span x-show="selectedItem.state === 'rejected'">Zamítnuté téma</span>
+      <span x-show="selectedItem.state === 'suggested'">Navržené téma</span>
+      <span x-show="selectedItem.state === 'new'">Nové téma</span>
+    </h2>
+
+    <div class="alert error px-2 my-8" x-show="errors.submitError" x-text="errors.submitError"></div>
+
+    <!-- voting details - form or preview of individual fields -->
+    <div x-show="selectedItem.state === 'new'" x-data="{preview: false}">
+      <!-- subject -->
+      <div>
+        <label for="subject">Předmět *</label>
+        <input id="subject" :class="{'input': true, 'error': errors.subjectError}" type="text"
+          x-model="selectedItem.subject" @input="selectedItem.subject = $el.value" @blur="validate($el.id)">
+        <div class="error-text" x-text="errors.subjectError"></div>
+      </div>
+      <!-- description -->
+      <div>
+        <label for="description">Popis *</label>
+        <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+          <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+          <div tabindex="-1"
+            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+          </div>
+          <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete použít
+            <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+              značky</a>)</span>
+        </label>
+        <textarea rows=10 id="description" x-show="!preview"
+          :class="{'input resize-none': true, 'error': errors.descriptionError, 'hidescrollbar': true}"
+          x-model="selectedItem.description" @input="selectedItem.description = $el.value"
+          @keydown.enter.stop="() => {}" @blur="validate($el.id)"></textarea>
+        <div class="error-text" x-text="errors.descriptionError"></div>
+        <div class="preview" x-html="utils.convertMD(selectedItem.description || '')" x-show="preview"></div>
+      </div>
+    </div>
+
+    <div x-show="selectedItem.state === 'suggested'">
+      <div class="border rounded-lg shadow-md px-8 py-0">
+        <div class="flex justify-between text-sm pt-2">
+          <span>Navrhovatel: <span x-text="userName(selectedItem.author)"></span></span>
+          <span>Navrženo: <span x-text="utils.formatDate(selectedItem.created)"></span></span>
+        </div>
+        <h1 class="pt-8" x-text="selectedItem.subject"></h1>
+        <div class="preview" x-html="utils.convertMD(selectedItem.description || '')"></div>
+      </div>
+    </div>
+
+    <div x-show="selectedItem.state === 'elaborating'" x-data="{
+      preview: false, showOriginal: false}">
+      <div class="border rounded-lg shadow-md px-8 py-0">
+        <div class="flex justify-between text-sm pt-2">
+          <span>Navrhovatel: <span x-text="userName(selectedItem.author)"></span></span>
+          <span>Schváleno k diskusi: <span x-text="utils.formatDate(selectedItem.preselectionClosed)"></span></span>
+        </div>
+        <div class="flex justify-between items-baseline py-2">
+          <div x-show="showOriginal" class="text-2xl font-bold">Původní znění</div>
+          <div x-show="!showOriginal" class="text-2xl font-bold">Finální znění k hlasování</div>
+          <a href="" @click.prevent="showOriginal = !showOriginal"
+            x-text="showOriginal ? '...zobrazit verzi k hlasování' : '...zobrazit původní verzi'" class="text-sm"></a>
+        </div>
+        <div x-show="showOriginal || selectedItem.author !== user_id">
+          <h1 class="pt-8" x-text="showOriginal ? selectedItem.subject : selectedItem.finalSubject"></h1>
+          <div class="preview"
+            x-html="utils.convertMD((showOriginal ? selectedItem.description : selectedItem.finalStatement) || '')">
+          </div>
+        </div>
+        <div x-show="!showOriginal && selectedItem.author === user_id">
+          <!-- subject -->
+          <div>
+            <label for="finalSubject">Předmět *</label>
+            <input id="finalSubject" :class="{'input': true, 'error': errors.finalSubjectError}" type="text"
+              x-model="selectedItem.finalSubject" @input="selectedItem.finalSubject = $el.value"
+              @blur="validate($el.id)">
+            <div class="error-text" x-text="errors.finalSubjectError"></div>
+          </div>
+          <!-- description -->
+          <div>
+            <label for="finalStatement">Popis *</label>
+            <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+              <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+              <div tabindex="-1"
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+              </div>
+              <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete
+                použít
+                <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+                  značky</a>)</span>
+            </label>
+            <textarea rows=10 id="finalStatement" style="resize: none" x-show="!preview"
+              :class="{'input': true, 'error': errors.finalStatementError, 'hidescrollbar': true}"
+              x-model="selectedItem.finalStatement" @input="selectedItem.finalStatement = $el.value"
+              @keydown.enter.stop="() => {}" @blur="validate($el.id)"></textarea>
+            <div class="error-text" x-text="errors.finalStatementError"></div>
+            <div class="preview" x-html="utils.convertMD(selectedItem.finalStatement || '')" x-show="preview"></div>
+          </div>
+          <button :disabled="disabled" class="primary my-3" @click="saveStatement">Uložit</button>
+        </div>
+      </div>
+    </div>
+
+    <div x-show="selectedItem.state === 'rejected'">
+      <div class="border rounded-lg shadow-md px-8 py-0">
+        <div class="flex justify-between text-sm pt-2">
+          <span>Navrhovatel: <span x-text="userName(selectedItem.author)"></span></span>
+          <span>Zamítnuto: <span x-text="utils.formatDate(selectedItem.preselectionClosed)"></span></span>
+        </div>
+        <h1 class="pt-8" x-text="selectedItem.subject"></h1>
+        <div class="preview" x-html="utils.convertMD(selectedItem.description || '')"></div>
+      </div>
+    </div>
+
+    <div x-show="selectedItem.state === 'voting'">
+      <div class="border rounded-lg shadow-md px-8 py-0">
+        <div class="flex justify-between text-sm pt-2">
+          <span>Navrhovatel: <span x-text="userName(selectedItem.author)"></span></span>
+          <span>Hlasování zahájeno: <span x-text="utils.formatDate(selectedItem.votingStarted)"></span></span>
+        </div>
+        <h1 class="pt-8" x-text="selectedItem.finalSubject"></h1>
+        <div class="preview" x-html="utils.convertMD(selectedItem.finalStatement || '')"></div>
+      </div>
+    </div>
+
+    <div x-show="selectedItem.state === 'closed'">
+      <div class="border rounded-lg shadow-md px-8 py-0">
+        <div class="flex justify-between text-sm pt-2">
+          <span>Navrhovatel: <span x-text="userName(selectedItem.author)"></span></span>
+          <span>Hlasování ukončeno: <span x-text="utils.formatDate(selectedItem.votingClosed)"></span></span>
+        </div>
+        <h1 class="pt-8" x-text="selectedItem.finalSubject"></h1>
+        <div class="preview" x-html="utils.convertMD(selectedItem.finalStatement || '')"></div>
+      </div>
+    </div>
+
+
+    <!-- votes -->
+    <div x-show="selectedItem.state !== 'new'" x-data="{unfold: false}">
+      <h2 class="flex items-between items-center cursor-pointer" @click="unfold = !unfold">
+        <span x-show="['suggested', 'rejected', 'elaborating'].includes(selectedItem.state)">Hlasování o propuštění k
+          diskusi</span>
+        <span x-show="['voting', 'closed'].includes(selectedItem.state)">Hlasování</span>
+        <span :class="{
+            'ml-auto h-5 w-5 shrink-0': true,
+            'rotate-0': !unfold,
+            'rotate-180': unfold
+          }">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </span>
+      </h2>
+
+      <table x-show="unfold" class="table-auto">
+        <thead>
+          <tr>
+            <th class="w-full">Hlasující</th>
+            <th class="flex justify-center items-center space-x-1">
+              <div>Hlas</div>
+              <div class="questionmark" data-tooltip-target="tooltip-default"></div>
+
+            </th>
+            <div id="tooltip-default" role="tooltip"
+              class="absolute z-10 invisible inline-block px-3 py-2 m-0 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+              Hodnota bez barvy znamená kontumační hlas.
+              <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="u in votersFor(selectedItem)">
+            <tr>
+              <td x-text="u === user_id ? 'Já' : userName(u)"></td>
+              <td>
+                <div x-text="utils.boolToString(voteOfFor(u, selectedItem)?.vote, 'PRO', 'PROTI', '')" :class="{
+                'btn': true,
+                'success': voteOfFor(u, selectedItem)?.vote && voteOfFor(u, selectedItem)?.voteActive,
+                'error': !_.isNil(voteOfFor(u, selectedItem)?.vote) && ! voteOfFor(u, selectedItem)?.vote && voteOfFor(u, selectedItem)?.voteActive
+                }">
+                </div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" class="text-right">Pro: <span x-text="positiveVotesFor(selectedItem)"></span>, Proti:
+              <span x-text="negativeVotesFor(selectedItem)"></span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- discussion -->
+    <div x-show="['elaborating', 'voting', 'closed'].includes(selectedItem.state)">
+      <h2 class="flex items-between items-center cursor-pointer" @click="unfold = !unfold">
+        Diskuse
+        <span :class="{
+            'ml-auto h-5 w-5 shrink-0': true,
+            'rotate-0': !unfold,
+            'rotate-180': unfold
+          }">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </span>
+      </h2>
+
+      <!-- comments -->
+      <div x-show="unfold">
+        <div class="mb-8" x-show="selectedItem.author === user_id && selectedItem.state === 'elaborating'">
+          <button class="primary" @click="startVoting">
+            Ukončit diskusi a zahájit hlasování
+          </button>
+          (termín <span x-text="utils.formatDate(utils.addWeek(selectedItem.preselectionClosed))"></span>)
+        </div>
+        <div x-show="selectedItem.state === 'elaborating'" class="flex flex-col space-y-2" x-data="{preview: false}">
+          <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+            <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+            <div tabindex="-1"
+              class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+            </div>
+            <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete použít
+              <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+                značky</a>)</span>
+          </label>
+          <textarea placeholder="Sem napište svůj komentář..." x-show="!preview" rows="5"
+            class="input scrollbar-hide resize-none w-full" x-model="comment" @keydown.enter.stop="() => {}"
+            @input="comment = $el.value"></textarea>
+          <div class="preview" x-show="preview" x-html="utils.convertMD(comment || '')">
+          </div>
+          <button class="primary" @click="storeComment">Odeslat</button>
+        </div>
+        <div class="mt-8 w-full max-h-[380px] overflow-y-auto scrollbar-hide">
+          <div class="alert pb-8" x-show="commentsFor(selectedItem).length === 0">K tomuto tématu
+            <span x-show="selectedItem.state === 'elaborating'">zatím</span>
+            žádná diskuse neproběhla.
+          </div>
+          <template x-for="comment in commentsFor(selectedItem)">
+            <div :id="comment.id" class="w-full flex flex-col px-4">
+              <div :class="{
+                'self-end items-end': comment.author === user_id,
+                'w-1/2 flex flex-col': true
+                }">
+                <span>
+                  <span class="text-sm font-bold"
+                    x-text="comment.author === user_id ? 'Já' : userName(comment.author)"></span>
+                  <span class="text-sm" x-text="utils.formatDateTime(comment.created)"></span>
+                </span>
+                <div :class="{
+                'text-sm preview bubble': true }" x-html="utils.convertMD(comment.text || '')">
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <!-- form actions -->
+    <button x-show="selectedItem.state === 'rejected'" :disabled="disabled" class="primary"
+      @click="reOpen(selectedItem.id)">Znovu otevřít</button>
+    <button x-show="selectedItem.state === 'new'" :disabled="disabled" class="primary mt-8"
+      @click="doCreateTopic">Navrhnout téma</button>
+
+    <div
+      x-show="['suggested', 'voting'].includes(selectedItem.state) && !didIVoteFor(selectedItem, isVote(selectedItem))">
+      <h2 x-show="selectedItem.state === 'suggested'">Propustit k diskusi? (termín <span
+          x-text="utils.formatDate(utils.addWeek(selectedItem.created))"></span>)
+      </h2>
+      <h2 x-show="selectedItem.state === 'voting'">Váš hlas? (termín <span
+          x-text="utils.formatDate(utils.addWeek(selectedItem.votingStarted))"></span>)
+      </h2>
+      <button :disabled="disabled" class="success w-20" @click="vote(selectedItem, true)">PRO</button>
+      <button :disabled="disabled" class="error w-20" @click="vote(selectedItem, false)">PROTI</button>
+    </div>
+  </div>
+</div>
+
+
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="/gdpr">Ochrana osobních údajů</a>
+</footer></body>
+
+</html>

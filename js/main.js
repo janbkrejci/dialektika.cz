@@ -17059,6 +17059,11 @@ ${content}</tr>
         history.back();
       }
     },
+    backIfNotLoggedIn() {
+      if (!localStorage.pocketbase_auth) {
+        history.back();
+      }
+    },
     logout() {
       pb.authStore.clear();
       this.onPageShow();
@@ -17456,6 +17461,7 @@ ${content}</tr>
     },
     async init() {
       const self2 = this;
+      this.subscribe = subscribe.bind(this);
       await this.subscribe("votings", (x) => !!x, {
         postDelete(item) {
           if (item.id === self2.selectedID) {
