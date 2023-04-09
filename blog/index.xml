@@ -6,7 +6,25 @@
     <description>Nejnovější články na webu Dialektika</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cs-CZ</language>
-    <lastBuildDate>Fri, 07 Apr 2023 16:00:00 +0100</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Apr 2023 10:00:00 +0100</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Na blbou otázku blbá odpověď, aneb o umělé inteligenci, demokracii a populismu</title>
+      <link>/blog/posts/2023/04/na-blbou-otazku/</link>
+      <pubDate>Sun, 09 Apr 2023 10:00:00 +0100</pubDate>
+      
+      <guid>/blog/posts/2023/04/na-blbou-otazku/</guid>
+      <description>&lt;p&gt;Umělá inteligence je oheň novověku. Převratný vynález, skvělý sluha, ale moc špatný pán. Pokud ji nepochopíme a nenaučíme se ji využít ku svému prospěchu, pokud ji budeme přijímat jako Boha - čistou vírou namísto rozumu, asi se o ní ošklivě popálíme.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Někdy něco neudělat je lepší, než to udělat</title>
+      <link>/blog/posts/2023/04/chvile-klidu/</link>
+      <pubDate>Sun, 09 Apr 2023 09:00:00 +0100</pubDate>
+      
+      <guid>/blog/posts/2023/04/chvile-klidu/</guid>
+      <description>&lt;p&gt;Až budou příští volby, půjdu volit toho, kdo slíbí, že se v ničem nebude vrtat. Zní to možná zpátečnicky. Aťsi. Já ale dobře vím, proč to říkám.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Management neboli řízení</title>
       <link>/blog/posts/2023/04/management/</link>

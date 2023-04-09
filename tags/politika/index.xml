@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Politika na webu Dialektika</title>
+    <link>/tags/politika/</link>
+    <description>Politika na webu Dialektika</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cs-CZ</language>
+    <lastBuildDate>Sun, 09 Apr 2023 09:00:00 +0100</lastBuildDate><atom:link href="/tags/politika/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Někdy něco neudělat je lepší, než to udělat</title>
+      <link>/blog/posts/2023/04/chvile-klidu/</link>
+      <pubDate>Sun, 09 Apr 2023 09:00:00 +0100</pubDate>
+      
+      <guid>/blog/posts/2023/04/chvile-klidu/</guid>
+      <description>&lt;p&gt;Až budou příští volby, půjdu volit toho, kdo slíbí, že se v ničem nebude vrtat. Zní to možná zpátečnicky. Aťsi. Já ale dobře vím, proč to říkám.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

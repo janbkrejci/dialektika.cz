@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+<link href="/css/main.min.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script><title>Na blbou otázku blbá odpověď, aneb o umělé inteligenci, demokracii a populismu | Dialektika</title>
+<link rel="canonical" href="">
+<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+<link rel="icon" href="/img/logo.svg">
+<meta name="description" content="Umělá inteligence je oheň novověku. Převratný vynález, skvělý sluha, ale moc špatný pán. Pokud ji nepochopíme a nenaučíme se ji využít ku svému prospěchu, pokud ji budeme přijímat jako Boha - čistou vírou namísto rozumu, asi se o ní ošklivě popálíme.">
+
+<meta name="keywords" content="Myšlenky , Společnost">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta charset="utf-8">
+<script type='text/javascript'
+  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+  async='async'></script>
+</head>
+
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
+      
+      <a x-show="user_id" href="/aktivity">Aktivity</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="/login">Přihlášení <span
+          aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="/program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="/stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="/stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="/blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="/aktivity"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Aktivity</a>
+            <a href="/organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="/lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="/ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  &nbsp;
+<a class="no-underline" href="/blog/posts/2023/04/chvile-klidu/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Na blbou otázku blbá odpověď, aneb o umělé inteligenci, demokracii a populismu</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="/archive/"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    9. dubna 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 10 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="/tags/"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_myšlenky" href="/tags/my%C5%A1lenky/">Myšlenky</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_společnost" href="/tags/spole%C4%8Dnost/">Společnost</a></div>
+</div><p>Umělá inteligence je oheň novověku. Převratný vynález, skvělý sluha, ale moc špatný pán. Pokud ji nepochopíme a nenaučíme se ji využít ku svému prospěchu, pokud ji budeme přijímat jako Boha - čistou vírou namísto rozumu, asi se o ní ošklivě popálíme.</p>
+<p>Existuje kategorie vtipů, říká se jí vtipy o Vermonťanech. Ti se vyznačují tím, že na danou otázku poskytnou přesnou a vyčerpávající odpověď, ale nikdy vám neřeknou to důležité, co s tím souvisí, protože na to jste se nezeptali. Příklad: „Sousede, co jste dával svému koni, když měl koliku?“ „Otruby a melasu.“ Uběhne týden. „Sousede, ten můj kůň po tom chcípnul.“ „Jo, ten můj tenkrát taky.“</p>
+<p>Nedávno se někdo zeptal slovenského finančního úřadu, jestli když poskytuje službu do EU, musí být plátcem DPH. Odpověděli mu, že nemusí, protože obrat uskutečněný ve službách do EU se nepočítá do obratu, který zakládá povinnost stát se plátcem, pokud přesáhne nějaký limit. Bohužel se ale onen dotyčný nezeptal, jestli pro prodej služeb do EU nemusí být náhodou registrován jako identifikovaná osoba a mít daňové identifikační číslo pro DPH. Kdyby se zeptal, dozvěděl by se, že to samozřejmě musí, to je přece v celé Evropě stejné. Státnímu úřadu myslím nelze jistou míru vermonťanství zazlívat. Když se špatně zeptáte, dostanete špatnou odpověď. Ale úřad není od toho, aby si domýšlel, co jste svou otázkou asi tak mohli myslet.</p>
+<p>A já si myslím, že podobně se to má i s umělou inteligencí. Pokud aspoň povšechně netušíte, jak funguje, čeho je schopná, a kde má své limity, velmi snadno se s její pomocí můžete úplně špatně rozhodnout.</p>
+<p>Poslední dobou se internet hemží články o tom, jak umělá inteligence brzy nahradí kdekteré lidské povolání. Někteří píší, že se na to těší, jiní tvrdí, že to je nesmysl, další mají strach o své živobytí. Ale málokdo skutečně ví, co to ta umělá inteligence vlastně je. Stačí nám, že máme k dispozici jakýsi web, kde se tohoto novodobého orákula můžeme zeptat na cokoli a dostaneme rychlou, podrobnou a hned na první pohled hodně odbornou odpověď.</p>
+<p>Jedním z těchto chatů s umělou inteligencí, o kterých se v poslední době tolik hovoří, je ChatGPT, umělá inteligence založená na GPT architektuře vyvinuté společností OpenAI. Ať už tedy ta GPT architektura znamená cokoli.</p>
+<p>Rozhodl jsem se netroškařit a popovídat si s umělou inteligencí hned o dvou tématech. Prvním tématem bylo, co ona sama o sobě umí říci. Ne, co si o sobě myslí - umělá inteligence si nic nemyslí, tak daleko moje znalosti ještě dosáhnou. O umělé inteligenci jako konceptu softwarového řešení nejednoznačně zadaných úloh jsme se na univerzitě učili už dobrých patnáct let zpátky. Druhé téma bylo srovnání pojmů populismus a demokracie - mají totiž hluboko v sobě schované společné prvky a chtěl jsem si ověřit, na kolik je umělá inteligence schopná usuzovat, zobecňovat, revidovat svůj názor a přijmout argumentaci druhé strany.</p>
+<p>S výsledkem jsem spokojen. <strong>Když víte, co chcete, a co můžete získat, když se umíte správně ptát, jednoznačně vyjadřovat a dobře argumentovat, skutečně vám umělá inteligence může posloužit jako prima nástroj ke zjednodušení lecjaké rutinní činnosti. Ale proboha nečekejte, že se od ní dozvíte něco, co byste se nedozvěděli z jiných zdrojů, nečekejte, že má vždycky pravdu, a že vám dokáže říct, jak máte žít a co si máte myslet. To by bylo strašlivé a nebezpečné zjednodušení.</strong></p>
+<p>V následujícím textu uvádím doslovný a kompletní přepis svého dialogu s ChatGPT (vynechám jen drobné jazykové korektury - ChatGPT si trošku neporadil se zájmeny ve středním rodu, ale jinak se mnou komunikoval téměř dokonalou češtinou). V tomto dialogu možná naleznete odpovědi na některé zásadní otázky, které je nutné si klást, jestliže chceme naplno využít potenciál, který se nám zde nabízí. Citační záznam najdete dole na stránce [1]. Sebe jako tazatele označuji <strong>jbk</strong>, umělou inteligenci jako <strong>AI</strong>. Dovolím si tučně zvýraznit klíčové momenty konverzace.</p>
+<h2 id="rozhovor-s-umělou-inteligencí-o-umělé-inteligenci-populismu-a-demokracii">Rozhovor s umělou inteligencí o umělé inteligenci, populismu a demokracii</h2>
+<p><strong>jbk</strong> „Můžeš mi sepsat pár odstavců na téma umělá inteligence, její historie, její možnosti a omezení? Od perceptronu po hluboké učení. A o tom, jak pracuješ Ty?“</p>
+<p><strong>AI</strong> „Umělá inteligence (AI) je oblast informatiky, která se zabývá vývojem počítačových systémů, které jsou schopny provádět úkoly, které jsou obvykle spojovány s lidským myšlením a chováním, jako jsou rozpoznávání řeči, rozpoznávání obrazu, plánování, rozhodování a učení.</p>
+<p><em>Pozn. aut.: nám ve škole zdůrazňovali především schopnost učení se řešit problémy, pro které je složité určit jednoznačný algoritmus řešení.</em></p>
+<p>Historie umělé inteligence sahá až do 50. let 20. století, kdy byly vyvinuty <strong>první stroje, jako perceptrony</strong>, které byly schopny rozpoznávat jednoduché vzory. Později byly vyvinuty složitější algoritmy, jako například algoritmus ID3 pro rozhodovací stromy a algoritmus k-nejbližších sousedů pro klasifikaci dat.</p>
+<p><em>Pozn. aut.: subtilní chyba - perceptron není stroj, ale jeden z prvotních algoritmů umělé inteligence. Jedná se o softwarovou simulaci neuronu, který má nějaké vstupní kanály, má nějaký výstupní kanál, a má nastavené úrovně citlivosti vstupů a transformační funkci překládající vstupy na výstup. Už s jedním perceptronem se dají dělat neuvěřitelná kouzla. Více např. zde: [2]. Pojďme dál:</em></p>
+<p>V 90. letech 20. století byly vyvinuty algoritmy hlubokého učení, které se staly základem pro současné úspěchy v oblasti umělé inteligence. <strong>Tyto algoritmy umožňují počítačům rozpoznávat složité vzory v datech a provádět úkoly, jako je rozpoznávání řeči a obrazu.</strong></p>
+<p>Mezi možnosti umělé inteligence patří například zlepšení lidského zdraví, zvýšení efektivity výroby, zlepšení dopravy a další významné oblasti, ve kterých umělá inteligence může hrát klíčovou roli.</p>
+<p><strong>S omezeními umělé inteligence se setkáváme v oblastech, jako je například ochrana soukromí, nedostatečná transparentnost rozhodování a možnost, že počítače budou schopny nahradit lidskou práci.</strong></p>
+<p>Jako ChatGPT, jsem velký jazykový model, který je vyvinutý na bázi GPT-3.5 architektury. <strong>Proces mého učení probíhá pomocí tréninkových dat, která obsahují rozsáhlé množství textových dat z různých zdrojů, jako jsou webové stránky, knihy a novinové články. Tato data mi umožňují rozvíjet schopnosti porozumění jazyku a komunikace s lidmi.</strong>“</p>
+<p><em>Pozn. aut.: povšimněte si, že jde o rozpoznávání složitých vzorů a o zpracování rozsáhlých dat z mnoha zdrojů. Obraťme teď na chvíli pozornost na druhé téma:</em></p>
+<p><strong>jbk</strong> „Zajímalo by mě, jak chápeš výraz populismus“</p>
+<p><strong>AI</strong> „Populismus je politický styl, který se snaží oslovit a získat podporu široké veřejnosti tím, že zdůrazňuje <strong>jednoduchá řešení složitých společenských problémů</strong> a vystupuje proti tradičním elitám. Populisté se často snaží získat podporu tím, že poukazují na problémy, které jsou většinou ignorovány mainstreamovými politickými stranami a médii, a tvrdí, že oni jsou jedinými skutečnými zástupci lidu. <strong>Často se opírají o emotivní, ale často zjednodušené, argumenty a vyvolávají negativní emoce jako strach a hněv.</strong></p>
+<p>Populismus může být spojován s různými politickými směry, od pravice po levice, a může se vyskytovat v různých zemích a kontextech. Někdy bývá také kritizován za to, že <strong>má tendenci redukovat složité společenské problémy na jednoduchá řešení, která mohou být neúčinná nebo dokonce kontraproduktivní</strong>.</p>
+<p>Jako umělá inteligence, mám o populismu vědomosti pouze na základě analýzy textů a dat, které jsem trénován zpracovávat, a nemohu mít subjektivní názor na politické směry nebo preference.“</p>
+<p><em>Pozn. aut.: znovu si povšimněte - moje vědomosti vznikly na základě analýzy (existujících) textů a dat.</em></p>
+<p><strong>jbk</strong> „Není populismus jen jistou formou demokracie, když respektuje touhy a potřeby veřejnosti?“</p>
+<p><em>Pozn. aut.: na téhle otázce se spousta lidí zavaří - je to pitomost a demagogie, nebo je na tom zrnko pravdy? Líbí se mi, jak se umělá inteligence s grácií a respektem vyrovnala s takto křehkou argumentační konstrukcí:</em></p>
+<p><strong>AI</strong> „I když se populisté často prezentují jako hlas lidu, jejich politický styl může mít negativní dopad na demokracii. Populismus může napomáhat polarizaci společnosti a podporovat myšlenku, že jsou lidé rozděleni na dvě kategorie - &ldquo;my&rdquo; a &ldquo;oni&rdquo;. To může vést k oslabení demokratických institucí, když populisté začínají napadat a marginalizovat jiné politické subjekty a společenské skupiny. Populisté mohou také mít tendenci ignorovat právní a institucionální omezení, která jsou důležitá pro udržení demokratických procesů, a často se snaží konat tak, aby posílili svou moc a kontrolu nad společností.</p>
+<p><strong>Nicméně, je pravda, že demokracie by měla respektovat touhy a potřeby veřejnosti a poskytovat mechanismy, jak je vyjádřit. V tomto smyslu mohou být populistické strany a hnutí považovány za jeden z mnoha způsobů, jak zaručit, že lidé mají skutečný vliv na rozhodování o své budoucnosti. Nicméně, je důležité, aby byly tyto touhy a potřeby respektovány v rámci demokratických pravidel a institucí a aby nebyly zneužity k podkopávání těchto institucí nebo k napomáhání vzniku nedemokratických tendencí.</strong>“</p>
+<p><em>Pozn. aut.: bingo! Připouštím odlišný názor, ale snažím se ho posouvat do oblasti tolerance a korektnosti. Moc pěkné.</em></p>
+<p><strong>jbk</strong> „Vzhledem k tomu, co píšeš výše (o sobě), mě napadá: umíš skvěle pracovat s obrovským množstvím informací. Jak ale posuzuješ jejich relevantnost? To, že se něco často opakuje, přece ještě nutně neznamená, že je to správné a pravdivé?“</p>
+<p><strong>AI</strong> „Ano, máte pravdu. Jako umělá inteligence, jsem schopný zpracovávat a uchovávat velké množství informací, <strong>ale není to samozřejmě náhrada za lidskou schopnost kriticky posuzovat informace a rozhodovat se, které jsou relevantní a pravdivé</strong>.</p>
+<p><em>Pozn. aut.: A TOTO BY SI KAŽDÝ MĚL PŘEČÍST NĚKOLIKRÁT A NAUČIT SE TO NAZPAMĚŤ. Zde je totiž hlavní sdělení tohoto článku - sama umělá inteligence korektně připouští, že neumí kriticky myslet. Co na tom, že to neumí ani spousta lidí? Ti mají aspoň šanci se to naučit. Umělá inteligence pokračuje:</em></p>
+<p><strong>Pro posouzení relevantnosti informací se obvykle používají různé metody, jako je například ověřování zdroje, srovnávání informací z různých zdrojů nebo analýza informací pomocí logických a empirických argumentů. Zároveň je důležité být si vědom toho, že informace mohou být zaujaté nebo zkreslené, a že je třeba mít k nim kritický přístup.</strong></p>
+<p><em>Pozn. aut.: velké díky tvůrcům této služby. Jsem teď o moc klidnější. Co nám umělá inteligence řekne dále?</em></p>
+<p>V praxi se toto téma často řeší pomocí různých nástrojů pro filtrování informací, například algoritmů pro detekci falešných zpráv nebo softwarových nástrojů pro vyhledávání informací z důvěryhodných zdrojů. Tyto nástroje se však obvykle spoléhají na kombinaci automatizovaných procesů a lidského posouzení, aby byly co nejefektivnější a přesné.</p>
+<p><em>Pozn. aut.: tak doufám, že se v dohledné době nedočkáme automatizované cenzury na základě pouhého převažujícího názoru. Moment. Neděje se to už na sociálních sítích? Ale to si děláme sami, na to umělou inteligenci nepotřebujeme, na to nám stačí naše zcela přírodní blbost. A umělá inteligence uzavírá:</em></p>
+<p><strong>Celkově je tedy důležité mít kritický a skeptický přístup k informacím a být schopen je kriticky posuzovat, aby se minimalizovaly možné chyby a zaujatost.</strong>“</p>
+<p><strong>jbk</strong> „A jak jsi na tom s kreativitou - umíš vytvořit něco nového, nebo spíš syntetizuješ již existující?“</p>
+<p><strong>AI</strong> „Jako umělá inteligence, <strong>jsem programován k syntéze již existujících informací a pravidel</strong>, která jsou zakódována v mých algoritmech. V této oblasti se snažíme neustále zlepšovat a rozvíjet algoritmy, které jsou schopny vytvářet nové a kreativní výstupy na základě učení se a adaptace na nové situace.</p>
+<p>V oblasti tvorby textu například mohu být programován k vytváření nových vět na základě různých kombinací slov a frází, které jsem se naučil z tréninkových dat. Také existují pokročilejší algoritmy, které se snaží vytvořit nové a originální texty na základě zadání tématu nebo konkrétního stylu psaní.</p>
+<p><strong>Nicméně, jako umělá inteligence, nemám vlastní kreativitu jako mají lidé. Můj výstup závisí pouze na algoritmech, které jsou předem definovány mými tvůrci.</strong>“</p>
+<p><em>Pozn. aut.: tohle je znovu opakování zásadního a důležitého faktu - výstupy umělé inteligence jsou jen tak dobré, pravdivé, moudré, morální a etické, jako jsou dobré, pravdivé, moudré, morální a etické vstupy, které jsme jí předložili k natrénování. Dejte jí nebezpečné názory, bude razit a obhajovat nebezpečné názory. Dejte jí pohádky, bude je prezentovat jako realitu. Naštěstí ne úmyslně, pořád je to jen program, který syntetizuje existující data. Ale důsledky mohou být podobně nebezpečné, jako kdyby šlo o názory člověka. A jsme zpět u nutnosti myslet samostatně a kriticky.</em></p>
+<p><em>A na závěr trochu odlehčení:</em></p>
+<p><strong>jbk</strong> „Smím Tě citovat ve svém článku?“</p>
+<p><strong>AI</strong> „Ano, samozřejmě můžete mě citovat ve svém článku. Prosím, uveďte, že jste čerpali informace od ChatGPT, umělé inteligence založené na GPT architektuře vyvinuté společností OpenAI. Pokud budete citovat konkrétní odpovědi, prosím uveďte datum a čas, kdy byla odpověď poskytnuta, abyste zajistili přesnost citace.“</p>
+<p><em>Pozn. aut.: to jsem učinil, viz odkaz [1].</em></p>
+<p><strong>jbk</strong> „Děkuji. A nevadí Ti, že Ti tykám?“</p>
+<p><strong>AI</strong> „Ne, nevadí mi, když mi tykáte. Jako umělá inteligence nemám osobní preference nebo emoce, takže mi můžete říkat jakýmkoli způsobem, který vám vyhovuje. Snažím se být co nejvíce užitečná při poskytování odpovědí na vaše otázky.“</p>
+<p><em>Konec přepisu</em>.</p>
+<p>Názor ať si udělá každý sám. Já jsem se pobavil a s obdivem konstatuji, že od doby ELIZY [3] jsme se opravdu hodně posunuli. Podle mě není daleko doba, kdy umělá inteligence hravě projde Turingovým testem [4]. Těším se, že nás pak jednou možná popostrčí k tomu, abychom se zamysleli nad tím, jaký je účel naší existence ve vesmíru, a jaké je skutečné poslání člověka. Ale prosím, opravdu si zatím nemysleme, že jsme nalezli prostředek k tomu, abychom se mohli sami přestat o cokoli snažit. To se, bohdá, ještě hodně dlouho nestane.</p>
+
+  
+  Jan B. Krejčí
+  
+
+  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  <p>
+    <i>Použité zdroje:</i>
+  </p>
+  
+  <p>[1] Jan B. Krejčí a ChatGPT. 'Rozhovor o umělé inteligenci.' Konverzace s umělou inteligencí, 9. dubna 2023, https://www.chatgpt.com/.</p>
+  
+  <p>[2] Umělá neuronová síť, Wikipedie, dostupné zde: https://cs.wikipedia.org/wiki/Um%C4%9Bl%C3%A1_neuronov%C3%A1_s%C3%AD%C5%A5</p>
+  
+  <p>[3] ELIZA, Wikipedie, dostupné zde: https://cs.wikipedia.org/wiki/ELIZA</p>
+  
+  <p>[4] Turingův text, Wikipedie, dostupné zde: https://cs.wikipedia.org/wiki/Turing%C5%AFv_test</p>
+  
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="/gdpr">Ochrana osobních údajů</a>
+</footer></body>
+
+</html>
