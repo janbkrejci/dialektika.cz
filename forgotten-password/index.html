@@ -19,14 +19,6 @@
 <main x-cloak class="grid place-content-center h-full">
   
 
-
-<script>
-  // return back if already logged in
-  if (localStorage.pocketbase_auth) {
-    back()
-  }
-</script>
-
 <div x-cloak @keyup.escape.window="history.back()" x-data="forgottenPassword" @keydown.enter.prevent="next"
   class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
   <div class="p-6 space-y-4">
