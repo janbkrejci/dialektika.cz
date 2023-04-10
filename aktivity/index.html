@@ -114,7 +114,7 @@
   
   
 
-<div x-data="aktivity" x-show="user_id" x-effect="if (!user_id) {} else {window.history.back();}">
+<div x-data="aktivity" x-show="user_id" x-effect="console.log('effect');if (initialized && !user_id) {backIfNotLoggedIn();}">
    <!-- navigation -->
   <div class="flex grow justify-between">
     <a href="#state=hlasovani">Hlasování</a>

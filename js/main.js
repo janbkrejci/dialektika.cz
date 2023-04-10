@@ -17433,6 +17433,7 @@ ${content}</tr>
     comment: null,
     reOpenID: null,
     unfold: false,
+    initialized: false,
     renew() {
       this.fields = {};
       this.errors = {};
@@ -17462,6 +17463,7 @@ ${content}</tr>
     async init() {
       const self2 = this;
       this.subscribe = subscribe.bind(this);
+      window.addEventListener("pageshow", this.backIfNotLoggedIn.bind(this));
       await this.subscribe("votings", (x) => !!x, {
         postDelete(item) {
           if (item.id === self2.selectedID) {
@@ -17480,6 +17482,7 @@ ${content}</tr>
       }, false);
       this.renew();
       this.$focus.focus(this.firstInput());
+      this.initialized = true;
     },
     isElaborating() {
       return this.selectedItem.state === "elaborating";
