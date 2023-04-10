@@ -3,11 +3,11 @@
 
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
-<script src="/js/main.js" defer></script><title>Značky | Dialektika</title>
+<script src="/js/main.js" defer></script><title>Hlasování | Dialektika</title>
 <link rel="canonical" href="">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content="">
+<meta name="description" content=" Navržená témata Nahrávám... V tuto chvíli zde žádná navržená témata nejsou. Termín Předmět Propustit k diskusi? PRO PROTI Navrhnout téma ">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
@@ -108,51 +108,54 @@
     </div>
   </div>
 </header><main x-cloak>
-  <h1 class="flex justify-between items-center">
-    
-    Značky
-    
-    
-  </h1>
+  <h1>Hlasování</h1>
 
   <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
-
   
-  
-  <h3 class="title">Argumentační fauly
-    <a href="/tags/argumenta%C4%8Dn%C3%AD-fauly/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 2x</a>
-  </h3>
-  
-  <h3 class="title">Kritika
-    <a href="/tags/kritika/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 1x</a>
-  </h3>
-  
-  <h3 class="title">Myšlenky
-    <a href="/tags/my%C5%A1lenky/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 2x</a>
-  </h3>
-  
-  <h3 class="title">Naučné
-    <a href="/tags/nau%C4%8Dn%C3%A9/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 1x</a>
-  </h3>
-  
-  <h3 class="title">Pochvaly
-    <a href="/tags/pochvaly/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 1x</a>
-  </h3>
-  
-  <h3 class="title">Politika
-    <a href="/tags/politika/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 1x</a>
-  </h3>
-  
-  <h3 class="title">Politika a politici
-    <a href="/tags/politika-a-politici/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 4x</a>
-  </h3>
-  
-  <h3 class="title">Společnost
-    <a href="/tags/spole%C4%8Dnost/" class="text-sm text-gray-500 dark:text-gray-400">nalezeno 3x</a>
-  </h3>
   
 
-  </main><footer x-cloak class="print:hidden">
+<div x-data="hlasovani" x-show="user_id" x-effect="console.log('effect');if (!user_id) {backIfNotLoggedIn();}">
+
+  <h2>Navržená témata</h2>
+
+  <div x-show="!collections.votes" class="alert px-2 mb-8">
+    Nahrávám...
+  </div>
+  <div x-show="collections.votes && !suggestedItems().length" class="alert success px-2 mb-8">
+    V tuto chvíli zde žádná navržená témata nejsou.
+  </div>
+
+  <table x-show="suggestedItems().length" class="table-fixed">
+    <thead>
+      <tr>
+        <th class="w-32">Termín</th>
+        <th>Předmět</th>
+        <th class="text-center w-48">Propustit k diskusi?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template x-for="item in suggestedItems">
+        <tr :id="item.id" @click="showDetail(item.id)" x-data="{voting: votingFor(item)}">
+          <td x-text="utils.formatDate(voting.preselectionDeadline)"></td>
+          <td x-text="voting.subject" class="truncate"></td>
+          <td class="whitespace-nowrap">
+            <button :disabled="disabled" class="success w-20" @click.stop="vote(item, true)">PRO</button>
+            <button :disabled="disabled" class="error w-20" @click.stop="vote(item, false)">PROTI</button>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+
+  <button class="primary mt-8" @click="showDetail(null)">Navrhnout téma</button>
+
+
+
+  
+</div>
+
+
+</main><footer x-cloak class="print:hidden">
   
   <div class="sharethis-inline-share-buttons grow"></div>
   

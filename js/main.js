@@ -13416,16 +13416,20 @@ ${content}</tr>
   var BACKEND_SERVER = "https://dialektika.janbkrejci.repl.co";
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
-  async function subscribe(colName, filter = (x) => !!x, hooks = {}) {
+  async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}) {
     const self2 = this;
-    this.collections[colName] = import_lodash2.default.filter(await pb.collection(colName).getFullList(), (r2) => {
+    this.collections[colName] = import_lodash2.default.filter(await pb.collection(colName).getFullList(options2), (r2) => {
       if (hooks.preCreate)
         return filter(hooks.preCreate(r2));
       return filter(r2);
     });
-    pb.collection(colName).subscribe("*", (e2) => {
+    pb.collection(colName).subscribe("*", async (e2) => {
       let origRecord = null;
-      const newRecord = e2.record;
+      let newRecord = e2.record;
+      if (options2.expand) {
+        newRecord = await pb.collection(colName).getOne(e2.record.id, { expand: options2.expand });
+        console.log("newRec", newRecord);
+      }
       function tryAdd(rec) {
         let r2 = rec;
         if (hooks.preCreate)
@@ -17740,6 +17744,30 @@ ${content}</tr>
       if (first) {
         this.$focus.focus(document.getElementById(first));
       }
+    }
+  }));
+  module_default.data("hlasovani", () => ({
+    async init() {
+      this.subscribe = subscribe.bind(this);
+      window.addEventListener("pagehow", this.backIfNotLoggedIn.bind(this));
+      this.subscribe("votings");
+      this.subscribe("votes", (x) => {
+        return x.user === pb.authStore.baseModel?.id;
+      });
+      console.log("this", this);
+    },
+    suggestedItems() {
+      return Object.values(this.collections.votes || []).filter(
+        (i2) => !i2.isVote && !i2.voted
+      );
+    },
+    votingFor(vote) {
+      return [...Object.values(this.collections.votings || []).filter(
+        (i2) => i2.id == vote.voting
+      )][0];
+    },
+    async vote(item, vote) {
+      await pb.collection("votes").update(item.id, { vote });
     }
   }));
   module_default.start();
