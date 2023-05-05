@@ -45,14 +45,13 @@ Nezrušitelná ustanovení těchto stanov jsou ta, která nelze změnit ani hlas
       <a href="/stanoviska">Přijatá stanoviska</a>
       <a href="/blog">Blog</a>
       
-      <a x-show="user_id" href="/hlasovani">Hlasování</a>
+      <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
       <a x-show="user_id" href="/organizace">Organizace</a>
       <a x-show="user_id" href="/lide">Lidé</a>
       <a x-show="user_id" href="/ja">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a x-show="!user_id" href="/login">Přihlášení <span
-          aria-hidden="true">&rarr;</span></a>
+      <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
       <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
         <span aria-hidden="true">&rarr;</span></a>
     </div>
@@ -91,7 +90,7 @@ Nezrušitelná ustanovení těchto stanov jsou ta, která nelze změnit ani hlas
           </div>
           
           <div x-show="user_id" class="space-y-2 py-6">
-            <a href="/hlasovani"
+            <a href="/hlasovani-moje"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
             <a href="/organizace"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
@@ -110,12 +109,9 @@ Nezrušitelná ustanovení těchto stanov jsou ta, která nelze změnit ani hlas
       </div>
     </div>
   </div>
-</header><main x-cloak>
-  <h1>Stanovy</h1>
+</header><main x-cloak><h1>Stanovy</h1>
 
-  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
-  
-  <h2 id="čl-1-základní-ustanovení">Čl. 1: Základní ustanovení</h2>
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div><h2 id="čl-1-základní-ustanovení">Čl. 1: Základní ustanovení</h2>
 <ol>
 <li>
 <p>Název dobrovolného sdružení je Dialektika.</p>

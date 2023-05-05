@@ -7,7 +7,7 @@
 <link rel="canonical" href="">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content="">
+<meta name="description" content="&larr; Zpět Uzavřené hlasování Probíhající hlasování Téma v diskusi Zamítnuté téma Navržené téma Nové téma Předmět * Popis * Náhled (můžete použít MarkDown značky) Navrhovatel: Navrženo: Navrhovatel: Schváleno k diskusi: Původní znění Finální znění k hlasování Předmět * Popis * Náhled (můžete použít MarkDown značky) Uložit Navrhovatel: Zamítnuto: Navrhovatel: Hlasování zahájeno: Navrhovatel: Hlasování ukončeno: Hlasování o propuštění k diskusi Hlasování Hlasující Hlas Hodnota bez barvy znamená kontumační hlas. Pro: , Proti: Diskuse Ukončit diskusi a zahájit hlasování (termín ) Náhled (můžete použít MarkDown značky) Odeslat K tomuto tématu zatím žádná diskuse neproběhla.">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
@@ -42,14 +42,13 @@
       <a href="/stanoviska">Přijatá stanoviska</a>
       <a href="/blog">Blog</a>
       
-      <a x-show="user_id" href="/hlasovani">Hlasování</a>
+      <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
       <a x-show="user_id" href="/organizace">Organizace</a>
       <a x-show="user_id" href="/lide">Lidé</a>
       <a x-show="user_id" href="/ja">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <a x-show="!user_id" href="/login">Přihlášení <span
-          aria-hidden="true">&rarr;</span></a>
+      <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
       <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
         <span aria-hidden="true">&rarr;</span></a>
     </div>
@@ -88,7 +87,7 @@
           </div>
           
           <div x-show="user_id" class="space-y-2 py-6">
-            <a href="/hlasovani"
+            <a href="/hlasovani-moje"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
             <a href="/organizace"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
@@ -107,12 +106,291 @@
       </div>
     </div>
   </div>
-</header><main x-cloak>
-  <h1>Hlasování</h1>
+</header><main x-cloak><h1>Hlasování</h1>
 
-  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
-  
-  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div><div x-data="oneVoting" x-show="user_id && voting" x-effect="backIfNotLoggedIn"
+  @keyup.escape.window="window.history.back()" @keydown.enter.prevent="next">
+
+  <button class="primary" @click="window.history.back()">&larr; Zpět</button>
+
+  <h2 class="mt-4">
+    <span x-show="voting.state === 'closed'">Uzavřené hlasování</span>
+    <span x-show="voting.state === 'voting'">Probíhající hlasování</span>
+    <span x-show="voting.state === 'elaborating'">Téma v diskusi</span>
+    <span x-show="voting.state === 'rejected'">Zamítnuté téma</span>
+    <span x-show="voting.state === 'suggested'">Navržené téma</span>
+    <span x-show="voting.state === 'new'">Nové téma</span>
+  </h2>
+
+  <div class="alert error px-2 my-8" x-show="errors.submitError" x-text="errors.submitError"></div>
+
+  <!-- voting details - form or preview of individual fields -->
+  <div x-show="voting.state === 'new'" x-data="{preview: false}">
+    <!-- subject -->
+    <div>
+      <label for="subject">Předmět *</label>
+      <input id="subject" :class="{'input': true, 'error': errors.subjectError}" type="text" x-model="voting.subject"
+        @input="voting.subject = $el.value" @blur="validate($el.id)">
+      <div class="error-text" x-text="errors.subjectError"></div>
+    </div>
+    <!-- description -->
+    <div>
+      <label for="description">Popis *</label>
+      <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+        <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+        <div tabindex="-1"
+          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+        </div>
+        <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete použít
+          <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+            značky</a>)</span>
+      </label>
+      <textarea rows=10 id="description" x-show="!preview"
+        :class="{'input resize-none': true, 'error': errors.descriptionError, 'hidescrollbar': true}"
+        x-model="voting.description" @input="voting.description = $el.value" @keydown.enter.stop="() => {}"
+        @blur="validate($el.id)"></textarea>
+      <div class="error-text" x-text="errors.descriptionError"></div>
+      <div class="preview" x-html="utils.convertMD(voting.description || '')" x-show="preview"></div>
+    </div>
+  </div>
+
+  <div x-show="voting.state === 'suggested'">
+    <div class="border rounded-lg shadow-md px-8 py-0">
+      <div class="flex justify-between text-sm pt-2">
+        <span>Navrhovatel: <span x-text="userName(voting.author)"></span></span>
+        <span>Navrženo: <span x-text="utils.formatDate(voting.created)"></span></span>
+      </div>
+      <h1 class="pt-8" x-text="voting.subject"></h1>
+      <div class="preview" x-html="utils.convertMD(voting.description || '')"></div>
+    </div>
+  </div>
+
+  <div x-show="voting.state === 'elaborating'" x-data="{
+  preview: false, showOriginal: false}">
+    <div class="border rounded-lg shadow-md px-8 py-0">
+      <div class="flex justify-between text-sm pt-2">
+        <span>Navrhovatel: <span x-text="userName(voting.author)"></span></span>
+        <span>Schváleno k diskusi: <span x-text="utils.formatDate(voting.preselectionClosed)"></span></span>
+      </div>
+      <div class="flex justify-between items-baseline py-2">
+        <div x-show="showOriginal" class="text-2xl font-bold">Původní znění</div>
+        <div x-show="!showOriginal" class="text-2xl font-bold">Finální znění k hlasování</div>
+        <a href="" @click.prevent="showOriginal = !showOriginal"
+          x-text="showOriginal ? '...zobrazit verzi k hlasování' : '...zobrazit původní verzi'" class="text-sm"></a>
+      </div>
+      <div x-show="showOriginal || voting.author !== user_id">
+        <h1 class="pt-8" x-text="showOriginal ? voting.subject : voting.finalSubject"></h1>
+        <div class="preview"
+          x-html="utils.convertMD((showOriginal ? voting.description : voting.finalStatement) || '')">
+        </div>
+      </div>
+      <div x-show="!showOriginal && voting.author === user_id">
+        <!-- subject -->
+        <div>
+          <label for="finalSubject">Předmět *</label>
+          <input id="finalSubject" :class="{'input': true, 'error': errors.finalSubjectError}" type="text"
+            x-model="voting.finalSubject" @input="voting.finalSubject = $el.value" @blur="validate($el.id)">
+          <div class="error-text" x-text="errors.finalSubjectError"></div>
+        </div>
+        <!-- description -->
+        <div>
+          <label for="finalStatement">Popis *</label>
+          <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+            <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+            <div tabindex="-1"
+              class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+            </div>
+            <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete
+              použít
+              <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+                značky</a>)</span>
+          </label>
+          <textarea rows=10 id="finalStatement" style="resize: none" x-show="!preview"
+            :class="{'input': true, 'error': errors.finalStatementError, 'hidescrollbar': true}"
+            x-model="voting.finalStatement" @input="voting.finalStatement = $el.value" @keydown.enter.stop="() => {}"
+            @blur="validate($el.id)"></textarea>
+          <div class="error-text" x-text="errors.finalStatementError"></div>
+          <div class="preview" x-html="utils.convertMD(voting.finalStatement || '')" x-show="preview"></div>
+        </div>
+        <button :disabled="disabled" class="primary my-3" @click="saveStatement">Uložit</button>
+      </div>
+    </div>
+  </div>
+
+  <div x-show="voting.state === 'rejected'">
+    <div class="border rounded-lg shadow-md px-8 py-0">
+      <div class="flex justify-between text-sm pt-2">
+        <span>Navrhovatel: <span x-text="userName(voting.author)"></span></span>
+        <span>Zamítnuto: <span x-text="utils.formatDate(voting.preselectionClosed)"></span></span>
+      </div>
+      <h1 class="pt-8" x-text="voting.subject"></h1>
+      <div class="preview" x-html="utils.convertMD(voting.description || '')"></div>
+    </div>
+  </div>
+
+  <div x-show="voting.state === 'voting'">
+    <div class="border rounded-lg shadow-md px-8 py-0">
+      <div class="flex justify-between text-sm pt-2">
+        <span>Navrhovatel: <span x-text="userName(voting.author)"></span></span>
+        <span>Hlasování zahájeno: <span x-text="utils.formatDate(voting.votingStarted)"></span></span>
+      </div>
+      <h1 class="pt-8" x-text="voting.finalSubject"></h1>
+      <div class="preview" x-html="utils.convertMD(voting.finalStatement || '')"></div>
+    </div>
+  </div>
+
+  <div x-show="voting.state === 'closed'">
+    <div class="border rounded-lg shadow-md px-8 py-0">
+      <div class="flex justify-between text-sm pt-2">
+        <span>Navrhovatel: <span x-text="userName(voting.author)"></span></span>
+        <span>Hlasování ukončeno: <span x-text="utils.formatDate(voting.votingClosed)"></span></span>
+      </div>
+      <h1 class="pt-8" x-text="voting.finalSubject"></h1>
+      <div class="preview" x-html="utils.convertMD(voting.finalStatement || '')"></div>
+    </div>
+  </div>
+
+  <!-- votes -->
+  <div x-show="voting.state !== 'new'">
+    <h2 class="flex items-between items-center cursor-pointer" @click="unfoldVoting = !unfoldVoting;"
+      @x-effect="unfoldVoting = ['suggested', 'voting'].includes(voting.state);">
+      <span x-show="['suggested', 'rejected', 'elaborating'].includes(voting.state)">Hlasování o propuštění k
+        diskusi</span>
+      <span x-show="['voting', 'closed'].includes(voting.state)">Hlasování</span>
+      <span :class="{
+        'ml-auto h-5 w-5 shrink-0': true,
+        'rotate-0': !unfoldVoting,
+        'rotate-180': unfoldVoting
+      }">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </span>
+    </h2>
+
+    <table x-show="unfoldVoting" class="table-auto">
+      <thead>
+        <tr>
+          <th class="w-full">Hlasující</th>
+          <th class="flex justify-center items-center space-x-1">
+            <div>Hlas</div>
+            <div class="questionmark bg-gray-500 dark:bg-gray-400 w-6 h-6" data-tooltip-target="tooltip-default">
+            </div>
+          </th>
+          <div id="tooltip-default" role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 m-0 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Hodnota bez barvy znamená kontumační hlas.
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="vote in votesForVoting" :key="vote.id">
+          <tr>
+            <td x-text="vote.user === user_id ? 'Já' : userName(vote.user)"></td>
+            <td>
+              <div x-text="vote.voted ? utils.boolToString(vote.vote, 'PRO', 'PROTI', '') : ''" :class="{
+            'btn': true,
+            'success': vote.vote && vote.votedActively,
+            'error': !vote.vote && vote.votedActively
+            }">
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="text-right">Pro: <span x-text="positiveVotes"></span>, Proti:
+            <span x-text="negativeVotes"></span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- discussion -->
+  <div x-show="['elaborating', 'voting', 'closed'].includes(voting.state)">
+    <h2 class="flex items-between items-center cursor-pointer" @click="unfoldDiscussion = !unfoldDiscussion">
+      Diskuse
+      <span :class="{'ml-auto h-5 w-5 shrink-0': true, 'rotate-0': !unfoldDiscussion, 'rotate-180': unfoldDiscussion}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </span>
+    </h2>
+
+    <!-- comments -->
+    <div x-show="unfoldDiscussion">
+      <div class="mb-8" x-show="voting.author === user_id && voting.state === 'elaborating'">
+        <button class="primary" @click="startVoting">
+          Ukončit diskusi a zahájit hlasování
+        </button>
+        (termín <span x-text="utils.formatDate(utils.addWeek(voting.preselectionClosed))"></span>)
+      </div>
+      <div x-show="voting.state === 'elaborating'" class="flex flex-col space-y-2" x-data="{preview: false}">
+        <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
+          <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
+          <div tabindex="-1"
+            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+          </div>
+          <span tabindex="-1" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Náhled (můžete použít
+            <a tabindex="-1" target="_blank" href="https://daringfireball.net/projects/markdown/basics">MarkDown
+              značky</a>)</span>
+        </label>
+        <textarea placeholder="Sem napište svůj komentář..." x-show="!preview" rows="5"
+          class="input scrollbar-hide resize-none w-full" x-model="comment" @keydown.enter.stop="() => {}"
+          @input="comment = $el.value"></textarea>
+        <div class="preview" x-show="preview" x-html="utils.convertMD(comment || '')">
+        </div>
+        <button class="primary" @click="storeComment">Odeslat</button>
+      </div>
+      <div class="mt-8 w-full max-h-[380px] overflow-y-auto scrollbar-hide">
+        <div class="alert pb-8" x-show="comments.length === 0">K tomuto tématu
+          <span x-show="voting.state === 'elaborating'">zatím</span>
+          žádná diskuse neproběhla.
+        </div>
+        <template x-for="comment in sortedComments" :key="comment.id">
+          <div :id="comment.id" class="w-full flex flex-col px-4">
+            <div :class="{
+            'self-end items-end': comment.author === user_id,
+            'w-1/2 flex flex-col': true
+            }">
+              <span>
+                <span class="text-sm font-bold"
+                  x-text="comment.author === user_id ? 'Já' : userName(comment.author)"></span>
+                <span class="text-sm" x-text="utils.formatDateTime(comment.created)"></span>
+              </span>
+              <div :class="{
+            'text-sm preview bubble': true }" x-html="utils.convertMD(comment.text || '')">
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <!-- form actions -->
+  <button x-show="voting.state === 'rejected'" :disabled="disabled" class="primary" @click="reOpen(voting.id)">Znovu
+    otevřít</button>
+  <button x-show="voting.state === 'new'" :disabled="disabled" class="primary mt-8" @click="doCreateTopic">Navrhnout
+    téma</button>
+
+  <div x-show="['suggested', 'voting'].includes(voting.state) && !didIVote() && shouldIVode()">
+    <h2 x-show="voting.state === 'suggested'">Propustit k diskusi? <span class="text-sm"
+        x-text="'(Termín pro vyjádření: ' + utils.formatDate(utils.addWeek(voting.created)) + ')'"></span>
+    </h2>
+    <h2 x-show="voting.state === 'voting'">Váš hlas? (termín <span
+        x-text="utils.formatDate(utils.addWeek(voting.votingStarted))"></span>)
+    </h2>
+    <button :disabled="disabled" class="success w-20" @click="vote(true)">PRO</button>
+    <button :disabled="disabled" class="error w-20" @click="vote(false)">PROTI</button>
+  </div>
+
+</div>
 </main><footer x-cloak class="print:hidden">
   
   <div class="sharethis-inline-share-buttons grow"></div>

@@ -7,7 +7,7 @@
 <link rel="canonical" href="">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content="">
+<meta name="description" content=" ">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
@@ -107,12 +107,431 @@
       </div>
     </div>
   </div>
-</header><main x-cloak>
-  <h1>Výsledky hlasování</h1>
+</header><main x-cloak><h1>Výsledky hlasování</h1>
 
-  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
-  
-  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div><div class="flex grow justify-between">
+  <a href="hlasovani" ">&larr; Hlasování</a>
+</div>
+
+<div x-data=" myVotings" x-show="user_id" x-effect="backIfNotLoggedIn">
+  <h2>Uzavřená hlasování</h2>
+  <div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script>
+        function loadDataForfinishedVotings() {
+            return {
+                search: "",
+                pageNumber: 0,
+                size: 5,
+                total: "",
+                get myForData() {
+                    return this["finishedVotings"];
+                },
+                get filteredData() {
+                    const start = this.pageNumber * this.size,
+                        end = start + this.size;
+    
+                    if (this.search === "") {
+                        this.total = this.myForData.length;
+                        return this.myForData.slice(start, end);
+                    }
+    
+                    
+                    this.total = this.myForData.filter((item) => {
+                        return (item.finalSubject + item.finalStatement)
+                        .toLowerCase()
+                        .includes(this.search.toLowerCase());
+                }).length;
+    
+                
+                return this.myForData
+                    .filter((item) => {
+                        return (item.finalSubject + item.finalStatement)
+                    .toLowerCase()
+                    .includes(this.search.toLowerCase());
+            })
+                        .slice(start, end);
+        },
+    
+            
+            pages() {
+            return Array.from({
+                length: Math.ceil(this.total / this.size),
+            });
+        },
+    
+        
+        nextPage() {
+            this.pageNumber++;
+        },
+    
+        
+        prevPage() {
+            this.pageNumber--;
+        },
+    
+        
+        pageCount() {
+            return Math.ceil(this.total / this.size);
+        },
+    
+        
+        startResults() {
+            return this.pageNumber * this.size + 1;
+        },
+    
+        
+        endResults() {
+            let resultsOnPage = (this.pageNumber + 1) * this.size;
+    
+            if (resultsOnPage <= this.total) {
+                return resultsOnPage;
+            }
+    
+            return this.total;
+        },
+    
+        
+        viewPage(index) {
+            this.pageNumber = index;
+        },
+            };
+        }
+    </script>
+    <div>
+        <div x-data="loadDataForfinishedVotings()">
+    
+            <div x-show="!filteredData" class="alert px-2 mb-8">
+                Nahrávám...
+            </div>
+    
+            <input x-show="filteredData" x-ref="searchField" x-model="search" x-on:click="viewPage(0)"
+                placeholder="Hledat..." type="search" class="input mb-8" />
+    
+            <div class="mt-6 flex flex-wrap justify-between items-center text-sm leading-5">
+                <div x-show="filteredData && !filteredData.length" class="w-full sm:w-auto text-center sm:text-right"
+                    x-show="total > 0">
+                    Celkem záznamů: <span class="font-bold" x-text="total"></span>
+                </div>
+            </div>
+    
+            <table x-show="user_id && filteredData && filteredData.length" class="table-fixed">
+                <thead>
+                    <tr>
+                        
+                        <th class="w-32 text-right">Uzavřeno</th>
+                        
+                        <th class="truncate">Předmět</th>
+                        
+                        <th class="whitespace-nowrap w-48 text-center">Výsledek</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="item in filteredData">
+                        <tr :id="item.id" @click.stop="location.href=&#39;hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.votingClosed)" ></td><td class="truncate"  x-text="item.finalSubject" ></td><td class="whitespace-nowrap w-48 text-center" ><div x-show='item.votingResult' class='btn mx-auto success w-40'>SCHVÁLENO</div><div x-show='!item.votingResult' class='btn mx-auto error w-40'>ZAMÍTNUTO</div></td></tr>
+                    </template>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <div class="w-full md:w-1/2 mx-auto py-6 flex justify-between items-center"
+                                x-show="pageCount() > 1">
+                                
+                                <button x-on:click="viewPage(0)" :disabled="pageNumber==0"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber==0 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                                        <line x1="5" y1="19" x2="5" y2="5"></line>
+                                    </svg>
+                                </button>
+    
+                                
+                                <button x-on:click="prevPage" :disabled="pageNumber==0"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber==0 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+    
+                                
+                                <template x-for="(page,index) in pages()" :key="index">
+                                    <button class="px-3 py-2 rounded"
+                                        :class="{ 'bg-gray-500 dark:bg-gray-400 text-white font-bold' : index === pageNumber}"
+                                        type="button" x-on:click="viewPage(index)">
+                                        <span x-text="index+1"></span>
+                                    </button>
+                                </template>
+    
+                                
+                                <button x-on:click="nextPage" :disabled="pageNumber >= pageCount() -1"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber >= pageCount() -1 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+    
+                                
+                                <button x-on:click="viewPage(Math.ceil(total/size)-1)"
+                                    :disabled="pageNumber >= pageCount() -1"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber >= pageCount() -1 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                                        <line x1="19" y1="5" x2="19" y2="19"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mt-6 flex flex-wrap justify-between items-center text-sm leading-5">
+                                <div class="w-full sm:w-auto text-center sm:text-left" x-show="pageCount() > 1">
+                                    Stránka <span x-text="pageNumber+1"> </span> z
+                                    <span x-text="pageCount()"></span> | Záznamy od
+                                    <span x-text="startResults()"></span> do
+                                    <span x-text="endResults()"></span>
+                                </div>
+    
+                                <div class="w-full sm:w-auto text-center sm:text-right" x-show="total > 0">
+                                    Celkem záznamů: <span class="font-bold" x-text="total"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+        </div>
+    </div>
+  </div>
+
+  <h2>Zamítnutá témata</h2>
+  <div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script>
+        function loadDataForrejectedSuggestions() {
+            return {
+                search: "",
+                pageNumber: 0,
+                size: 5,
+                total: "",
+                get myForData() {
+                    return this["rejectedSuggestions"];
+                },
+                get filteredData() {
+                    const start = this.pageNumber * this.size,
+                        end = start + this.size;
+    
+                    if (this.search === "") {
+                        this.total = this.myForData.length;
+                        return this.myForData.slice(start, end);
+                    }
+    
+                    
+                    this.total = this.myForData.filter((item) => {
+                        return (item.subject + item.description)
+                        .toLowerCase()
+                        .includes(this.search.toLowerCase());
+                }).length;
+    
+                
+                return this.myForData
+                    .filter((item) => {
+                        return (item.subject + item.description)
+                    .toLowerCase()
+                    .includes(this.search.toLowerCase());
+            })
+                        .slice(start, end);
+        },
+    
+            
+            pages() {
+            return Array.from({
+                length: Math.ceil(this.total / this.size),
+            });
+        },
+    
+        
+        nextPage() {
+            this.pageNumber++;
+        },
+    
+        
+        prevPage() {
+            this.pageNumber--;
+        },
+    
+        
+        pageCount() {
+            return Math.ceil(this.total / this.size);
+        },
+    
+        
+        startResults() {
+            return this.pageNumber * this.size + 1;
+        },
+    
+        
+        endResults() {
+            let resultsOnPage = (this.pageNumber + 1) * this.size;
+    
+            if (resultsOnPage <= this.total) {
+                return resultsOnPage;
+            }
+    
+            return this.total;
+        },
+    
+        
+        viewPage(index) {
+            this.pageNumber = index;
+        },
+            };
+        }
+    </script>
+    <div>
+        <div x-data="loadDataForrejectedSuggestions()">
+    
+            <div x-show="!filteredData" class="alert px-2 mb-8">
+                Nahrávám...
+            </div>
+    
+            <input x-show="filteredData" x-ref="searchField" x-model="search" x-on:click="viewPage(0)"
+                placeholder="Hledat..." type="search" class="input mb-8" />
+    
+            <div class="mt-6 flex flex-wrap justify-between items-center text-sm leading-5">
+                <div x-show="filteredData && !filteredData.length" class="w-full sm:w-auto text-center sm:text-right"
+                    x-show="total > 0">
+                    Celkem záznamů: <span class="font-bold" x-text="total"></span>
+                </div>
+            </div>
+    
+            <table x-show="user_id && filteredData && filteredData.length" class="table-fixed">
+                <thead>
+                    <tr>
+                        
+                        <th class="w-32 text-right">Zamítnuto</th>
+                        
+                        <th class="truncate">Předmět</th>
+                        
+                        <th class="whitespace-nowrap w-48 text-center">Akce</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="item in filteredData">
+                        <tr :id="item.id" @click.stop="location.href=&#39;hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.preselectionClosed)" ></td><td class="truncate"  x-text="item.subject" ></td><td class="whitespace-nowrap w-48 text-center" ><button :disabled='disabled' class='primary w-40' @click.stop='reOpen(item.id)'>Znovu otevřít</button></td></tr>
+                    </template>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <div class="w-full md:w-1/2 mx-auto py-6 flex justify-between items-center"
+                                x-show="pageCount() > 1">
+                                
+                                <button x-on:click="viewPage(0)" :disabled="pageNumber==0"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber==0 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                                        <line x1="5" y1="19" x2="5" y2="5"></line>
+                                    </svg>
+                                </button>
+    
+                                
+                                <button x-on:click="prevPage" :disabled="pageNumber==0"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber==0 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+    
+                                
+                                <template x-for="(page,index) in pages()" :key="index">
+                                    <button class="px-3 py-2 rounded"
+                                        :class="{ 'bg-gray-500 dark:bg-gray-400 text-white font-bold' : index === pageNumber}"
+                                        type="button" x-on:click="viewPage(index)">
+                                        <span x-text="index+1"></span>
+                                    </button>
+                                </template>
+    
+                                
+                                <button x-on:click="nextPage" :disabled="pageNumber >= pageCount() -1"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber >= pageCount() -1 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+    
+                                
+                                <button x-on:click="viewPage(Math.ceil(total/size)-1)"
+                                    :disabled="pageNumber >= pageCount() -1"
+                                    :class="{ 'disabled cursor-not-allowed' : pageNumber >= pageCount() -1 }">
+                                    <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                                        <line x1="19" y1="5" x2="19" y2="19"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mt-6 flex flex-wrap justify-between items-center text-sm leading-5">
+                                <div class="w-full sm:w-auto text-center sm:text-left" x-show="pageCount() > 1">
+                                    Stránka <span x-text="pageNumber+1"> </span> z
+                                    <span x-text="pageCount()"></span> | Záznamy od
+                                    <span x-text="startResults()"></span> do
+                                    <span x-text="endResults()"></span>
+                                </div>
+    
+                                <div class="w-full sm:w-auto text-center sm:text-right" x-show="total > 0">
+                                    Celkem záznamů: <span class="font-bold" x-text="total"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+        </div>
+    </div>
+  </div>
+</div>
 </main><footer x-cloak class="print:hidden">
   
   <div class="sharethis-inline-share-buttons grow"></div>

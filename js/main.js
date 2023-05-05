@@ -5698,14 +5698,14 @@
           if (setPrototypeOf) {
             setPrototypeOf(set3, null);
           }
-          var l3 = array.length;
-          while (l3--) {
-            var element = array[l3];
+          var l4 = array.length;
+          while (l4--) {
+            var element = array[l4];
             if (typeof element === "string") {
               var lcElement = transformCaseFunc(element);
               if (lcElement !== element) {
                 if (!isFrozen(array)) {
-                  array[l3] = lcElement;
+                  array[l4] = lcElement;
                 }
                 element = lcElement;
               }
@@ -6258,7 +6258,7 @@
             var attr;
             var value;
             var lcName;
-            var l3;
+            var l4;
             _executeHook("beforeSanitizeAttributes", currentNode, null);
             var attributes = currentNode.attributes;
             if (!attributes) {
@@ -6270,9 +6270,9 @@
               keepAttr: true,
               allowedAttributes: ALLOWED_ATTR
             };
-            l3 = attributes.length;
-            while (l3--) {
-              attr = attributes[l3];
+            l4 = attributes.length;
+            while (l4--) {
+              attr = attributes[l4];
               var _attr = attr, name = _attr.name, namespaceURI = _attr.namespaceURI;
               value = name === "value" ? attr.value : stringTrim(attr.value);
               lcName = transformCaseFunc(name);
@@ -8200,7 +8200,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     const method = Array.prototype[key];
     arrayInstrumentations[key] = function(...args) {
       const arr = toRaw(this);
-      for (let i2 = 0, l3 = this.length; i2 < l3; i2++) {
+      for (let i2 = 0, l4 = this.length; i2 < l4; i2++) {
         track(arr, "get", i2 + "");
       }
       const res = method.apply(arr, args);
@@ -10276,7 +10276,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   var equalStrings = (val1, val2, msg) => val1 === val2 ? null : msg;
 
   // ns-hugo:/home/runner/dialektika/frontend/assets/js/utils.js
-  var DOMPurify = __toESM(require_purify());
+  var import_dompurify = __toESM(require_purify());
 
   // node_modules/marked/lib/marked.esm.js
   function getDefaults() {
@@ -10362,8 +10362,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var nonWordAndColonTest = /[^\w:]/g;
   var originIndependentUrl = /^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;
-  function cleanUrl(sanitize2, base, href) {
-    if (sanitize2) {
+  function cleanUrl(sanitize, base, href) {
+    if (sanitize) {
       let prot;
       try {
         prot = decodeURIComponent(unescape(href)).replace(nonWordAndColonTest, "").toLowerCase();
@@ -10444,13 +10444,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return cells;
   }
   function rtrim(str, c3, invert) {
-    const l3 = str.length;
-    if (l3 === 0) {
+    const l4 = str.length;
+    if (l4 === 0) {
       return "";
     }
     let suffLen = 0;
-    while (suffLen < l3) {
-      const currChar = str.charAt(l3 - suffLen - 1);
+    while (suffLen < l4) {
+      const currChar = str.charAt(l4 - suffLen - 1);
       if (currChar === c3 && !invert) {
         suffLen++;
       } else if (currChar !== c3 && invert) {
@@ -10459,15 +10459,15 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         break;
       }
     }
-    return str.slice(0, l3 - suffLen);
+    return str.slice(0, l4 - suffLen);
   }
   function findClosingBracket(str, b2) {
     if (str.indexOf(b2[1]) === -1) {
       return -1;
     }
-    const l3 = str.length;
+    const l4 = str.length;
     let level = 0, i2 = 0;
-    for (; i2 < l3; i2++) {
+    for (; i2 < l4; i2++) {
       if (str[i2] === "\\") {
         i2++;
       } else if (str[i2] === b2[0]) {
@@ -10506,7 +10506,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     const text = cap[1].replace(/\\([\[\]])/g, "$1");
     if (cap[0].charAt(0) !== "!") {
       lexer2.state.inLink = true;
-      const token2 = {
+      const token = {
         type: "link",
         raw: raw2,
         href,
@@ -10515,7 +10515,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         tokens: lexer2.inlineTokens(text)
       };
       lexer2.state.inLink = false;
-      return token2;
+      return token;
     }
     return {
       type: "image",
@@ -10751,8 +10751,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         list.items[list.items.length - 1].raw = raw2.trimRight();
         list.items[list.items.length - 1].text = itemContents.trimRight();
         list.raw = list.raw.trimRight();
-        const l3 = list.items.length;
-        for (i2 = 0; i2 < l3; i2++) {
+        const l4 = list.items.length;
+        for (i2 = 0; i2 < l4; i2++) {
           this.lexer.state.top = false;
           list.items[i2].tokens = this.lexer.blockTokens(list.items[i2].text, []);
           if (!list.loose) {
@@ -10762,7 +10762,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           }
         }
         if (list.loose) {
-          for (i2 = 0; i2 < l3; i2++) {
+          for (i2 = 0; i2 < l4; i2++) {
             list.items[i2].loose = true;
           }
         }
@@ -10772,7 +10772,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     html(src) {
       const cap = this.rules.block.html.exec(src);
       if (cap) {
-        const token2 = {
+        const token = {
           type: "html",
           raw: cap[0],
           pre: !this.options.sanitizer && (cap[1] === "pre" || cap[1] === "script" || cap[1] === "style"),
@@ -10780,11 +10780,11 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         };
         if (this.options.sanitize) {
           const text = this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]);
-          token2.type = "paragraph";
-          token2.text = text;
-          token2.tokens = this.lexer.inline(text);
+          token.type = "paragraph";
+          token.text = text;
+          token.tokens = this.lexer.inline(text);
         }
-        return token2;
+        return token;
       }
     }
     def(src) {
@@ -10815,9 +10815,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         };
         if (item.header.length === item.align.length) {
           item.raw = cap[0];
-          let l3 = item.align.length;
+          let l4 = item.align.length;
           let i2, j, k, row;
-          for (i2 = 0; i2 < l3; i2++) {
+          for (i2 = 0; i2 < l4; i2++) {
             if (/^ *-+: *$/.test(item.align[i2])) {
               item.align[i2] = "right";
             } else if (/^ *:-+: *$/.test(item.align[i2])) {
@@ -10828,18 +10828,18 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
               item.align[i2] = null;
             }
           }
-          l3 = item.rows.length;
-          for (i2 = 0; i2 < l3; i2++) {
+          l4 = item.rows.length;
+          for (i2 = 0; i2 < l4; i2++) {
             item.rows[i2] = splitCells(item.rows[i2], item.header.length).map((c3) => {
               return { text: c3 };
             });
           }
-          l3 = item.header.length;
-          for (j = 0; j < l3; j++) {
+          l4 = item.header.length;
+          for (j = 0; j < l4; j++) {
             item.header[j].tokens = this.lexer.inline(item.header[j].text);
           }
-          l3 = item.rows.length;
-          for (j = 0; j < l3; j++) {
+          l4 = item.rows.length;
+          for (j = 0; j < l4; j++) {
             row = item.rows[j];
             for (k = 0; k < row.length; k++) {
               row[k].tokens = this.lexer.inline(row[k].text);
@@ -11268,8 +11268,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   function mangle(text) {
     let out = "", i2, ch;
-    const l3 = text.length;
-    for (i2 = 0; i2 < l3; i2++) {
+    const l4 = text.length;
+    for (i2 = 0; i2 < l4; i2++) {
       ch = text.charCodeAt(i2);
       if (Math.random() > 0.5) {
         ch = "x" + ch.toString(16);
@@ -11341,92 +11341,92 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           return leading + "    ".repeat(tabs.length);
         });
       }
-      let token2, lastToken, cutSrc, lastParagraphClipped;
+      let token, lastToken, cutSrc, lastParagraphClipped;
       while (src) {
         if (this.options.extensions && this.options.extensions.block && this.options.extensions.block.some((extTokenizer) => {
-          if (token2 = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token2.raw.length);
-            tokens.push(token2);
+          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+            src = src.substring(token.raw.length);
+            tokens.push(token);
             return true;
           }
           return false;
         })) {
           continue;
         }
-        if (token2 = this.tokenizer.space(src)) {
-          src = src.substring(token2.raw.length);
-          if (token2.raw.length === 1 && tokens.length > 0) {
+        if (token = this.tokenizer.space(src)) {
+          src = src.substring(token.raw.length);
+          if (token.raw.length === 1 && tokens.length > 0) {
             tokens[tokens.length - 1].raw += "\n";
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
-        if (token2 = this.tokenizer.code(src)) {
-          src = src.substring(token2.raw.length);
+        if (token = this.tokenizer.code(src)) {
+          src = src.substring(token.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
-            lastToken.raw += "\n" + token2.raw;
-            lastToken.text += "\n" + token2.text;
+            lastToken.raw += "\n" + token.raw;
+            lastToken.text += "\n" + token.text;
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
-        if (token2 = this.tokenizer.fences(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.fences(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.heading(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.heading(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.hr(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.hr(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.blockquote(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.blockquote(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.list(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.list(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.html(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.html(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.def(src)) {
-          src = src.substring(token2.raw.length);
+        if (token = this.tokenizer.def(src)) {
+          src = src.substring(token.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
-            lastToken.raw += "\n" + token2.raw;
-            lastToken.text += "\n" + token2.raw;
+            lastToken.raw += "\n" + token.raw;
+            lastToken.text += "\n" + token.raw;
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-          } else if (!this.tokens.links[token2.tag]) {
-            this.tokens.links[token2.tag] = {
-              href: token2.href,
-              title: token2.title
+          } else if (!this.tokens.links[token.tag]) {
+            this.tokens.links[token.tag] = {
+              href: token.href,
+              title: token.title
             };
           }
           continue;
         }
-        if (token2 = this.tokenizer.table(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.table(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.lheading(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.lheading(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
         cutSrc = src;
@@ -11444,30 +11444,30 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             cutSrc = src.substring(0, startIndex + 1);
           }
         }
-        if (this.state.top && (token2 = this.tokenizer.paragraph(cutSrc))) {
+        if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
           lastToken = tokens[tokens.length - 1];
           if (lastParagraphClipped && lastToken.type === "paragraph") {
-            lastToken.raw += "\n" + token2.raw;
-            lastToken.text += "\n" + token2.text;
+            lastToken.raw += "\n" + token.raw;
+            lastToken.text += "\n" + token.text;
             this.inlineQueue.pop();
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           lastParagraphClipped = cutSrc.length !== src.length;
-          src = src.substring(token2.raw.length);
+          src = src.substring(token.raw.length);
           continue;
         }
-        if (token2 = this.tokenizer.text(src)) {
-          src = src.substring(token2.raw.length);
+        if (token = this.tokenizer.text(src)) {
+          src = src.substring(token.raw.length);
           lastToken = tokens[tokens.length - 1];
           if (lastToken && lastToken.type === "text") {
-            lastToken.raw += "\n" + token2.raw;
-            lastToken.text += "\n" + token2.text;
+            lastToken.raw += "\n" + token.raw;
+            lastToken.text += "\n" + token.text;
             this.inlineQueue.pop();
             this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
@@ -11489,7 +11489,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       return tokens;
     }
     inlineTokens(src, tokens = []) {
-      let token2, lastToken, cutSrc;
+      let token, lastToken, cutSrc;
       let maskedSrc = src;
       let match;
       let keepPrevChar, prevChar;
@@ -11516,75 +11516,75 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
         keepPrevChar = false;
         if (this.options.extensions && this.options.extensions.inline && this.options.extensions.inline.some((extTokenizer) => {
-          if (token2 = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token2.raw.length);
-            tokens.push(token2);
+          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+            src = src.substring(token.raw.length);
+            tokens.push(token);
             return true;
           }
           return false;
         })) {
           continue;
         }
-        if (token2 = this.tokenizer.escape(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.escape(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.tag(src)) {
-          src = src.substring(token2.raw.length);
+        if (token = this.tokenizer.tag(src)) {
+          src = src.substring(token.raw.length);
           lastToken = tokens[tokens.length - 1];
-          if (lastToken && token2.type === "text" && lastToken.type === "text") {
-            lastToken.raw += token2.raw;
-            lastToken.text += token2.text;
+          if (lastToken && token.type === "text" && lastToken.type === "text") {
+            lastToken.raw += token.raw;
+            lastToken.text += token.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
-        if (token2 = this.tokenizer.link(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.link(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.reflink(src, this.tokens.links)) {
-          src = src.substring(token2.raw.length);
+        if (token = this.tokenizer.reflink(src, this.tokens.links)) {
+          src = src.substring(token.raw.length);
           lastToken = tokens[tokens.length - 1];
-          if (lastToken && token2.type === "text" && lastToken.type === "text") {
-            lastToken.raw += token2.raw;
-            lastToken.text += token2.text;
+          if (lastToken && token.type === "text" && lastToken.type === "text") {
+            lastToken.raw += token.raw;
+            lastToken.text += token.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
-        if (token2 = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.codespan(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.codespan(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.br(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.br(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.del(src)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.del(src)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (token2 = this.tokenizer.autolink(src, mangle)) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (token = this.tokenizer.autolink(src, mangle)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
-        if (!this.state.inLink && (token2 = this.tokenizer.url(src, mangle))) {
-          src = src.substring(token2.raw.length);
-          tokens.push(token2);
+        if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
           continue;
         }
         cutSrc = src;
@@ -11602,18 +11602,18 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             cutSrc = src.substring(0, startIndex + 1);
           }
         }
-        if (token2 = this.tokenizer.inlineText(cutSrc, smartypants)) {
-          src = src.substring(token2.raw.length);
-          if (token2.raw.slice(-1) !== "_") {
-            prevChar = token2.raw.slice(-1);
+        if (token = this.tokenizer.inlineText(cutSrc, smartypants)) {
+          src = src.substring(token.raw.length);
+          if (token.raw.slice(-1) !== "_") {
+            prevChar = token.raw.slice(-1);
           }
           keepPrevChar = true;
           lastToken = tokens[tokens.length - 1];
           if (lastToken && lastToken.type === "text") {
-            lastToken.raw += token2.raw;
-            lastToken.text += token2.text;
+            lastToken.raw += token.raw;
+            lastToken.text += token.text;
           } else {
-            tokens.push(token2);
+            tokens.push(token);
           }
           continue;
         }
@@ -11818,18 +11818,18 @@ ${content}</tr>
       return parser2.parseInline(tokens);
     }
     parse(tokens, top2 = true) {
-      let out = "", i2, j, k, l22, l3, row, cell, header, body, token2, ordered, start3, loose, itemBody, item, checked, task, checkbox, ret;
+      let out = "", i2, j, k, l22, l32, row, cell, header, body, token, ordered, start3, loose, itemBody, item, checked, task, checkbox, ret;
       const l4 = tokens.length;
       for (i2 = 0; i2 < l4; i2++) {
-        token2 = tokens[i2];
-        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token2.type]) {
-          ret = this.options.extensions.renderers[token2.type].call({ parser: this }, token2);
-          if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(token2.type)) {
+        token = tokens[i2];
+        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+          ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
+          if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(token.type)) {
             out += ret || "";
             continue;
           }
         }
-        switch (token2.type) {
+        switch (token.type) {
           case "space": {
             continue;
           }
@@ -11839,42 +11839,42 @@ ${content}</tr>
           }
           case "heading": {
             out += this.renderer.heading(
-              this.parseInline(token2.tokens),
-              token2.depth,
-              unescape(this.parseInline(token2.tokens, this.textRenderer)),
+              this.parseInline(token.tokens),
+              token.depth,
+              unescape(this.parseInline(token.tokens, this.textRenderer)),
               this.slugger
             );
             continue;
           }
           case "code": {
             out += this.renderer.code(
-              token2.text,
-              token2.lang,
-              token2.escaped
+              token.text,
+              token.lang,
+              token.escaped
             );
             continue;
           }
           case "table": {
             header = "";
             cell = "";
-            l22 = token2.header.length;
+            l22 = token.header.length;
             for (j = 0; j < l22; j++) {
               cell += this.renderer.tablecell(
-                this.parseInline(token2.header[j].tokens),
-                { header: true, align: token2.align[j] }
+                this.parseInline(token.header[j].tokens),
+                { header: true, align: token.align[j] }
               );
             }
             header += this.renderer.tablerow(cell);
             body = "";
-            l22 = token2.rows.length;
+            l22 = token.rows.length;
             for (j = 0; j < l22; j++) {
-              row = token2.rows[j];
+              row = token.rows[j];
               cell = "";
-              l3 = row.length;
-              for (k = 0; k < l3; k++) {
+              l32 = row.length;
+              for (k = 0; k < l32; k++) {
                 cell += this.renderer.tablecell(
                   this.parseInline(row[k].tokens),
-                  { header: false, align: token2.align[k] }
+                  { header: false, align: token.align[k] }
                 );
               }
               body += this.renderer.tablerow(cell);
@@ -11883,18 +11883,18 @@ ${content}</tr>
             continue;
           }
           case "blockquote": {
-            body = this.parse(token2.tokens);
+            body = this.parse(token.tokens);
             out += this.renderer.blockquote(body);
             continue;
           }
           case "list": {
-            ordered = token2.ordered;
-            start3 = token2.start;
-            loose = token2.loose;
-            l22 = token2.items.length;
+            ordered = token.ordered;
+            start3 = token.start;
+            loose = token.loose;
+            l22 = token.items.length;
             body = "";
             for (j = 0; j < l22; j++) {
-              item = token2.items[j];
+              item = token.items[j];
               checked = item.checked;
               task = item.task;
               itemBody = "";
@@ -11923,24 +11923,24 @@ ${content}</tr>
             continue;
           }
           case "html": {
-            out += this.renderer.html(token2.text);
+            out += this.renderer.html(token.text);
             continue;
           }
           case "paragraph": {
-            out += this.renderer.paragraph(this.parseInline(token2.tokens));
+            out += this.renderer.paragraph(this.parseInline(token.tokens));
             continue;
           }
           case "text": {
-            body = token2.tokens ? this.parseInline(token2.tokens) : token2.text;
+            body = token.tokens ? this.parseInline(token.tokens) : token.text;
             while (i2 + 1 < l4 && tokens[i2 + 1].type === "text") {
-              token2 = tokens[++i2];
-              body += "\n" + (token2.tokens ? this.parseInline(token2.tokens) : token2.text);
+              token = tokens[++i2];
+              body += "\n" + (token.tokens ? this.parseInline(token.tokens) : token.text);
             }
             out += top2 ? this.renderer.paragraph(body) : body;
             continue;
           }
           default: {
-            const errMsg = 'Token with "' + token2.type + '" type was not found.';
+            const errMsg = 'Token with "' + token.type + '" type was not found.';
             if (this.options.silent) {
               console.error(errMsg);
               return;
@@ -11954,44 +11954,44 @@ ${content}</tr>
     }
     parseInline(tokens, renderer) {
       renderer = renderer || this.renderer;
-      let out = "", i2, token2, ret;
-      const l3 = tokens.length;
-      for (i2 = 0; i2 < l3; i2++) {
-        token2 = tokens[i2];
-        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token2.type]) {
-          ret = this.options.extensions.renderers[token2.type].call({ parser: this }, token2);
-          if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token2.type)) {
+      let out = "", i2, token, ret;
+      const l4 = tokens.length;
+      for (i2 = 0; i2 < l4; i2++) {
+        token = tokens[i2];
+        if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+          ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
+          if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token.type)) {
             out += ret || "";
             continue;
           }
         }
-        switch (token2.type) {
+        switch (token.type) {
           case "escape": {
-            out += renderer.text(token2.text);
+            out += renderer.text(token.text);
             break;
           }
           case "html": {
-            out += renderer.html(token2.text);
+            out += renderer.html(token.text);
             break;
           }
           case "link": {
-            out += renderer.link(token2.href, token2.title, this.parseInline(token2.tokens, renderer));
+            out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
             break;
           }
           case "image": {
-            out += renderer.image(token2.href, token2.title, token2.text);
+            out += renderer.image(token.href, token.title, token.text);
             break;
           }
           case "strong": {
-            out += renderer.strong(this.parseInline(token2.tokens, renderer));
+            out += renderer.strong(this.parseInline(token.tokens, renderer));
             break;
           }
           case "em": {
-            out += renderer.em(this.parseInline(token2.tokens, renderer));
+            out += renderer.em(this.parseInline(token.tokens, renderer));
             break;
           }
           case "codespan": {
-            out += renderer.codespan(token2.text);
+            out += renderer.codespan(token.text);
             break;
           }
           case "br": {
@@ -11999,15 +11999,15 @@ ${content}</tr>
             break;
           }
           case "del": {
-            out += renderer.del(this.parseInline(token2.tokens, renderer));
+            out += renderer.del(this.parseInline(token.tokens, renderer));
             break;
           }
           case "text": {
-            out += renderer.text(token2.text);
+            out += renderer.text(token.text);
             break;
           }
           default: {
-            const errMsg = 'Token with "' + token2.type + '" type was not found.';
+            const errMsg = 'Token with "' + token.type + '" type was not found.';
             if (this.options.silent) {
               console.error(errMsg);
               return;
@@ -12114,17 +12114,17 @@ ${content}</tr>
         if (!tokens.length)
           return done();
         let pending = 0;
-        marked.walkTokens(tokens, function(token2) {
-          if (token2.type === "code") {
+        marked.walkTokens(tokens, function(token) {
+          if (token.type === "code") {
             pending++;
             setTimeout(() => {
-              highlight(token2.text, token2.lang, function(err, code) {
+              highlight(token.text, token.lang, function(err, code) {
                 if (err) {
                   return done(err);
                 }
-                if (code != null && code !== token2.text) {
-                  token2.text = code;
-                  token2.escaped = true;
+                if (code != null && code !== token.text) {
+                  token.text = code;
+                  token.escaped = true;
                 }
                 pending--;
                 if (pending === 0) {
@@ -12281,11 +12281,11 @@ ${content}</tr>
       }
       if (pack.walkTokens) {
         const walkTokens2 = marked.defaults.walkTokens;
-        opts.walkTokens = function(token2) {
+        opts.walkTokens = function(token) {
           let values = [];
-          values.push(pack.walkTokens.call(this, token2));
+          values.push(pack.walkTokens.call(this, token));
           if (walkTokens2) {
-            values = values.concat(walkTokens2.call(this, token2));
+            values = values.concat(walkTokens2.call(this, token));
           }
           return values;
         };
@@ -12295,14 +12295,14 @@ ${content}</tr>
   };
   marked.walkTokens = function(tokens, callback) {
     let values = [];
-    for (const token2 of tokens) {
-      values = values.concat(callback.call(marked, token2));
-      switch (token2.type) {
+    for (const token of tokens) {
+      values = values.concat(callback.call(marked, token));
+      switch (token.type) {
         case "table": {
-          for (const cell of token2.header) {
+          for (const cell of token.header) {
             values = values.concat(marked.walkTokens(cell.tokens, callback));
           }
-          for (const row of token2.rows) {
+          for (const row of token.rows) {
             for (const cell of row) {
               values = values.concat(marked.walkTokens(cell.tokens, callback));
             }
@@ -12310,16 +12310,16 @@ ${content}</tr>
           break;
         }
         case "list": {
-          values = values.concat(marked.walkTokens(token2.items, callback));
+          values = values.concat(marked.walkTokens(token.items, callback));
           break;
         }
         default: {
-          if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token2.type]) {
-            marked.defaults.extensions.childTokens[token2.type].forEach(function(childTokens) {
-              values = values.concat(marked.walkTokens(token2[childTokens], callback));
+          if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token.type]) {
+            marked.defaults.extensions.childTokens[token.type].forEach(function(childTokens) {
+              values = values.concat(marked.walkTokens(token[childTokens], callback));
             });
-          } else if (token2.tokens) {
-            values = values.concat(marked.walkTokens(token2.tokens, callback));
+          } else if (token.tokens) {
+            values = values.concat(marked.walkTokens(token.tokens, callback));
           }
         }
       }
@@ -12366,14 +12366,16 @@ ${content}</tr>
       return d2;
     },
     convertMD(s2) {
-      return DOMPurify.sanitize(marked.parse(s2));
+      return import_dompurify.default.sanitize(marked.parse(s2));
     },
     userName(id) {
       if (!id)
-        return "...";
-      const u2 = import_lodash.default.find(this.collections.users, (usr) => usr.id === id);
-      const fullName = [u2?.firstName, u2?.lastName].join(" ").trim();
-      return fullName || u2?.username || "Anonym";
+        return "";
+      const u2 = this.collections.users.find((u3) => u3.id === id);
+      if (!u2)
+        return "";
+      const fullName = [u2.firstName, u2.lastName].join(" ").trim();
+      return fullName || u2.username || "Anonym";
     }
   };
 
@@ -12693,8 +12695,8 @@ ${content}</tr>
       void 0 === t2 && (t2 = "pb_auth");
       var s2 = { secure: true, sameSite: true, httpOnly: true, path: "/" }, a2 = getTokenPayload(this.token);
       (null == a2 ? void 0 : a2.exp) ? s2.expires = new Date(1e3 * a2.exp) : s2.expires = new Date("1970-01-01"), e2 = Object.assign({}, s2, e2);
-      var c3 = { token: this.token, model: (null === (n2 = this.model) || void 0 === n2 ? void 0 : n2.export()) || null }, u2 = cookieSerialize(t2, JSON.stringify(c3), e2), l3 = "undefined" != typeof Blob ? new Blob([u2]).size : u2.length;
-      return c3.model && l3 > 4096 && (c3.model = { id: null === (i2 = null == c3 ? void 0 : c3.model) || void 0 === i2 ? void 0 : i2.id, email: null === (r2 = null == c3 ? void 0 : c3.model) || void 0 === r2 ? void 0 : r2.email }, this.model instanceof o && (c3.model.username = this.model.username, c3.model.verified = this.model.verified, c3.model.collectionId = this.model.collectionId), u2 = cookieSerialize(t2, JSON.stringify(c3), e2)), u2;
+      var c3 = { token: this.token, model: (null === (n2 = this.model) || void 0 === n2 ? void 0 : n2.export()) || null }, u2 = cookieSerialize(t2, JSON.stringify(c3), e2), l4 = "undefined" != typeof Blob ? new Blob([u2]).size : u2.length;
+      return c3.model && l4 > 4096 && (c3.model = { id: null === (i2 = null == c3 ? void 0 : c3.model) || void 0 === i2 ? void 0 : i2.id, email: null === (r2 = null == c3 ? void 0 : c3.model) || void 0 === r2 ? void 0 : r2.email }, this.model instanceof o && (c3.model.username = this.model.username, c3.model.verified = this.model.verified, c3.model.collectionId = this.model.collectionId), u2 = cookieSerialize(t2, JSON.stringify(c3), e2)), u2;
     }, BaseAuthStore.prototype.onChange = function(e2, t2) {
       var n2 = this;
       return void 0 === t2 && (t2 = false), this._onChangeCallbacks.push(e2), t2 && e2(this.token, this.model), function() {
@@ -13350,11 +13352,11 @@ ${content}</tr>
         this.cancelControllers[e2].abort();
       return this.cancelControllers = {}, this;
     }, Client.prototype.send = function(e2, n2) {
-      var i2, o2, r2, s2, a2, c3, u2, l3;
+      var i2, o2, r2, s2, a2, c3, u2, l4;
       return __awaiter(this, void 0, void 0, function() {
         var d2, h2, p2, v2, f2, m2, b2 = this;
         return __generator(this, function(y2) {
-          return d2 = Object.assign({ method: "GET" }, n2), this.isFormData(d2.body) || (d2.body && "string" != typeof d2.body && (d2.body = JSON.stringify(d2.body)), void 0 === (null === (i2 = null == d2 ? void 0 : d2.headers) || void 0 === i2 ? void 0 : i2["Content-Type"]) && (d2.headers = Object.assign({}, d2.headers, { "Content-Type": "application/json" }))), void 0 === (null === (o2 = null == d2 ? void 0 : d2.headers) || void 0 === o2 ? void 0 : o2["Accept-Language"]) && (d2.headers = Object.assign({}, d2.headers, { "Accept-Language": this.lang })), (null === (r2 = this.authStore) || void 0 === r2 ? void 0 : r2.token) && void 0 === (null === (s2 = null == d2 ? void 0 : d2.headers) || void 0 === s2 ? void 0 : s2.Authorization) && (d2.headers = Object.assign({}, d2.headers, { Authorization: this.authStore.token })), this.enableAutoCancellation && false !== (null === (a2 = d2.params) || void 0 === a2 ? void 0 : a2.$autoCancel) && (h2 = (null === (c3 = d2.params) || void 0 === c3 ? void 0 : c3.$cancelKey) || (d2.method || "GET") + e2, this.cancelRequest(h2), p2 = new AbortController(), this.cancelControllers[h2] = p2, d2.signal = p2.signal), null === (u2 = d2.params) || void 0 === u2 || delete u2.$autoCancel, null === (l3 = d2.params) || void 0 === l3 || delete l3.$cancelKey, v2 = this.buildUrl(e2), void 0 !== d2.params && ((f2 = this.serializeQueryParams(d2.params)) && (v2 += (v2.includes("?") ? "&" : "?") + f2), delete d2.params), this.beforeSend && (void 0 !== (m2 = Object.assign({}, this.beforeSend(v2, d2))).url || void 0 !== m2.options ? (v2 = m2.url || v2, d2 = m2.options || d2) : Object.keys(m2).length && (d2 = m2, (null === console || void 0 === console ? void 0 : console.warn) && console.warn("Deprecated format of beforeSend return: please use `return { url, options }`, instead of `return options`."))), [2, fetch(v2, d2).then(function(e3) {
+          return d2 = Object.assign({ method: "GET" }, n2), this.isFormData(d2.body) || (d2.body && "string" != typeof d2.body && (d2.body = JSON.stringify(d2.body)), void 0 === (null === (i2 = null == d2 ? void 0 : d2.headers) || void 0 === i2 ? void 0 : i2["Content-Type"]) && (d2.headers = Object.assign({}, d2.headers, { "Content-Type": "application/json" }))), void 0 === (null === (o2 = null == d2 ? void 0 : d2.headers) || void 0 === o2 ? void 0 : o2["Accept-Language"]) && (d2.headers = Object.assign({}, d2.headers, { "Accept-Language": this.lang })), (null === (r2 = this.authStore) || void 0 === r2 ? void 0 : r2.token) && void 0 === (null === (s2 = null == d2 ? void 0 : d2.headers) || void 0 === s2 ? void 0 : s2.Authorization) && (d2.headers = Object.assign({}, d2.headers, { Authorization: this.authStore.token })), this.enableAutoCancellation && false !== (null === (a2 = d2.params) || void 0 === a2 ? void 0 : a2.$autoCancel) && (h2 = (null === (c3 = d2.params) || void 0 === c3 ? void 0 : c3.$cancelKey) || (d2.method || "GET") + e2, this.cancelRequest(h2), p2 = new AbortController(), this.cancelControllers[h2] = p2, d2.signal = p2.signal), null === (u2 = d2.params) || void 0 === u2 || delete u2.$autoCancel, null === (l4 = d2.params) || void 0 === l4 || delete l4.$cancelKey, v2 = this.buildUrl(e2), void 0 !== d2.params && ((f2 = this.serializeQueryParams(d2.params)) && (v2 += (v2.includes("?") ? "&" : "?") + f2), delete d2.params), this.beforeSend && (void 0 !== (m2 = Object.assign({}, this.beforeSend(v2, d2))).url || void 0 !== m2.options ? (v2 = m2.url || v2, d2 = m2.options || d2) : Object.keys(m2).length && (d2 = m2, (null === console || void 0 === console ? void 0 : console.warn) && console.warn("Deprecated format of beforeSend return: please use `return { url, options }`, instead of `return options`."))), [2, fetch(v2, d2).then(function(e3) {
             return __awaiter(b2, void 0, void 0, function() {
               var n3;
               return __generator(this, function(i3) {
@@ -13416,27 +13418,34 @@ ${content}</tr>
   var BACKEND_SERVER = "https://dialektika.janbkrejci.repl.co";
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
-  async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}) {
-    const self2 = this;
-    this.collections[colName] = import_lodash2.default.filter(await pb.collection(colName).getFullList(options2), (r2) => {
+  async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}, targetCollection = null) {
+    let collection = targetCollection;
+    if (!collection) {
+      if (!this.collections[colName]) {
+        this.collections[colName] = [];
+      }
+      collection = this.collections[colName];
+    }
+    pb.collection("colName").unsubscribe();
+    collection.splice(0, collection.length);
+    collection.push(...import_lodash2.default.filter(await pb.collection(colName).getFullList(options2), (r2) => {
       if (hooks.preCreate)
         return filter(hooks.preCreate(r2));
       return filter(r2);
-    });
+    }));
     pb.collection(colName).subscribe("*", async (e2) => {
       let origRecord = null;
       let newRecord = e2.record;
-      if (options2.expand) {
-        newRecord = await pb.collection(colName).getOne(e2.record.id, { expand: options2.expand });
-        console.log("newRec", newRecord);
+      if (!import_lodash2.default.isEmpty(options2)) {
+        newRecord = await pb.collection(colName).getOne(e2.record.id, options2);
       }
       function tryAdd(rec) {
         let r2 = rec;
         if (hooks.preCreate)
           r2 = hooks.preCreate(r2);
         if (!!r2 && filter(r2)) {
-          if (!self2.collections[colName].find((i2) => i2.id === r2.id)) {
-            self2.collections[colName].push(r2);
+          if (!collection.find((i2) => i2.id === r2.id)) {
+            collection.push(r2);
           }
           if (hooks.postCreate)
             r2 = hooks.postCreate(r2);
@@ -13446,7 +13455,7 @@ ${content}</tr>
       function tryDelete(rec) {
         if (hooks.preDelete)
           hooks.preDelete(rec);
-        import_lodash2.default.remove(self2.collections[colName], (x) => x.id === rec.id);
+        import_lodash2.default.remove(collection, (x) => x.id === rec.id);
         if (hooks.postDelete)
           hooks.postDelete(rec);
         return rec;
@@ -13470,7 +13479,7 @@ ${content}</tr>
       }
       switch (e2.action) {
         case "update":
-          origRecord = this.collections[colName].find((item) => item.id === newRecord.id);
+          origRecord = collection.find((item) => item.id === newRecord.id);
           tryUpdate(origRecord, e2.record);
           break;
         case "create":
@@ -15585,7 +15594,7 @@ ${content}</tr>
   };
   var __spreadArray = function(to, from, pack) {
     if (pack || arguments.length === 2)
-      for (var i2 = 0, l3 = from.length, ar; i2 < l3; i2++) {
+      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
         if (ar || !(i2 in from)) {
           if (!ar)
             ar = Array.prototype.slice.call(from, 0, i2);
@@ -16452,7 +16461,7 @@ ${content}</tr>
   };
   var __spreadArray2 = function(to, from, pack) {
     if (pack || arguments.length === 2)
-      for (var i2 = 0, l3 = from.length, ar; i2 < l3; i2++) {
+      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
         if (ar || !(i2 in from)) {
           if (!ar)
             ar = Array.prototype.slice.call(from, 0, i2);
@@ -16647,7 +16656,7 @@ ${content}</tr>
   };
   var __spreadArray3 = function(to, from, pack) {
     if (pack || arguments.length === 2)
-      for (var i2 = 0, l3 = from.length, ar; i2 < l3; i2++) {
+      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
         if (ar || !(i2 in from)) {
           if (!ar)
             ar = Array.prototype.slice.call(from, 0, i2);
@@ -17003,25 +17012,44 @@ ${content}</tr>
   ]);
   events.init();
 
+  // node_modules/alpinejs-tash/dist/tash.esm.js
+  function l3(s2) {
+    s2.directive("tash", (r2, { modifiers: c3, expression: a2 }, { evaluate: u2, effect: m2 }) => {
+      let p2 = (e2) => new RegExp(`${d2}${e2}${f2}`, "g"), i2 = c3.includes("vue"), o2 = c3.includes("angular"), d2 = i2 ? "{{ " : o2 ? "{{" : "{", f2 = i2 ? " }}" : o2 ? "}}" : "}", g2 = a2.split(",").map((e2) => e2.trim()), t2 = document.createElement("template");
+      t2.innerHTML = r2.innerHTML;
+      let n2 = `${t2.innerHTML}`;
+      m2(() => {
+        g2.forEach((e2) => {
+          let H = u2(e2), h2 = p2(e2);
+          n2 = n2.replace(h2, H);
+        }), r2.innerHTML = n2, n2 = t2.innerHTML;
+      });
+    });
+  }
+  var M = l3;
+
   // <stdin>
   window.utils = utils_default;
   window.Alpine = module_default;
   window.pb = pb;
+  window._ = import_lodash3.default;
   module_default.plugin(module_default2);
+  module_default.plugin(M);
   module_default.data("common", () => ({
     user_showMenu: false,
     user_showSidebar: false,
-    user_model: null,
     disabled: false,
-    collections: {},
+    collections: { users: [] },
+    user_model: pb.authStore.model,
     fields: {},
     errors: {},
     reset() {
       this.errors = {};
     },
-    get user_name() {
-      const fullName = [this.user_model?.firstName, this.user_model?.lastName].join(" ").trim();
-      return fullName || this.user_model?.username;
+    user_name() {
+      if (!this.user_model)
+        return "Nep\u0159ihl\xE1\u0161en\xFD u\u017Eivatel";
+      return this.userName(this.user_model.id);
     },
     get user_email() {
       return this.user_model?.email;
@@ -17033,7 +17061,7 @@ ${content}</tr>
       return this.user_model ? `${BACKEND_SERVER}/api/files/users/${this.user_model.id}/${this.user_model.avatar}` : null;
     },
     get sortedUsers() {
-      return import_lodash3.default.chain(this.collections.users).sortBy("created").reverse().value();
+      return import_lodash3.default.chain(this.collections.users).sortBy(["lastName", "firstName"]).value();
     },
     setPropertiesFromHash() {
       const u2 = new URLSearchParams(window.location.hash.substring(1));
@@ -17042,8 +17070,9 @@ ${content}</tr>
       }, this);
     },
     async init() {
-      window.addEventListener("pageshow", this.onPageShow.bind(this));
       this.userName = utils_default.userName.bind(this);
+      this.subscribe = subscribe.bind(this);
+      window.addEventListener("pageshow", this.onPageShow.bind(this));
       if (localStorage.getItem("pocketbase_auth")) {
         try {
           await pb.collection("users").authRefresh();
@@ -17051,26 +17080,34 @@ ${content}</tr>
           pb.authStore.clear();
         }
       }
-      this.userName = utils_default.userName.bind(this);
-      this.subscribe = subscribe.bind(this);
+      pb.authStore.onChange(() => {
+        this.user_model = pb.authStore.model;
+      });
       this.subscribe("users");
     },
     async onPageShow() {
       this.user_model = pb.authStore.model;
     },
     backIfLoggedIn() {
-      if (localStorage.pocketbase_auth) {
-        history.back();
+      if (pb.authStore.model) {
+        if (document.referrer) {
+          window.history.back();
+        } else {
+          window.location.replace("/");
+        }
       }
     },
     backIfNotLoggedIn() {
-      if (!localStorage.pocketbase_auth) {
-        history.back();
+      if (!pb.authStore.model) {
+        if (document.referrer) {
+          window.history.back();
+        } else {
+          window.location.replace("/");
+        }
       }
     },
     logout() {
       pb.authStore.clear();
-      this.onPageShow();
     }
   }));
   module_default.data("login", () => ({
@@ -17102,7 +17139,7 @@ ${content}</tr>
       if (id) {
         this.validate(id);
       }
-      if ("password" === id) {
+      if (id === "password") {
         if (!this.disabled)
           this.doLogin();
       } else {
@@ -17127,7 +17164,7 @@ ${content}</tr>
       if (this.validate()) {
         try {
           await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          history.back();
+          window.history.back();
           this.disabled = false;
         } catch (err) {
           this.errors.loginError = "Ne\xFAsp\u011B\u0161n\xFD pokus o p\u0159ihl\xE1\u0161en\xED";
@@ -17190,7 +17227,7 @@ ${content}</tr>
       if (id) {
         this.validate(id);
       }
-      if ("password2" === id) {
+      if (id === "password2") {
         if (!this.disabled)
           this.doRegister();
       } else {
@@ -17226,7 +17263,7 @@ ${content}</tr>
           });
           await pb.collection("users").requestVerification(this.fields.email);
           await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          history.back();
+          window.history.back();
           this.disabled = false;
         } catch (err) {
           this.errors.registrationError = "Ne\xFAsp\u011B\u0161n\xE1 registrace";
@@ -17297,7 +17334,7 @@ ${content}</tr>
       if (id) {
         this.validate(id);
       }
-      if ("email" === id) {
+      if (id === "email") {
         if (!this.disabled)
           this.doReset();
       } else {
@@ -17335,6 +17372,7 @@ ${content}</tr>
     }
   }));
   module_default.data("passwordReset", () => ({
+    token: null,
     validate(id = null) {
       if (id) {
         switch (id) {
@@ -17356,8 +17394,8 @@ ${content}</tr>
     },
     init() {
       window.addEventListener("pageshow", this.backIfLoggedIn);
-      token = window.location.hash.substring(1);
-      if (token === "") {
+      this.token = window.location.hash.substring(1);
+      if (this.token === "") {
         window.back();
       }
       this.$focus.first();
@@ -17392,7 +17430,7 @@ ${content}</tr>
       this.disabled = true;
       if (this.validate()) {
         try {
-          await pb.collection("users").confirmPasswordReset(token, this.fields.password, this.fields.password2);
+          await pb.collection("users").confirmPasswordReset(this.token, this.fields.password, this.fields.password2);
           this.errors.resetSuccess = "Heslo bylo zm\u011Bn\u011Bno";
           this.disabled = false;
           this.$focus.first();
@@ -17412,15 +17450,15 @@ ${content}</tr>
     }
   }));
   module_default.data("confirmEmail", () => ({
+    token: null,
     async init() {
-      token = window.location.hash.substring(1);
-      if (token === "") {
+      this.token = window.location.hash.substring(1);
+      if (this.token === "") {
         window.back();
       }
       try {
-        await pb.collection("users").confirmVerification(token);
+        await pb.collection("users").confirmVerification(this.token);
       } catch (err) {
-        console.log(err);
         this.errors.confirmError = "E-mail se nepoda\u0159ilo ov\u011B\u0159it";
         if (err.response.data.token) {
           this.errors.confirmError = "Pou\u017Eit\xFD odkaz je neplatn\xFD nebo star\xFD";
@@ -17428,203 +17466,179 @@ ${content}</tr>
       }
     }
   }));
-  module_default.data("aktivity", () => ({
-    state: null,
-    lastState: null,
-    action: null,
-    selectedID: null,
-    selectedItem: {},
+  module_default.data("myVotings", () => ({
+    onPageShow() {
+      this.backIfNotLoggedIn();
+    },
+    async init() {
+      const b2 = this.onPageShow.bind(this);
+      window.addEventListener("pageshow", b2);
+      pb.authStore.onChange(this.backIfNotLoggedIn);
+      this.subscribe("votes");
+      this.subscribe("votings");
+    },
+    get myVotes() {
+      return import_lodash3.default.chain(this.collections.votes).filter((v2) => v2.user == pb.authStore.model.id).value();
+    },
+    get myVotings() {
+      let myVotings = import_lodash3.default.chain(this.myVotes).map((v2) => v2.voting).uniq().value();
+      return import_lodash3.default.chain(this.collections.votings).filter((v2) => myVotings.includes(v2.id)).value();
+    },
+    get finishedVotings() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "closed").sortBy("votingClosed").reverse().value();
+    },
+    get rejectedSuggestions() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "rejected").sortBy("preselectionClosed").reverse().value();
+    },
+    get elaborations() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "elaborating").sortBy("preselectionClosed").reverse().value();
+    },
+    get suggestions() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "suggested").sortBy("preselectionDeadline").reverse().value();
+    },
+    get votings() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "voting").sortBy("votingDeadline").reverse().value();
+    },
+    async reOpen(id) {
+      window.location.href = "/hlasovani-detail?reOpen=" + id;
+    },
+    myVoteForVoting(voting) {
+      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting"));
+    },
+    async vote(voting, vote) {
+      await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
+    }
+  }));
+  module_default.data("allVotings", () => ({
+    onPageShow() {
+      this.backIfNotLoggedIn();
+    },
+    async init() {
+      const b2 = this.onPageShow.bind(this);
+      window.addEventListener("pageshow", b2);
+      pb.authStore.onChange(this.backIfNotLoggedIn);
+      this.subscribe("votes");
+      this.subscribe("votings");
+    },
+    get myVotes() {
+      return this.collections.votes;
+    },
+    get myVotings() {
+      return this.collections.votings;
+    },
+    get finishedVotings() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "closed").sortBy("votingClosed").reverse().value();
+    },
+    get rejectedSuggestions() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "rejected").sortBy("preselectionClosed").reverse().value();
+    },
+    get elaborations() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "elaborating").sortBy("preselectionClosed").reverse().value();
+    },
+    get suggestions() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "suggested").sortBy("preselectionDeadline").reverse().value();
+    },
+    get votings() {
+      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "voting").sortBy("votingDeadline").reverse().value();
+    },
+    async reOpen(id) {
+      window.location.href = "/hlasovani-detail?reOpen=" + id;
+    },
+    myVoteForVoting(voting) {
+      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting"));
+    },
+    async vote(voting, vote) {
+      await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
+    }
+  }));
+  module_default.data("oneVoting", () => ({
+    unfoldVoting: false,
+    unfoldDiscussion: true,
+    id: null,
+    disabled: false,
+    votings: [{ id: "new", state: "new" }],
+    votes: [],
+    comments: [],
     comment: null,
-    reOpenID: null,
-    unfold: false,
-    initialized: false,
-    renew() {
-      this.fields = {};
-      this.errors = {};
-      this.comment = null;
-      this.state = null;
-      this.selectedID = null;
-      this.selectedItem = {};
-      this.reOpenID = null;
-      this.setPropertiesFromHash();
-      if (this.selectedID) {
-        this.selectedItem = this.collections.votings.find((i2) => i2.id === this.selectedID) || {
-          state: "new"
-        };
-        this.unfold = this.selectedItem.state === "elaborating";
-      } else if (this.reOpenID) {
-        const orig = { ...this.collections.votings.find((i2) => i2.id === this.reOpenID) };
-        delete orig.id;
-        delete orig.updated;
-        delete orig.preselectionResult;
-        delete orig.preselectionClosed;
-        orig.state = "new";
-        this.selectedItem = orig;
-      } else if (!this.state) {
-        window.location.replace("/aktivity#state=hlasovani");
-      }
+    errors: {},
+    get voting() {
+      const id = this.id || "new";
+      return this.votings.find((v2) => v2.id === id) || {};
+    },
+    positiveVotes() {
+      return [
+        ...Object.values(this.votes || {}).filter((vote) => vote.vote && vote.voted)
+      ].length || 0;
+    },
+    negativeVotes() {
+      return [
+        ...Object.values(this.votes || {}).filter((vote) => !vote.vote && vote.voted)
+      ].length || 0;
+    },
+    votesForVoting() {
+      let isVote = ["voting", "closed"].includes(this.voting.state);
+      return this.votes.filter((vote) => vote.isVote === isVote);
+    },
+    getMyVote() {
+      return this.votesForVoting().find((vote) => vote.user === pb.authStore.model.id);
+    },
+    getMyVoteID() {
+      return this.getMyVote()?.id;
+    },
+    didIVote() {
+      let result = !!this.getMyVote()?.voted;
+      return result;
+    },
+    shouldIVote() {
+      return !!this.getMyVote();
+    },
+    get sortedComments() {
+      return import_lodash3.default.chain(this.comments).sortBy("created").reverse().value();
+    },
+    onPageShow() {
+      this.backIfNotLoggedIn();
+      this.unfoldVoting = ["suggested", "voting"].includes(this.voting.state);
+      this.unfoldDiscussion = ["elaborating"].includes(this.voting.state);
+      this.$focus.focus(this.firstInput());
     },
     async init() {
       const self2 = this;
       this.subscribe = subscribe.bind(this);
-      window.addEventListener("pageshow", this.backIfNotLoggedIn.bind(this));
-      await this.subscribe("votings", (x) => !!x, {
-        postDelete(item) {
-          if (item.id === self2.selectedID) {
-            const s2 = new URLSearchParams(window.location.hash.substring(1));
-            s2.delete("selectedID");
-            s2.set("state", self2.lastState || "hlasovani");
-            self2.lastState = null;
-            window.location.hash = s2.toString();
-          }
-        }
-      });
-      await this.subscribe("votes");
-      await this.subscribe("discussions");
-      window.addEventListener("hashchange", () => {
-        self2.renew();
-      }, false);
-      this.renew();
-      this.$focus.focus(this.firstInput());
-      this.initialized = true;
-    },
-    isElaborating() {
-      return this.selectedItem.state === "elaborating";
-    },
-    commentsFor(voting) {
-      return import_lodash3.default.chain(this.collections.discussions).reject((c3) => c3.relatedCollection !== "votings" || c3.relatedRecordID !== voting.id).sortBy(["created"]).reverse().value();
-    },
-    votersFor(voting) {
-      const { scope: scope2 } = voting;
-      if (!scope2)
-        return [];
-      return import_lodash3.default.chain(this.collections.users).sortBy(["lastName", "firstName"]).map((u2) => u2.id).value();
-    },
-    isVote(voting) {
-      return ["voting", "closed"].includes(voting.state);
-    },
-    votesFor(voting) {
-      const isVote = this.isVote(voting);
-      const result = import_lodash3.default.reject(
-        this.collections.votes,
-        (i2) => i2.isVote !== isVote || i2.voting !== voting.id
-      );
-      return result;
-    },
-    positiveVotesFor(voting) {
-      return import_lodash3.default.sumBy(this.votesFor(voting), (o2) => o2.vote ? 1 : 0) || 0;
-    },
-    negativeVotesFor(voting) {
-      return import_lodash3.default.sumBy(this.votesFor(voting), (o2) => o2.vote ? 0 : 1) || 0;
-    },
-    voteOfFor(uid2, voting) {
-      const isVote = this.isVote(voting);
-      const functor = (i2) => i2.isVote === isVote && i2.voting === voting.id && i2.user === uid2;
-      const result = import_lodash3.default.find(this.collections.votes, functor);
-      return result;
-    },
-    amIVoterFor(voting) {
-      return this.votersFor(voting).includes(this.user_id);
-    },
-    didIVoteFor(voting, finalVote) {
-      return !!(this.collections.votes || []).find(
-        (i2) => i2.user === this.user_id && i2.isVote === finalVote && i2.voting === voting.id
-      );
-    },
-    suggestedItems() {
-      return Object.values(this.collections.votings || []).filter(
-        (i2) => i2.state === "suggested" && this.amIVoterFor(i2) && !this.didIVoteFor(i2, false)
-      );
-    },
-    elaboratingItems() {
-      return Object.values(this.collections.votings || {}).filter((i2) => i2.state === "elaborating" && this.amIVoterFor(i2));
-    },
-    rejectedItems() {
-      return import_lodash3.default.chain(Object.values(this.collections.votings || {}).filter((i2) => i2.state === "rejected" && this.amIVoterFor(i2))).sortBy("preselectionClosed").reverse().value();
-    },
-    votingItems() {
-      return Object.values(this.collections.votings || {}).filter((i2) => i2.state === "voting" && this.amIVoterFor(i2) && !this.didIVoteFor(i2, true));
-    },
-    closedItems() {
-      return import_lodash3.default.chain(Object.values(this.collections.votings || {}).filter((i2) => i2.state === "closed" && this.amIVoterFor(i2))).sortBy("votingClosed").reverse().value();
-    },
-    reOpen(id) {
-      window.location.hash = `state=detail&selectedID=&reOpenID=${id}`;
-    },
-    async saveStatement() {
-      this.disabled = true;
-      try {
-        await pb.collection("votings").update(this.selectedItem.id, {
-          finalSubject: this.selectedItem.finalSubject,
-          finalStatement: this.selectedItem.finalStatement
-        });
-      } catch (error2) {
-        console.log(error2);
-        this.errors.submitError = "N\u011Bco se nepovedlo";
-      } finally {
-        this.disabled = false;
+      const b2 = this.onPageShow.bind(this);
+      window.addEventListener("pageshow", b2);
+      pb.authStore.onChange(b2);
+      let s2 = new URLSearchParams(window.location.search);
+      this.id = s2.get("id");
+      let reOpen = s2.get("reOpen");
+      if (this.id) {
+        await self2.subscribe("votings", (x) => x.id === self2.id, {}, {}, self2.votings);
+        await self2.subscribe("votes", (x) => x.voting === self2.id, {}, {}, self2.votes);
+        self2.subscribe("discussions", (x) => x.relatedCollection === "votings" && x.relatedRecordID === self2.id, {}, {}, self2.comments);
+        self2.unfoldVoting = ["suggested", "voting"].includes(self2.voting.state);
+        self2.unfoldDiscussion = ["elaborating"].includes(self2.voting.state);
+      }
+      if (reOpen) {
+        let orig = await pb.collection("votings").getOne(reOpen);
+        this.voting.subject = orig.subject;
+        this.voting.description = orig.description;
       }
     },
-    async vote(item, value) {
-      if (!item || import_lodash3.default.isNil(value))
-        return;
-      this.disabled = true;
-      const isVote = this.isVote(item);
-      try {
-        const votersCount = this.votersFor(item).length;
-        const votesCount = this.votesFor(item).length + 1;
-        let posVotes = this.positiveVotesFor(item);
-        let negVotes = this.negativeVotesFor(item);
-        if (value) {
-          posVotes += 1;
-        } else {
-          negVotes += 1;
-        }
-        const vote = {
-          voting: item.id,
-          user: this.user_id,
-          isVote,
-          vote: value,
-          voteActive: true
-        };
-        await pb.collection("votes").create(vote);
-        if (votesCount >= votersCount) {
-          let result = false;
-          const updateObj = { ...item };
-          if (item.state === "suggested") {
-            result = posVotes > negVotes;
-            updateObj.preselectionResult = result;
-            updateObj.state = result ? "elaborating" : "rejected";
-            updateObj.preselectionClosed = new Date();
-            if (result) {
-              updateObj.finalSubject = item.subject;
-              updateObj.finalStatement = item.description;
-            }
-          } else {
-            result = posVotes >= negVotes;
-            updateObj.votingResult = result;
-            updateObj.state = "closed";
-            updateObj.votingClosed = new Date();
-          }
-          await pb.collection("votings").update(item.id, updateObj);
-        }
-      } catch (error2) {
-        console.log(error2);
-        this.errors.submitError = "Nepovedlo se...";
-      }
-      this.disabled = false;
+    async vote(vote) {
+      await pb.collection("votes").update(await this.getMyVoteID(), { vote });
     },
     async doCreateTopic() {
       this.disabled = true;
       if (this.validate()) {
         try {
-          this.selectedItem.state = "suggested";
-          this.selectedItem.author = this.user_id;
-          this.selectedItem.scope = "bv6zy25qi4ijcv2";
-          const newItem = await pb.collection("votings").create(this.selectedItem);
-          window.location.replace(`/aktivity#state=detail&selectedID=${newItem.id}`);
+          this.voting.author = pb.authStore.model.id;
+          this.voting.scope = (await pb.collection("districts").getList(null, null, {
+            filter: "code = '9'"
+          })).items[0].id;
+          const rec = import_lodash3.default.omit(this.voting, "id");
+          rec.state = "suggested";
+          const newItem = await pb.collection("votings").create(rec);
+          window.location.replace(`/hlasovani-detail?id=${newItem.id}`);
         } catch (err) {
-          console.log(err);
           this.errors.submitError = JSON.stringify(err, 2, null);
         } finally {
           this.disabled = false;
@@ -17637,80 +17651,28 @@ ${content}</tr>
     async storeComment() {
       if (this.comment) {
         await pb.collection("discussions").create({
-          author: this.user_id,
+          author: pb.authStore.model.id,
           relatedCollection: "votings",
-          relatedRecordID: this.selectedItem.id,
+          relatedRecordID: this.id,
           text: this.comment
         });
         this.comment = "";
       }
     },
-    async startVoting() {
+    async saveStatement() {
       this.disabled = true;
       try {
-        await pb.collection("votings").update(this.selectedItem.id, {
-          state: "voting",
-          votingStarted: new Date()
-        });
+        if (this.validate) {
+          await pb.collection("votings").update(this.id, {
+            finalSubject: this.voting.finalSubject,
+            finalStatement: this.voting.finalStatement
+          });
+        }
       } catch (error2) {
-        console.log(error2);
         this.errors.submitError = "N\u011Bco se nepovedlo";
       } finally {
         this.disabled = false;
       }
-    },
-    firstInput() {
-      function e2(id) {
-        return document.getElementById(id);
-      }
-      let result = null;
-      switch (this.selectedItem.state) {
-        case "new":
-          result = e2("subject");
-          break;
-        default:
-          break;
-      }
-      return result;
-    },
-    showDetail(id) {
-      this.lastState = this.state;
-      const s2 = new URLSearchParams(window.location.hash.substring(1));
-      s2.set("state", "detail");
-      s2.set("selectedID", id);
-      window.location.hash = s2.toString();
-    },
-    hideDetail() {
-      const s2 = new URLSearchParams();
-      s2.set("state", this.lastState || "hlasovani");
-      this.lastState = null;
-      window.history.back();
-    },
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "subject":
-            this.errors.subjectError = required(this.selectedItem.subject?.trim());
-            break;
-          case "description":
-            this.errors.descriptionError = required(this.selectedItem.description?.trim());
-            break;
-          default:
-            this.submitError = `Nenastaven\xE1 validace pro pole'${id}'`;
-            break;
-        }
-      } else {
-        this.reset();
-        switch (this.selectedItem.state) {
-          case "new":
-            this.validate("subject");
-            this.validate("description");
-            break;
-          default:
-            break;
-        }
-      }
-      return !(this.errors.subjectError || this.errors.descriptionError);
     },
     next() {
       const current = this.$focus.focused()?.id;
@@ -17718,11 +17680,14 @@ ${content}</tr>
         this.validate(current);
       }
       let nxt = null;
-      switch (this.selectedItem.state) {
+      switch (this.voting.state) {
         case "new":
           switch (current) {
             case "subject":
               nxt = "description";
+              break;
+            case "finalSubject":
+              nxt = "finalStatement";
               break;
             default:
               break;
@@ -17740,34 +17705,83 @@ ${content}</tr>
         first = "subject";
       } else if (this.errors.descriptionError) {
         first = "description";
+      } else if (this.errors.finalSubjectError) {
+        first = "finalSubject";
+      } else if (this.errors.finalStatementError) {
+        first = "finalStatement";
       }
       if (first) {
         this.$focus.focus(document.getElementById(first));
       }
-    }
-  }));
-  module_default.data("hlasovani", () => ({
-    async init() {
-      this.subscribe = subscribe.bind(this);
-      window.addEventListener("pagehow", this.backIfNotLoggedIn.bind(this));
-      this.subscribe("votings");
-      this.subscribe("votes", (x) => {
-        return x.user === pb.authStore.baseModel?.id;
-      });
-      console.log("this", this);
     },
-    suggestedItems() {
-      return Object.values(this.collections.votes || []).filter(
-        (i2) => !i2.isVote && !i2.voted
-      );
+    validate(id = null) {
+      if (id) {
+        switch (id) {
+          case "subject":
+            this.errors.subjectError = required(this.voting.subject?.trim());
+            break;
+          case "finalSubject":
+            this.errors.finalSubjectError = required(this.voting.finalSubject?.trim());
+            break;
+          case "description":
+            this.errors.descriptionError = required(this.voting.description?.trim());
+            break;
+          case "finalStatement":
+            this.errors.finalStatementError = required(this.voting.finalStatement?.trim());
+            break;
+          default:
+            this.submitError = `Nenastaven\xE1 validace pro pole'${id}'`;
+            break;
+        }
+      } else {
+        this.reset();
+        switch (this.voting.state) {
+          case "new":
+            this.validate("subject");
+            this.validate("description");
+            break;
+          case "elaborating":
+            this.validate("finalSubject");
+            this.validate("finalStatement");
+            break;
+          default:
+            break;
+        }
+      }
+      return !(this.errors.subjectError || this.errors.descriptionError);
     },
-    votingFor(vote) {
-      return [...Object.values(this.collections.votings || []).filter(
-        (i2) => i2.id == vote.voting
-      )][0];
+    firstInput() {
+      function e2(id) {
+        return document.getElementById(id);
+      }
+      let result = null;
+      switch (this.voting.state) {
+        case "new":
+          result = e2("subject");
+          break;
+        case "elaborating":
+          result = e2("finalSubject");
+          break;
+        default:
+          break;
+      }
+      return result;
     },
-    async vote(item, vote) {
-      await pb.collection("votes").update(item.id, { vote });
+    async startVoting() {
+      this.disabled = true;
+      try {
+        await pb.collection("votings").update(this.id, {
+          state: "voting"
+        });
+        await this.subscribe("votes", (x) => x.voting === this.id && x.isVote === ["voting", "closed"].includes(this.voting.state), {}, {}, this.votes);
+      } catch (error2) {
+        this.errors.submitError = "N\u011Bco se nepovedlo";
+      } finally {
+        this.disabled = false;
+      }
+    },
+    async reOpen() {
+      window.location.href = window.location.href.replace("id=", "reOpen=");
     }
   }));
   module_default.start();

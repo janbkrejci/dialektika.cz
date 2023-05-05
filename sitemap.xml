@@ -59,6 +59,8 @@
     <loc>/blog/posts/2023/03/nehodi-se-do-kramu/</loc>
     <lastmod>2023-03-02T10:00:00+01:00</lastmod>
   </url><url>
+    <loc>/lide/</loc>
+  </url><url>
     <loc>/aktivity/</loc>
   </url><url>
     <loc>/archive/</loc>
@@ -67,9 +69,13 @@
   </url><url>
     <loc>/hlasovani-detail/</loc>
   </url><url>
-    <loc>/hlasovani/</loc>
-  </url><url>
     <loc>/404.html</loc>
+  </url><url>
+    <loc>/hlasovani-moje/</loc>
+  </url><url>
+    <loc>/vysledky-moje/</loc>
+  </url><url>
+    <loc>/ja/</loc>
   </url><url>
     <loc>/forgotten-password/</loc>
   </url><url>
@@ -89,6 +95,8 @@
   </url><url>
     <loc>/stanovy/</loc>
   </url><url>
-    <loc>/hlasovani-vysledky/</loc>
+    <loc>/hlasovani-vsechna/</loc>
+  </url><url>
+    <loc>/vysledky-vsechny/</loc>
   </url>
 </urlset>
