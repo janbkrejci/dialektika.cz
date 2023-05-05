@@ -242,7 +242,7 @@
                 </thead>
                 <tbody>
                     <template x-for="item in filteredData">
-                        <tr :id="item.id" @click.stop="location.href=&#39;hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.votingClosed)" ></td><td class="truncate"  x-text="item.finalSubject" ></td><td class="whitespace-nowrap w-48 text-center" ><div x-show='item.votingResult' class='btn mx-auto success w-40'>SCHVÁLENO</div><div x-show='!item.votingResult' class='btn mx-auto error w-40'>ZAMÍTNUTO</div></td></tr>
+                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.votingClosed)" ></td><td class="truncate"  x-text="item.finalSubject" ></td><td class="whitespace-nowrap w-48 text-center" ><div x-show='item.votingResult' class='btn mx-auto success w-40'>SCHVÁLENO</div><div x-show='!item.votingResult' class='btn mx-auto error w-40'>ZAMÍTNUTO</div></td></tr>
                     </template>
                 </tbody>
                 <tfoot>
@@ -451,7 +451,7 @@
                 </thead>
                 <tbody>
                     <template x-for="item in filteredData">
-                        <tr :id="item.id" @click.stop="location.href=&#39;hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.preselectionClosed)" ></td><td class="truncate"  x-text="item.subject" ></td><td class="whitespace-nowrap w-48 text-center" ><button :disabled='disabled' class='primary w-40' @click.stop='reOpen(item.id)'>Znovu otevřít</button></td></tr>
+                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.preselectionClosed)" ></td><td class="truncate"  x-text="item.subject" ></td><td class="whitespace-nowrap w-48 text-center" ><button :disabled='disabled' class='primary w-40' @click.stop='reOpen(item.id)'>Znovu otevřít</button></td></tr>
                     </template>
                 </tbody>
                 <tfoot>
