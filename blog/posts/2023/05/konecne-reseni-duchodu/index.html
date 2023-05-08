@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+<link href="/css/main.min.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script><title>Konečné řešení důchodové reformy | Dialektika</title>
+<link rel="canonical" href="">
+<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+<link rel="icon" href="/img/logo.svg">
+<meta name="description" content="Dlouho, předlouho nám politici slibují, že nám už konečně představí tu pravou důchodovou reformu. To, co nám ale pokaždé po dlouhém čekání ukáží, je vždycky hořkým zklamáním.">
+
+<meta name="keywords" content="Myšlenky , Společnost">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta charset="utf-8">
+<script type='text/javascript'
+  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+  async='async'></script>
+</head>
+
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
+      
+      <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="/program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="/stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="/stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="/blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="/hlasovani-moje"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
+            <a href="/organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="/lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="/ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  &nbsp;
+<a class="no-underline" href="/blog/posts/2023/04/na-hloupou-otazku/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Konečné řešení důchodové reformy</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="/archive/"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    8. května 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 12 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="/tags/"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_myšlenky" href="/tags/my%C5%A1lenky/">Myšlenky</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_společnost" href="/tags/spole%C4%8Dnost/">Společnost</a></div>
+</div><p>Dlouho, předlouho nám politici slibují, že nám už konečně představí tu pravou důchodovou reformu. To, co nám ale pokaždé po dlouhém čekání ukáží, je vždycky hořkým zklamáním.</p>
+<p>Každá další tak zvaná reforma přináší zhoršení očekávání pro ty, kdo ještě v důchodu nejsou, ale zhusta i pro ty šťastné, kteří už se ho dočkali. Pořád dokola slyšíme, že důchodový systém je těžce deficitní, že si na důchody musíme nějakou formou šetřit, že nemůžeme chodit na odpočinek tak brzy, že je potřeba zvýšit všemožné daně, a že je nutné rozlišovat, kdo měl jak náročné povolání, nebo kolik vychoval či porodil dětí.</p>
+<p>Přátelé, řekněme si to na rovinu – to jsou všechno jen nebetyčné a pitomé kecy lidí, kteří se odmítají pořádně zamyslet, pochopit podstatu problému a něco dobře rozhodnout.</p>
+<p>V tomto článku vám nabízíme zcela střízlivý a pragmatický pohled na to, jak je potřeba se na problematiku starobních důchodů podívat, abychom našli skutečné a definitivní řešení.</p>
+<h1 id="otázka-č-1--chceme-vůbec-mít-nějaký-systém-starobních-důchodů">Otázka č. 1 – chceme vůbec mít nějaký systém starobních důchodů?</h1>
+<p>Jednoznačně ano, protože:</p>
+<ol>
+<li>
+<p>čistě z lidského hlediska si staří lidé zaslouží, abychom si vážili jejich odvedené práce pro společnost, a proto jim v době, kdy už jsou unavení, často nemocní, anebo jen jejich názory a schopnosti již neodpovídají aktuálním trendům, zajistili důstojné dožití. K pojmu důstojné dožití se vrátíme později;</p>
+</li>
+<li>
+<p>pokud jim nezajistíme jejich životní potřeby starobním důchodem, vrátí se nám to z jiné strany tím, že budou stejně existovat na jiných důchodech (např. na invalidním) a sociálních dávkách, takže asi bude lepší problém neschovávat do jiné škatulky, ale řešit ho tam, kde vznikl – od jisté chvíle prostě lidé nejsou schopní vytvářet hodnoty pro společnost. Tečka. A střílet je nejspíš nechceme.</p>
+</li>
+</ol>
+<h1 id="otázka-č-2--co-má-a-nemá-být-starobní-důchod">Otázka č. 2 – co má a nemá být starobní důchod?</h1>
+<p>Jak jsme napsali výše, starobní důchod má být prostředkem k zajištění důstojného dožití.</p>
+<p>Důstojným dožitím se myslí takový stav, kdy staří lidé nemusejí mít obavy, že nebudou mít kde bydlet, že zmrznou, nebo nebudou mít co jíst. Takže se bavíme o naplnění základních životních potřeb, nikoli o zajištění luxusu, bohatství a zábavy.</p>
+<p>Možná jste také slyšeli o důchodcích, kteří přispívají svým dětem na živobytí, nebo o jiných, kteří v důchodu několikrát ročně navštěvují zahraniční turistické destinace. Možná jste si kladli otázku, jestli to platí z úspor, nebo proto, že mají tak vysoké důchody. Odpověď asi neznáme, ale jistě se alespoň shodneme na tom, že starobní důchod v ne zrovna bohaté zemi by neměl takové věci sám o sobě umožnit.</p>
+<h1 id="otázka-č-3---jaké-základní-vlastnosti-chceme-aby-systém-starobních-důchodů-měl">Otázka č. 3 - jaké základní vlastnosti chceme, aby systém starobních důchodů měl?</h1>
+<p>Tohle je nesmírně důležité, pokud se na tomto neshodneme, nikdy správný systém nenajdeme.</p>
+<p>Jsme přesvědčeni, že systém starobních důchodů musí být:</p>
+<ol>
+<li>
+<p><strong>Trvale udržitelný.</strong> Nesmí (tak jak to dělá teď) zvyšovat zadlužení státu. Stát můžeme zadlužovat kvůli investicím do budoucnosti, starobní důchody v budoucnosti nic dalšího nepřinesou. Je to podobné, jako v domácnostech. Má určitě smysl půjčit si na bydlení, na vzdělání a na podnikání, ale je hloupé si půjčovat na dovolenou a na vánoční dárky.</p>
+</li>
+<li>
+<p><strong>Srozumitelný.</strong> Když se vás zeptáme, jestli víte, kdy přesně půjdete do důchodu a jak vysoký ho budete mít, umíte z hlavy odpovědět? Ne? To byste ale měli. Každý občan by měl mít jasno. Jestliže je systém příliš složitý na to, aby mu každý rozuměl, pak s sebou nese i složitou a nabobtnalou administrativu, kterou někdo musí vykonávat. A to stojí peníze, které by mohly sloužit k základnímu účelu, čili k výplatě důchodů.</p>
+</li>
+<li>
+<p><strong>Solidární.</strong> Na tohle nějak politici i obyčejní lidé neustále zapomínají. A to je špatně. Pokud si zvykneme na to, že systém je a má být solidární, tak zmizí spousta nepříjemných diskusí, které vrážejí klíny mezi staré a mladé, mezi bohaté a chudé, mezi muže a ženy, mezi policisty, záchranáře, učitele, lékaře, podnikatele, zaměstnance, prostě mezi jednotlivé skupiny obyvatelstva rozlišené podle nejrůznějších kritérií. Lidé si nemají vybírat povolání podle toho, jestli díky němu půjdou dřív do důchodu nebo ho budou mít vyšší. Lidé by neměli mít děti proto, aby dostali výchovné.</p>
+</li>
+</ol>
+<p>Solidární systém znamená, že každý do systému přispívá tolik, kolik je schopen, a každý z něj dostává tolik, kolik je možné. A všichni dostávají stejně, nebo aspoň co nejvíc podobně. Je to možná tvrdé, ale jelikož se v podstatě jedná o sociální dávku, je to spravedlivé pro všechny. Tak zvaná zásluhovost má v solidárním systému fungovat v co nejmenší míře, pokud vůbec. Dnešní systém, kdy základní výměra důchodu je minimální a převažuje část zásluhová, je úplně zvrácený. A přináší jen nenávist, závist, vztek a rezignaci. Rozvírá nůžky rozdílů nejen mezi skupinami obyvatel, ale i uvnitř nich, například i mezi důchodci samotnými.</p>
+<h1 id="důchodová-reforma-ve-třech-bodech">Důchodová reforma ve třech bodech</h1>
+<p>Pokud se shodneme na tom, co je napsáno výše, nic nám nebrání stanovit základní pravidla, jak má nový systém starobních důchodů vypadat a fungovat. A pak můžeme ladit parametry podle objektivně zjistitelných dat.</p>
+<h2 id="pravidlo-první-kdo-má-pobírat-starobní-důchod">Pravidlo první: Kdo má pobírat starobní důchod</h2>
+<p>Důchod má pobírat ten, kdo:</p>
+<ol>
+<li>
+<p>sám v životě pracoval a přispíval do důchodového systému tolik, kolik byl schopen,</p>
+</li>
+<li>
+<p>už dále pracovat nemůže,</p>
+</li>
+<li>
+<p>splnil podmínky odchodu na odpočinek, kterými jsou dosažený věk a počet odpracovaných (započtených) roků.</p>
+</li>
+</ol>
+<p>Starobní důchod není určen pro ty, kdo tyto podmínky nesplnili. Možná se zeptáte, jak do toho zapadají ti, co nejsou vůbec schopni práce, například nemocní a postižení. Jednoduše! O ty se stát chce starat a stará jinak. Máme snad invalidní důchod. To je úplně jiná problematika a není správné ji míchat do problematiky starobních důchodů.</p>
+<p>A co ti, co nepracovali, protože nechtěli? Promiňte. Říkali jsme solidární systém, ne debilní. Ti se musí zařídit jinak. Ať žijí z vesmírné energie, z dědictví, nebo ať je živí příbuzní. Nedáš, nedostaneš.</p>
+<h2 id="pravidlo-druhé-od-kdy-má-člověk-pobírat-starobní-důchod">Pravidlo druhé: Od kdy má člověk pobírat starobní důchod</h2>
+<p>Pojďme si jednotlivé podmínky z Pravidla prvního upřesnit.</p>
+<p><strong>Dosažený věk:</strong> Život člověka se z pohledu jeho možného uplatnění v pracovním procesu dělí na tři části. Předproduktivní (učení se a příprava na budoucí povolání), produktivní (výkon povolání) a poproduktivní (důchod, odpočinek). Můžeme vést sáhodlouhé diskuse o tom, jak dlouhá tato období jsou, nebo se prostě můžeme rozhodnout. Obecně se zdroje shodují na tom, že produktivní období je od 15 do 65 let. Tak pojďme zapomenout na to, že předchozí generace chodily do důchodu o deset let dřív, s tím už stejně nic nenaděláme, a pojďme si říct, že do důchodu se chodí nejdřív v 65 letech. Hotovo. Řečnění o tom, že bychom měli trávit v důchodu 20,1 roku, když střední délka života žen byla v roce 2022 82 let a mužů 76,1 let [1], je nesmyslné, zavádějící a zcela k ničemu. Jen si to spočítejte.</p>
+<p><strong>Odpracovaná (započtená) doba:</strong> Kolik je let mezi 15 a 65? A vida, padesát. Jenže kdo jde do práce ve chvíli, kdy dostane občanský průkaz? Požadavky na vzdělání se neustále zvyšují. S trochou nadhledu můžeme předpokládat, že dalších patnáct let člověk stráví přípravou na výkon povolání. Ať už hned v mládí, anebo v průběhu života různými rekvalifikacemi. Pak se nám potenciální odpracovatelná doba zkracuje na 35 let. A to je maximální rozumná hranice, protože člověk také často stráví nějaké roky hledáním práce apod. Takže 35 let, maximálně. Tak dlouho by měl člověk odvádět příspěvek do důchodového systému, aby měl právo z něj poté čerpat.</p>
+<p><em>Poznámka na okraj: předčasné důchody. Přežitek. Jejich důvodem byla vysoká nezaměstnanost v 90. letech. Bylo potřeba se systémově postarat o pětapadesátníky, které nikdo nechtěl zaměstnat. Dnes tohle neplatí. Ale zítra to zase může platit. Takže správně je to tak, že předčasné důchody jsou přípustné pouze v době vysoké nezaměstnanosti. V době přezaměstnanosti jsou nežádoucí. Podle ČSSZ [2] jsme na konci roku 2022 měli v ČR celkem 2,8 milionu důchodců (včetně invalidních a pozůstalostních), z čehož 680 tisíc bylo předčasných. <strong>To je skoro čtvrtina!!!</strong></em></p>
+<p><em>Poznámka druhá: předdůchody, tedy možnost přestat pracovat dříve. Celé špatně. Pryč s tím ze systému. Jestli chce někdo přestat chodit do práce, proč by nemohl, ale přispívat do důchodového systému a platit zdravotní pojištění bude do té doby, než dosáhne 65 let a 35 započtených let (kdy odváděl). Je to tak složité? Na to není potřeba žádná právní úprava.</em></p>
+<p><em>Poznámka třetí: Nucení lidí pracovat v postproduktivním věku nic nepřinese. Na druhou stranu násilné odstavení těch, kdo pracovat mohou a chtějí, také postrádá smysl. Jestli někdo chce, může a umí pracovat po dosažení 65 let, ať to dělá. A nehádejme se o to, jestli má nebo nemá v té době odvádět sociální a zdravotní pojištění. Má, stejně jako všichni ostatní, kdo pracují. Pracovat je jeho volba. A žádné zvyšování výměry důchodu to nemá způsobovat, respektive může, ale tak malé, aby to nebylo motivací zůstat v práci. Zdůvodnění podrobněji níže v textu o průběžném systému.</em></p>
+<h2 id="pravidlo-třetí-jak-vysoký-má-být-starobní-důchod-a-kde-se-na-něj-vezme">Pravidlo třetí: Jak vysoký má být starobní důchod a kde se na něj vezme</h2>
+<p>Nejdřív si pojďme opět říct jednu nepříjemnou pravdu. Na důchod se nedá našetřit. Inflace je nevyhnutelná a dnešní koruna je oproti koruně za dvacet let nicotná. Proto už v roce 1889 vymyslel Otto von Bismarck průběžný systém.</p>
+<p>Je průběžný systém ten pravý?</p>
+<p>Ano. Je to jediný systém, který je odolný proti inflaci a dalším znehodnocujícím vlivům, a to proto, že prostředky se spotřebovávají právě ve chvíli, kdy byly získány. Jedinou nevýhodou mohou být krátkodobé výkyvy v populaci a příjmech. Podmínkou správného fungování průběžného systému je jednoznačné navázání výdajů tohoto systému na jeho příjmy. Všichni určitě rozumíme tomu, že nelze brát tam, kde nic není, a že peníze se ze vzduchu neberou.</p>
+<p>Průběžný systém se v ČR nazývá prvním pilířem důchodového systému. Každý zaměstnanec odvádí 28 % své mzdy (část sám, část odvádí zaměstnavatel). Malá násobilka: třetinu mzdy odvádím, tak později třetinu produktivního věku chci strávit v důchodu, že? Tedy pracuji-li 35 let, necelých 12 let důchodu? ŠPATNĚ! Takhle to nefunguje, nemá fungovat, není to tak myšleno. Průběžný systém nemá paměť a není to spoření. Co bylo před pěti lety je pryč, co bude za deset let, nikdo netuší. Průběžný systém je jen a pouze toto: v roce 2022 se vybralo 573,21 miliardy Kč [3], a ty se mohou rozdělit mezi důchodce. Jaká proboha valorizace? Ta je přece obsažená v té příjmové straně, ne? Když poskočí inflace, zvednou se mzdy a tím naroste příjmová strana.</p>
+<p>O žádné další pilíře se vlády a poslanců neprosíme. To, jestli si někdo kromě toho, že odvádí do systému, může a bude ještě bokem šetřit nebo investovat, je jednak rozhodnutím každého jednotlivce, a jednak pro tohle v naší poměrně vyspělé zemi máme celou škálu produktů poskytovaných státem kontrolovanými a jištěnými komerčními finančními institucemi. Není potřeba zakládat další fondy, to jsou jen trafiky, které oproti dostupným alternativám nepřinášejí žádnou výhodu.</p>
+<p>Co by nás naopak mělo zajímat, je rozdíl mezi tím, kolik do systému odvádějí zaměstnanci a kolik OSVČ. Uvědomují si páni zákonodárci, že OSVČ sice odvádí stejných 28 %, ale z vyměřovacího základu, který neodpovídá hrubému příjmu OSVČ, ale je jen jeho zlomkem? Vyměřovací základ OSVČ je totiž polovinou jejího zisku (příjmy mínus výdaje). Tedy například řemeslník s výdajovým paušálem 80 % odvádí 28 % z poloviny zisku (který je 20 %), tedy vyměřovací základ tohoto řemeslníka je 10 % jeho celkových příjmů? Takže reálně odvede 2,8 % svých celkových příjmů. A na druhou stranu, uvědomují si páni zákonodárci, že výměry důchodů pro OSVČ jsou také dramaticky nižší, než výměry zaměstnanců? A že z nich nebude reálné v postproduktivním věku žít? OSVČ musí okamžitě začít odvádět tak, jako zaměstnanci, tedy z celého daňového základu, a ne z jeho poloviny. A vyměřovat důchody se jim musí stejně, jako zaměstnancům, jinak nám všichni skončí na dávkách, což pravděpodobně reálně uvidíme v nejbližších letech, kdy se do důchodu začnou dostávat lidé, kteří celý produktivní život byli OSVČ.</p>
+<p>Další chybou, která je obzvlášť pikantní v době, kdy sháníme do důchodového systému každou korunu, abychom zazáplatovali koncepční chyby, které jsme si v něm nadělali, je existence stropu sociálního pojištění. Co kdybychom místo nápadů jako je dvojí progresivní sazba daně prostě zrušili strop pro odvod sociálního pojištění? Pak nepotřebujeme ani první progresivní sazbu, která byla mimochodem původně uzákoněna jako dočasná.</p>
+<p>Takže kde se na důchody vezme? Z průběžného systému. Máme přesná a objektivní data, kolik do systému v minulém roce přiteklo [3]. Máme přesně zjištěno, kolik je důchodců (všech - starobních, invalidních i pozůstalostních) [2]. Je to tak těžké spočítat? Podle údajů z roku 2022 [2], [3] vychází, že průměrný důchod má být: 573.210 / 12 / 2.844 = 16,79 tis. Kč měsíčně. Ve srovnání s tím, co zůstane čistého pracovníkovi, který v roce 2023 pobírá minimální mzdu a nemá děti (15,37 tis. Kč) to stále není tak zlé.</p>
+<p>Jestliže dnes máme průměrný důchod [3] 18 tis. Kč, nelze se divit, že důchodový systém generuje schodek, který musíme společně zaplatit z jiné hromádky, třeba ze zdravotnictví. Takže problém nespočívá, jak se nám snaží politici nakukat, v generaci Husákových dětí, ale v tom, že neumíme počítat a aktuálně utrácíme víc, než si můžeme dovolit. Nemluvě o 680 tisících lidí, kteří se nechávají živit v předčasném důchodu, protože jim to politici dovolili.</p>
+<p><em>Malé cvičení: kdyby neexistovali předčasní starobní důchodci, kolik by podle výpočtu výše vycházel průměrný důchod všem ostatním důchodcům? 573.210 / 12 / 1.934 = 24,7 tis. Kč měsíčně. Už chápete, proč se nám nelíbí předčasné odchody do důchodu?</em></p>
+<p>Máme jedinou možnost. Nastavit jasná pravidla, zrušit výjimky z výjimek a celý systém narovnat. A jednou za rok pak revidovat data a parametricky upravit výši důchodů pro další rok podle aktuálního počtu důchodců a podle příjmové stránky. Jinak to nejde. Možná namítnete, že řídit se loňskými daty pro letošní rok není také úplně správně. Ale výkyvy, které takto vzniknou, budou mít tendenci se vzájemně vyrušit. Celkový výsledek tak určitě bude výrazně lepší, než výsledek paskvilu, kterým se řídíme teď, kdy nejprve něco slíbíme a až pak přemýšlíme, kde na to vzít.</p>
+<h1 id="závěr">Závěr</h1>
+<p>Závěr ať si každý udělá sám. Ať se každý rozhodne, jestli chce dál poslouchat nesmysly o tom, že schodek důchodového systému je nutné spravit pozdějším odchodem do penze a zvýšením DPH z léků, nebo jestli bude hledat a podporovat takové politiky, kteří se nebojí podívat pravdě i lidem do očí, počítat a pracovat s objektivními daty. Mají při tom výhodu, jim dostupné informace jsou mnohem přesnější a komplexnější, než to, co se najde na internetu.</p>
+<p>Nechceme tvrdit, že to, co jsme v tomto článku sepsali, je dokonalá a jediná možná cesta. Nám osobně se třeba líbí i myšlenka rovného důchodu jako sociální dávky, který by také vyřešil všechny problémy, a ještě by díky němu odpadly miliardové výdaje za administrativu, ale to je na jinou debatu. Teď bychom měli řešit to, co nás aktuálně trápí.</p>
+<p>Tento článek jsme dokázali bez pomoci samozvaných rádoby-expertních komisí na základě veřejně dostupných informací z oficiálních zdrojů vymyslet za pár týdnů a sepsat za jedno dopoledne. Určitě bude potřeba udělat přesnější výpočty, ale věříme, že důchodová reforma popsaná výše je nejen reálně uskutečnitelná, ale především že nepřinese sociální nepokoje, ba naopak povede k všeobecnému zklidnění a smíření. A navíc bude beze změny fungovat i za dvacet, padesát, sto let.</p>
+<p><em>Pokud souhlasíte, podělte se o odkaz na tento článek s přáteli, nebo ještě lépe ho pošlete svému poslanci.</em></p>
+
+  
+  Jan B. Krejčí a Jaroslava Krejčí
+  
+
+  
+  <div class="separator mt-8 h-8 bg-gray-300 dark:bg-gray-700"></div>
+  <p>
+    <i>Použité zdroje:</i>
+  </p>
+  
+  <p>[1] ČTK https://www.ceskenoviny.cz/zpravy/2323542</p>
+  
+  <p>ČSSZ: Důchodci v ČR, dostupné zde: https://www.cssz.cz/documents/20143/99428/duchodci_v_cr_v_casove_rade.pdf/c75ba336-7353-69a0-7595-eb4d027db7dd </p>
+  
+  <p>[3] MF ČR: Hospodaření systému důchodového pojištění, dostupné zde: https://www.mfcr.cz/cs/verejny-sektor/statni-rozpocet/hospodareni-systemu-duchodoveho-pojisten</p>
+  
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="/gdpr">Ochrana osobních údajů</a>
+</footer></body>
+
+</html>
