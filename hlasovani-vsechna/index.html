@@ -242,7 +242,7 @@
                 </thead>
                 <tbody>
                     <template x-for="item in filteredData">
-                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.votingDeadline)" ></td><td class="truncate"  x-text="item.finalSubject" ></td><td class="whitespace-nowrap w-48 text-center" ><button class='success w-20' @click.stop='vote(item,true)'>PRO</button><button class='error w-20' @click.stop='vote(item,false)'>PROTI</button></td></tr>
+                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.votingDeadline)" ></td><td class="truncate"  x-text="item.finalSubject" ></td><td class="whitespace-nowrap w-48 text-center" ><button x-show='shouldIVoteFor(item)' class='success w-20' @click.stop='vote(item,true)'>PRO</button><button x-show='shouldIVoteFor(item)' class='error w-20' @click.stop='vote(item,false)'>PROTI</button></td></tr>
                     </template>
                 </tbody>
                 <tfoot>
@@ -658,7 +658,7 @@
                 </thead>
                 <tbody>
                     <template x-for="item in filteredData">
-                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.preselectionDeadline)" ></td><td class="truncate"  x-text="item.subject" ></td><td class="whitespace-nowrap w-48 text-center" ><button class='success w-20' @click.stop='vote(item,true)'>PRO</button><button class='error w-20' @click.stop='vote(item,false)'>PROTI</button></td></tr>
+                        <tr :id="item.id" @click.stop="location.href=&#39;/hlasovani-detail?id=&#39;&#43;item.id"><td class="w-32 text-right"  x-text="utils.formatDate(item.preselectionDeadline)" ></td><td class="truncate"  x-text="item.subject" ></td><td class="whitespace-nowrap w-48 text-center" ><button x-show='shouldIVoteFor(item)' class='success w-20' @click.stop='vote(item,true)'>PRO</button><button x-show='shouldIVoteFor(item)' class='error w-20' @click.stop='vote(item,false)'>PROTI</button></td></tr>
                     </template>
                 </tbody>
                 <tfoot>

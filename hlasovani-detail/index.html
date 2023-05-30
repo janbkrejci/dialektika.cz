@@ -330,7 +330,8 @@
         </button>
         (termín <span x-text="utils.formatDate(utils.addWeek(voting.preselectionClosed))"></span>)
       </div>
-      <div x-show="voting.state === 'elaborating'" class="flex flex-col space-y-2" x-data="{preview: false}">
+      <div x-show="voting.state === 'elaborating' && shouldIVote()" class="flex flex-col space-y-2"
+        x-data="{preview: false}">
         <label tabindex="-1" class="relative inline-flex items-center cursor-pointer">
           <input tabindex="-1" type="checkbox" x-model="preview" class="sr-only peer">
           <div tabindex="-1"
@@ -379,7 +380,7 @@
   <button x-show="voting.state === 'new'" :disabled="disabled" class="primary mt-8" @click="doCreateTopic">Navrhnout
     téma</button>
 
-  <div x-show="['suggested', 'voting'].includes(voting.state) && !didIVote() && shouldIVode()">
+  <div x-show="['suggested', 'voting'].includes(voting.state) && !didIVote() && shouldIVote()">
     <h2 x-show="voting.state === 'suggested'">Propustit k diskusi? <span class="text-sm"
         x-text="'(Termín pro vyjádření: ' + utils.formatDate(utils.addWeek(voting.created)) + ')'"></span>
     </h2>

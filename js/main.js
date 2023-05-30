@@ -17503,7 +17503,7 @@ ${content}</tr>
       window.location.href = "/hlasovani-detail?reOpen=" + id;
     },
     myVoteForVoting(voting) {
-      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting"));
+      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting") && v2.user === pb.authStore.model.id);
     },
     async vote(voting, vote) {
       await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
@@ -17545,7 +17545,11 @@ ${content}</tr>
       window.location.href = "/hlasovani-detail?reOpen=" + id;
     },
     myVoteForVoting(voting) {
-      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting"));
+      return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting") && v2.user === pb.authStore.model.id);
+    },
+    shouldIVoteFor(voting) {
+      debugger;
+      return !!this.myVoteForVoting(voting);
     },
     async vote(voting, vote) {
       await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
