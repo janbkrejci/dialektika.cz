@@ -13415,7 +13415,7 @@ ${content}</tr>
 
   // ns-hugo:/home/runner/dialektika/frontend/assets/js/pocketbase.js
   var import_lodash2 = __toESM(require_lodash());
-  var BACKEND_SERVER = "https://dialektika.janbkrejci.repl.co";
+  var BACKEND_SERVER = !!window.location.host.match("dialektika") ? "https://dialektika.janbkrejci.repl.co" : window.location.origin;
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
   async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}, targetCollection = null) {
