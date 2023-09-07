@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+<link href="/css/main.min.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script><title>Vzdělanost | Dialektika</title>
+<link rel="canonical" href="">
+<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+<link rel="icon" href="/img/logo.svg">
+<meta name="description" content="Vzdělanost je krásný termín a každý bude souhlasit, že se jedná o vznešený cíl. Otázka je, zda si každý z nás představuje pod pojmem vzdělanost totéž.">
+
+<meta name="keywords" content="Dialektika , Společnost">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta charset="utf-8">
+<script type='text/javascript'
+  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+  async='async'></script>
+</head>
+
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
+      
+      <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="/program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="/stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="/stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="/blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="/hlasovani-moje"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
+            <a href="/organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="/lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="/ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  &nbsp;
+<a class="no-underline" href="/blog/posts/2023/09/dialektika/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Vzdělanost</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="/archive/"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    2. září 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 6 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="/tags/"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_dialektika" href="/tags/dialektika/">Dialektika</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_společnost" href="/tags/spole%C4%8Dnost/">Společnost</a></div>
+</div><p>Vzdělanost je krásný termín a každý bude souhlasit, že se jedná o vznešený cíl. Otázka je, zda si každý z nás představuje pod pojmem vzdělanost totéž.</p>
+<p>Dle mého názoru vzdělanost není o certifikátech, které potvrzují dosaženou úroveň vzdělání každého jednotlivce, ale je o dosažené schopnosti lidí na příslušné úrovni vzdělání konat. Stát by měl tuto úroveň schopnosti konat garantovat právě oněmi vydanými certifikáty, ale bohužel se tak neděje. Úroveň vzdělání podle certifikátu může být srovnatelná, ale schopnost lidí konat se velice liší stát od státu, kraj od kraje a dokonce škola od školy.</p>
+<p>Jako v mnoha jiných oblastech i ve školství se stát snaží zasahovat do každé maličkosti ve školách, zvyšuje administrativu a diktuje, jak se má učit. Já se domnívám, že učitelé učit umí. Když jim dáme požadavek na konkrétní úroveň a kvalitu znalostí a dovedností na konci každého stupně vzdělání, tak si sami dokáží poradit tak, aby stanovených cílů dosáhli.</p>
+<p>Jediné co stát musí zajistit, je výstupní kontrola, a to jednotná pro celý stát na každém stupni vzdělání. Jedině kontrolou dosažení cílů můžeme zjistit, jak jednotlivá školská zařízení fungují a zda jsou schopna splnit požadavky na taková zařízení. To vše bez předepisování garantů a výše vzdělání vyučujících. Garanti a certifikáty vyučujících totiž nezaručují vůbec nic.</p>
+<p>Dovolím si předložit návrh, jak by mělo být koncipováno vzdělání od mateřských škol po vysoké školy při zachování stávajícího nastavení vzdělávacího systému v ČR:</p>
+<h2 id="mateřské-školy">Mateřské školy</h2>
+<p>Úkolem mateřské školy je uvedení dětí do kolektivu a tím přispění k dosažení sociální zralosti dětí. Bez kolektivu se dítě nedokáže naučit správnému sociálnímu chování, které je základní podmínkou fungování ve společnosti.</p>
+<p>Jednotnou zkouškou na konci tohoto vzdělání je vlastně zápis do základní školy. Obávám se, že tato „zkouška“ postrádá tu nejdůležitější část, a tou je zpětná vazba mateřským školám a zřizovatelům mateřských škol. Takže naprosto chybí vyhodnocení fungování mateřských škol z hlediska plnění jejich základního cíle.</p>
+<h2 id="základní-školy--první-stupeň">Základní školy – první stupeň</h2>
+<p>První stupeň základní školy je tvořen prvním až pátým ročníkem. Jeho úkolem by (dle mého názoru) mělo být dosažení gramotnosti obyvatelstva. To znamená naučit děti číst, psát a počítat, ale pozor, už žijeme v éře počítačů, takže počítačová gramotnost nesmí zůstat stranou.</p>
+<p>Počítačová gramotnost je první Achillovou patou současného vzdělávání. Základní úkony na počítačích a principy fungování počítačů na prvním stupni neučíme, ale klidně na druhém stupni a dále ve školství předpokládáme jejich znalost.</p>
+<p>Výsledem je, že si naše děti báječně „palečkují“ na telefonech, skvěle hrají počítačové hry a sdílejí fotky na sociálních sítích, ale ani vysokoškoláci často neumí tak základní věci jako zformátovat na počítači napsaný text, nebo vytvořit fungující tabulku v Excelu.</p>
+<p>Naprosto chybí státem garantovaná zkouška dosažených znalostí z prvního stupně základní školy. Jedinou její alternativou je dnes přijímací řízení na víceletá gymnázia.</p>
+<p>Absence výstupní kontroly prvního stupně základní školy znamená, že se snažíme děti dále vzdělávat, aniž bychom měli sebemenší důkaz, zda jsou nebo nejsou gramotné. Prostě to jen předpokládáme, a to často až na úroveň vysoké školy.</p>
+<h2 id="základní-školy--druhý-stupeň">Základní školy – druhý stupeň</h2>
+<p>Druhý stupeň základní školy je tvořen šestým až devátým ročníkem. Jeho úkol v současnosti není vůbec zřejmý.</p>
+<p>Dle mého názoru by výsledkem vzdělání druhého stupně měla být schopnost přežít v našem státě a v reálném světe. Na druhém stupni by se tedy měl vychovávat občan, který se umí orientovat v právním systému i ekonomickém prostředí České republiky. Výsledkem vzdělání na druhém stupni základní školy by měla být také znalost základních fyzikálních zákonů, které omezují náš reálný život. Není totiž pravdou, že můžeme mít vše, co chceme. Už jen to, že žijeme na Zemi, limituje naše možnosti. Například i takzvaná finanční negramotnost ve skutečnosti vyplývá z neznalosti základních fyzikálních zákonů. Nemohu totiž rozdávat z něčeho, co nemám. Za samozřejmost pak považuji rozvoj kritického myšlení, bez kterého je každý snadnou obětí „predátorů“.</p>
+<p>Toto v současném školství naprosto postrádám. Věřte, že mluvím z vlastní zkušenosti, kdy u poměrně přirozeně inteligentních jedinců marně hledám výše uvedené znalosti a schopnosti. Tito jedinci pak ale nemohou být plnohodnotnými občany státu, protože nevědí, jaká jsou jejich práva a povinnosti a jak mohou bojovat proti nespravedlnosti.</p>
+<p>Výstupní kontrola opět naprosto chybí. Do života vstupují mladí lidé bez základních znalostí a bez kritického myšlení. Přesto základní školy dále fungují stejným způsobem a jsou státem financovány bez ohledu na chabé výsledky. Za co jsou financovány, nikdo neví. Možná i to je důvod, proč rodiče dávají před druhým stupněm základní školy přednost víceletým gymnáziím, aby jejich děti nezakrněly.</p>
+<p>Přijímací řízení na střední školy je pouhým sítem, protože nemáme dostatečné kapacity středních škol. Úlohu výstupní kontroly a zpětné vazby neplní ani náhodou.</p>
+<h2 id="střední-školy">Střední školy</h2>
+<p>Úlohou středních škol je dle mého názoru další rozvoj znalostí z druhého stupně základních škol s tím, že by se znalosti měly rozšířit o principy fungování nejen ČR, ale celého světa. Samozřejmostí je prohlubování specializace podle zaměření odborné školy.</p>
+<p>Neopomíjenou součástí středoškolského vzdělání by mělo být pochopení fungování EU. Tomu bychom jako evropští občané měli rozumět, ale nerozumíme téměř nikdo. Politikům se to zřejmě velice hodí.</p>
+<p>Je mi moc líto učitelů na středních školách, protože musí stavět tam, kde naprosto chybí základy ze základních škol. Nemají to vůbec lehké.</p>
+<p>Speciálním typem střední školy je gymnázium. Podle definice se jedná o typ střední školy poskytující všeobecné vzdělání. Gymnázium bylo historicky vnímáno jako příprava pro vysokoškolské vzdělání. Toto již není pravda. Jestliže existují gymnázia, kde maturitní zkouška z matematiky chybí, pak se již nejedná o všeobecné vzdělání, ale o odbornou školu s humanitním zaměřením.</p>
+<p>Střední školy jsou jediným stupněm vzdělání, u kterého existuje státní výstupní kontrola v podobě celostátně vyhlašované maturitní zkoušky. Bohužel pouze u českého jazyka a literatury. Zbytek vzdělání je opět naprosto mimo kontrolu státu. Jeho úroveň je tudíž zpochybnitelná.</p>
+<h2 id="vysoké-školy">Vysoké školy</h2>
+<p>Úlohou vysoké školy je dle mého názoru vychovat řídící pracovníky, kteří budou schopni samostatného vyhledávání informací a především rozhodování. K tomu, aby někdo mohl rozhodovat za druhé a o druhých, potřebuje kromě informací také morálku. Morálka jako pevný základ pro rozhodování je ve školství naprosto opomíjena, přestože se jedná o základní pilíř fungování ve společnosti.</p>
+<p>Výstupní kontrolou má být státní závěrečná zkouška, která postrádá srovnatelnou úroveň u různých škol. Stát si myslí, že když škole dá právo provozovat vysokoškolské vzdělávání, nemusí již dále zkoumat jeho úroveň, pokud nedojde k tak hroznému pochybení, jako je rozdávání vysokoškolských titulů za nic. To je velký omyl.</p>
+<h2 id="slíbený-návrh">Slíbený návrh</h2>
+<p>Na začátku jsem napsala, že předložím návrh, jak by to mělo být správně. Návrh je jednoduchý:</p>
+<ol>
+<li>Ujasnit si a zviditelnit, co je cílem kterého stupně vzdělávání. Jednoduchými slovy a konkrétními požadavky na to, co má žák konkrétně umět.</li>
+<li>Zajistit prověření toho, jak tyto požadavky každý žák splňuje. Na to není potřeba zavádění složitých procedur a předpisů - stačí udělat povinné dotazníkové šetření nebo zadat státní písemky.</li>
+<li>Vyhodnotit úroveň splnění požadavků, informovat o ní veřejnost a především vzdělávací instituce samotné.</li>
+</ol>
+<p>&hellip;je to tak složité?</p>
+<h2 id="závěrem">Závěrem</h2>
+<p>Politici neustále mluví o vzdělání a nutnosti jeho rozvoje. Často se hovoří o změně osnov. Časté jsou také diskuze o víceletých gymnáziích a jejich existenci. Obávám se, že problém školství je někde jinde. Problémem je naprostá nesrovnatelnost jednotlivých škol, chybějící kontrola ze strany státu a situace, kdy stát garantuje úroveň vzdělání, o které vůbec nic neví a ani tuto úroveň na jednotlivých stupních vzdělání nemá jasně definovanou.</p>
+<p>Důsledky v celé společnosti vidíme všichni. Snažíme se „ochránit“ ty, kterým jsme neposkytli dostatečné základní vzdělání. Zaměstnavatelé nemají kvalitní zaměstnance. Řídí nás často nemorální jedinci, kteří nejsou schopní učinit kvalitní rozhodnutí.</p>
+<p>Jestli chceme přežít, je potřeba se vzdělávacím systémem u nás už vážně něco zásadního udělat. A buďte si jisti, že umělá inteligence nás nezachrání, protože počítače umí jen to, co je lidé naučí (včetně schopnosti se učit). Když budeme hloupí, budeme je učit špatně a zadáme jim špatná data, počítače určitě problémy správně nevyřeší.</p>
+
+  
+  Jaroslava Krejčí
+  
+
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="/gdpr">Ochrana osobních údajů</a>
+</footer></body>
+
+</html>

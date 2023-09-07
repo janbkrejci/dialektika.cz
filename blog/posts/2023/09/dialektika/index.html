@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+<link href="/css/main.min.css" rel="stylesheet" />
+<script src="/js/main.js" defer></script><title>Dialektika - pro lepší život | Dialektika</title>
+<link rel="canonical" href="">
+<link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
+<link rel="icon" href="/img/logo.svg">
+<meta name="description" content="Dnes vám přinášíme zamyšlení nad tím, jak to udělat, aby se nám všem lépe žilo. Cílem Dialektiky je totiž přesně tohle - přispět k lepšímu životu občanů České republiky.
+Zní to možná moc obecně, ale věřte, že za tímhle jednoduchým prohlášením je spousta přemýšlení a práce.
+Pojďme si tedy myšlenku a cíl Dialektiky zkusit vysvětlit trochu do hloubky. Možná, že po přečtení tohoto článku vám začne dávat lepší smysl to, o co se tady snažíme.">
+
+<meta name="keywords" content="Dialektika , Společnost">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta charset="utf-8">
+<script type='text/javascript'
+  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
+  async='async'></script>
+</head>
+
+<body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+  <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Globální navigace">
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="sr-only">Dialektika</span>
+        <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button"
+        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  text-gray-700 dark:text-gray-100"
+        @click="user_showSidebar = true">
+        <span class="sr-only">Hlavní nabídka</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="/program">Program</a>
+      <a href="/stanovy">Stanovy</a>
+      <a href="/stanoviska">Přijatá stanoviska</a>
+      <a href="/blog">Blog</a>
+      
+      <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
+      <a x-show="user_id" href="/organizace">Organizace</a>
+      <a x-show="user_id" href="/lide">Lidé</a>
+      <a x-show="user_id" href="/ja">Já</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
+      <a x-show="user_id" href="#" @click.prevent="logout">Odhlášení
+        <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+  
+  <div x-show="user_showSidebar" class="lg:hidden" role="dialog" aria-modal="true">
+    
+    <div class="fixed inset-0 z-10" @click="user_showSidebar = false"></div>
+    <div focus="true"
+      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-gray-100/10 scrollbar-hide ">
+      <div class="flex items-center justify-between">
+        <a href="/" class="-m-1.5 p-1.5 visible sm:invisible">
+          <span class="sr-only">Dialektika</span>
+          <div class="logo w-8 h-8 bg-gray-900 dark:bg-gray-100"></div>
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5" @click="user_showSidebar = false">
+          <span class="sr-only">Zavřít nabídku</span>
+          <svg class="h-6 w-6 text-gray-700 dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-300/10">
+          <div class="space-y-2 py-6">
+            <a href="/program"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Program</a>
+            <a href="/stanovy"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Stanovy</a>
+            <a href="/stanoviska"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přijatá
+              stanoviska</a>
+            <a href="/blog"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Blog</a>
+          </div>
+          
+          <div x-show="user_id" class="space-y-2 py-6">
+            <a href="/hlasovani-moje"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
+            <a href="/organizace"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
+            <a href="/lide"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
+            <a href="/ja"
+              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
+          </div>
+          <div class="py-6">
+            <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Přihlášení</a>
+            <a x-show="user_id" @click.prevent="logout"
+              class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Odhlášení</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header><main x-cloak>
+    
+<div class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex justify-between">
+  
+  <a class="no-underline" href="/blog/posts/2023/09/vzdelavani/"><div>&larr; Novější</div></a>
+  
+<a class="no-underline" href="/blog/posts/2023/06/hlava_23/"><div class="text-right">Starší &rarr;</div></a>
+</div>
+<h1>Dialektika - pro lepší život</h1><div class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+    <a href="/archive/"><div class="calendar w-4 h-4 mr-1 bg-gray-500 dark:bg-gray-400"></div></a>
+    
+    2. září 2023 | 
+
+    <div class="clock w-4 h-4 mx-1 bg-gray-500 dark:bg-gray-400"></div>
+   
+    
+    Doba čtení 9 min.</div>
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">  
+    <a href="/tags/"><div class="tag w-4 h-4 bg-gray-500 dark:bg-gray-400"></div></a>
+    &nbsp;<a class="text-gray-500 dark:text-gray-400" id="tag_dialektika" href="/tags/dialektika/">Dialektika</a> &nbsp;&middot;&nbsp; <a class="text-gray-500 dark:text-gray-400" id="tag_společnost" href="/tags/spole%C4%8Dnost/">Společnost</a></div>
+</div><p>Dnes vám přinášíme zamyšlení nad tím, jak to udělat, aby se nám všem lépe žilo. Cílem Dialektiky je totiž přesně tohle - přispět k lepšímu životu občanů České republiky.</p>
+<p>Zní to možná moc obecně, ale věřte, že za tímhle jednoduchým prohlášením je spousta přemýšlení a práce.</p>
+<p>Pojďme si tedy myšlenku a cíl Dialektiky zkusit vysvětlit trochu do hloubky. Možná, že po přečtení tohoto článku vám začne dávat lepší smysl to, o co se tady snažíme.</p>
+<h2 id="co-je-to-ten-lepší-život">Co je to ten lepší život?</h2>
+<p>O kvalitě života se toho napsalo už hodně. Maslow vymyslel svou pyramidu potřeb, v Bhůtánu místo měření výkonnosti ekonomiky vynalezli měření indexu národního štěstí, různá náboženství v tom, co je to kvalitní život, mají také celkem  jasno - buďte dobří, dodržujte přikázání a přijdete do nebe. Někteří filosofové tvrdí, že nebe je (nebo může být) tady na Zemi. Vyberte si. Všichni míří stejným směrem. Člověk je, jak sám s oblibou říká, nejdokonalejším výtvorem přírody (nebo Boha, podle toho, čemu věříte). Možná je jenom jedinečnou a náhodnou hříčkou Vesmíru, možná ne. Jisté ale je, že člověk je bytost společenská. Na tom se asi shodne většina - bez společnosti (tlupy, smečky) člověk jen těžko přežívá a určitě není šťastný.</p>
+<p>Proto jsem přesvědčen, že společnost, ve které žijeme, je zásadním a určujícím faktorem pro naše štěstí a obecně pro kvalitu našeho života. Můžete namítnout, že vám je do společnosti houby, vystačíte si sami, nebo se svou rodinou či partou nejbližších přátel. Ale tak to není. Celá společnost se nás neustále dotýká ze všech stran, i když si to ani neuvědomujeme. Kde se vzalo jídlo, co máme na stole? Odkud pochází elektřina, kterou svítíme? Jak se k nám dostal signál mobilní sítě? Většinu věcí, se kterými se denně potkáváme, už dnes nedokáže od A do Z vyrobit ani vysvětlit žádný jednotlivec. Ať tak či tak, společnost tu s námi je a my jsme její součástí.</p>
+<p>V každém okamžiku našeho života jsme se společností v kontaktu. Něco jí odevzdáváme (svůj čas, práci, myšlenky, úsilí) a něco od ní dostáváme (zase jiné myšlenky, věci, služby, hodnoty, pravidla, bezpečí a tak dále). Klíčovým faktorem naší spokojenosti je rovnováha - to, co dostáváme, by mělo spravedlivě odpovídat tomu, co odevzdáváme. O tom je dělba práce, kterou člověk vynalezl už na konci pravěku. Když se člověk cítí zneužívaný, protože odevzdává víc, než dostává, je nespokojený. Když dostává víc, než odevzdává, tak sice už tolik nespokojený není, ale pokud má aspoň trochu svědomí, tak ho jednou za čas aspoň dožene pocit studu.</p>
+<p>Celá společnost se pořád někam posouvá a vyvíjí. Tu k lepšímu, ondy zase k horšímu. Jsme raději, když je to k lepšímu.</p>
+<p>Jak poznáme, zda je náš život dnes lepší, než včera? Nevím, ale nějak to zkrátka poznáme - je to především o osobním pocitu a názoru, zatím myslím nikdo nevymyslel všeobecně přijímanou stupnici pro objektivní měření, tedy kromě Bhůtánců.</p>
+<p>Lepší život člověka tedy nejspíš znamená jeho vědomí, že se obecně zlepšuje život celé společnosti, a že on sám z toho není vynechán.</p>
+<h2 id="dělba-práce-ve-společnosti">Dělba práce ve společnosti</h2>
+<p>Jak jsem naznačil už výše, ve společnosti funguje na mnoha úrovních dělba práce. Hezky to popsal inspektor Trachta ve filmu Rozpuštěný a vypuštěný - někteří ořou a vláčejí, jiní sklízejí. V lidské společnosti existuje nesčíslné množství rolí, které někdo plní. Není mým úmyslem je zkoušet vyjmenovat, ani se zamýšlet nad tím, jak dobře či špatně jsou do těchto rolí lidé obsazováni. To je na jiné povídání. Chci jen říct, že ať už je moje role jakákoli, v zájmu celku bych ji měl vykonávat svědomitě, soustředěně a opravdově. Z teorie her vyplývá, že spolupráce je vždycky výhodnější strategií než zápas, a to nehledě na to, zda ostatní spolupracují, nebo chtějí zápasit. To je dobré si uvědomit. Je jedno, co a jak dělají ostatní, z pohledu celkového skóre je vždy správné spolupracovat, tedy dělat to, co je mi předurčeno, a to nejlépe, jak to dokážu.</p>
+<p>A tady je jeden ze zdrojů lidské nespokojenosti. Když máme pocit, že se ostatní nesnaží tolik, kolik se snažíme my, cítíme se zneužíváni. To je pochopitelné. Jenže problém je v tom, že když se zeptáte těch ostatních, tak vám určitě neřeknou, že se úmyslně a vědomě vezou na úkor druhých!</p>
+<p>V tuto chvíli je úplně jedno, jestli má pravdu jeden, nebo druhý. Podstatné je, že tenhle nesoulad ve vnímání existuje, a že se s ním musíme naučit pracovat.</p>
+<h2 id="výhody-zralé-občanské-společnosti">Výhody zralé občanské společnosti</h2>
+<p>Jak dosáhnout toho, aby se ten druhý dozvěděl, že z našeho pohledu nedělá to, co má, a aby měl šanci se před námi hájit? To tajemství se jmenuje dospělost. Ve společnosti, která je dospělá, si lidé říkají navzájem to, co si myslí. Říkají si to se vší slušností, ale otevřeně. Neštěkají na sebe, nejsou pasivně agresivní, nepomlouvají se za zády. A jsou připraveni na to, že druzí jim na oplátku otevřeně řeknou, co se jim nelíbí u nich samotných. Tomuhle se říká občanská společnost - mluvíme spolu, diskutujeme, přesvědčujeme se o svých názorech a přijímáme názory ostatních.</p>
+<p>Mrkněte se kolem sebe - jestlipak se nás náš minulý prezident nebo současný premiér někdy zeptali, co si myslíme? Já vím, že to je těžké, sám se tomu často rád vyhnu. Smutnou pravdou ale je, že bez zpětné vazby se nelze rozvíjet, můžeme se jen utvrzovat ve svých názorech, u kterých ale nemůžeme mít jistotu, že jsou správné, pokud je nepodrobíme kritickému zkoumání a diskusi.</p>
+<p>Rád dávám za příklad dospělého občanství jednu na pohled banální historku ze své dávné návštěvy Holandska. Zastavil jsem u benzínové pumpy, nabral si palivo a šel zaplatit. Ve frontě u pokladny se mi začalo chtít na WC, tak jsem si tam po zaplacení skočil. Když jsem přišel k autu, stála tam paní středního věku a zcela klidně, věcně a vlídně mi řekla: „Já vím, že jste cizinec. Chci vám tedy říct, že tady je zvykem, když natankujete, odjet od stojanu a pak jít teprve platit, aby mohli tankovat ostatní. Kdybyste tedy byl tak hodný a příště to udělal takto.“ Poděkoval jsem a omluvil se, že jsem neměl tušení, jak je to správně. Zopakovala mi, že se na mě vůbec nezlobí, ale že pokládala za správné mi to říct, protože si je jistá, že když to budu vědět, zachovám se příště očekávaným způsobem. Krása, co říkáte? Paní na mě nekřičela, nepomlouvala mě u jiných lidí, neobešla mi auto s korunou. Ne, řekla mi, co ode mě očekává a proč. Hotovo, vyřízeno, jedeme dál. Tohle mi v naší domovině dodnes hrozně moc chybí. Pojďme si přestat brblat pod fousy, že je někdo lump, a pojďme se ho zkusit zeptat, co ho vede k tomu, že dělá to, co dělá. Nebude to tak lepší?</p>
+<h2 id="nejdřív-základy-pak-zbytek">Nejdřív základy, pak zbytek</h2>
+<p>Pokud chceme lepší život, musíme se o něj přičinit. Nejprve každý sám za sebe - dělejme to, co máme dělat. Dělejme to poctivě. Učme se od druhých. Mluvme spolu otevřeně a slušně o všech důležitých věcech. Hledejme každou cestu, jak můžeme společně něco zlepšit. Když každý udělá denně jednu maličkost, výsledky budou obrovské.</p>
+<p>Je důležité vždycky vědět, kam směřujeme. Co je problém, jaká je jeho skutečná příčina a jak ho chceme vyřešit. Využívejme různosti našich schopností, odlišnosti názorů i přesvědčení. Mysleme na to, že důležitou součástí každého konání je i to, že by mu ostatní měli rozumět. Jen tak nás mohou podpořit a přiložit ruku k dílu.</p>
+<p>Já osobně bych začal v oblasti základního nastavení - pravidel chování ve společnosti, respektive ve státě. Jinými slovy u zákonů, které rámují a určují veškeré naše konání. Vnímám jako velký problém nejen jejich množství, ale také jejich nesrozumitelnost, vzájemnou nesoudržnost a to, že veřejnost vůbec netuší, kam všechny směřují. Chci věřit, že to tuší aspoň ti, kdo je píší a schvalují. Ale to mi nestačí. Nelíbí se mi postoj „Do toho se nám nepleťte, my to za vás vymyslíme a vyřešíme.“ Nebudí ve mně důvěru.</p>
+<p>Další na řadě je politická kultura v naší zemi. Ať chceme, nebo ne, máme tady zastupitelskou demokracii, kdy občané dávají mandát svým zástupcům, aby jejich jménem řídili stát. Oni ale vždycky po volbách tak nějak zapomenou na to „jejich jménem“ a v hlavě si to přeloží jako „místo nich“. Někam si zalezou a cosi si tam spolu vaří pod pokličkou. A voliči jsou zase zklamaní, že je od toho odstrkují a nevezmou je do party. Tomuto se snaží zabránit Dialektika - když si přečtete prototyp našich stanov (nahoře je na něj odkaz), tak uvidíte, že Dialektika kráčí směrem k demokracii, která není jen slovem na papíře, ale klíčovým principem veškerého konání a jednání. Čím víc lidí bude chtít takto pracovat a osobně se podílet na řízení země, tím lépe to bude fungovat.</p>
+<h2 id="vzkaz-pro-manažery-naší-země">Vzkaz pro manažery naší země</h2>
+<p>Milá vládo, milí poslanci a senátoři, milý pane prezidente, milí zastupitelé. Velice vás prosím, mluvte s námi obyčejnými lidmi. Já chápu, že máte tolik práce, že se nestihnete ani pořádně najíst a vyspat. Ale když trošku zpomalíte a věnujete nějaký čas tomu, abyste s námi prodiskutovali změny a opatření, která se chystáte přijmout, uděláte dobře sami sobě. Abychom my, obyčejní občané, byli schopni vám pomáhat posouvat naši zemi k lepší budoucnosti, musíme především pochopit, o co se snažíte. A vy zase musíte pochopit, co trápí nás, z čeho máme obavy, po čem toužíme a co je pro nás důležité. Jestli nás budete pořád vynechávat ze svého rozhodování, nedivte se pak tomu, že se k vám a vašim rozhodnutím budeme obracet zády.</p>
+<h2 id="vzkaz-pro-veřejnoprávní-média-a-novináře">Vzkaz pro veřejnoprávní média a novináře</h2>
+<p>Milí přátelé, vaší úlohou je především v rámci šíření důležitých informací přispívat k hladkému chodu státu a tím k lepšímu životu společnosti. Chci od vás tedy jako váš zaměstnavatel, který vás svými poplatky a vynucenou konzumací reklamy živí, abyste si dali tu práci a informovali veřejnost o nových zákonech, které procházejí legislativním procesem. Lidé se od vás mají dozvídat, co se chystá, proč to je navrženo, jaká je podstata řešení, od kdy bude změna platit a jak se týká každého z nich. A hlavně se mají dozvídat, co bylo opravdu schváleno a co ne. Tohle neděláte a já jsem s tím vážně nespokojen. Když už o něčem informujete, tak je to vždycky ve chvíli, kdy se teprve jedná o návrh, o kterém se ještě ani nazačalo jednat. Co pak ale už nikdy neřeknete, je to, že ten návrh vůbec projednán nebyl a platit nikdy nebude. Lidé se pak špatně rozhodují a dělají nesprávné kroky, protože jste jim popletli hlavy špatnou informací. Dělejte to tedy prosím zodpovědně, poctivě a hlavně důsledně. Já vím, že je to práce. Ale bez práce nejsou koláče.</p>
+
+  
+  Jan B. Krejčí
+  
+
+  
+</main><footer x-cloak class="print:hidden">
+  
+  <div class="sharethis-inline-share-buttons grow"></div>
+  
+  <a href="/gdpr">Ochrana osobních údajů</a>
+</footer></body>
+
+</html>

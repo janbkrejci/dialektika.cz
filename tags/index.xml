@@ -6,11 +6,20 @@
     <description>Značky na webu Dialektika</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cs-CZ</language>
-    <lastBuildDate>Fri, 23 Jun 2023 10:00:00 +0100</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Sep 2023 10:00:00 +0200</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dialektika</title>
+      <link>/tags/dialektika/</link>
+      <pubDate>Sat, 02 Sep 2023 10:00:00 +0200</pubDate>
+      
+      <guid>/tags/dialektika/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Společnost</title>
       <link>/tags/spole%C4%8Dnost/</link>
-      <pubDate>Fri, 23 Jun 2023 10:00:00 +0100</pubDate>
+      <pubDate>Sat, 02 Sep 2023 10:00:00 +0200</pubDate>
       
       <guid>/tags/spole%C4%8Dnost/</guid>
       <description></description>
@@ -19,7 +28,7 @@
     <item>
       <title>Myšlenky</title>
       <link>/tags/my%C5%A1lenky/</link>
-      <pubDate>Mon, 08 May 2023 13:00:00 +0100</pubDate>
+      <pubDate>Sun, 09 Apr 2023 10:00:00 +0100</pubDate>
       
       <guid>/tags/my%C5%A1lenky/</guid>
       <description></description>
