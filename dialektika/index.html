@@ -4,19 +4,18 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Co je to dialektika? | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
 <meta name="description" content="Těžko říci, význam tohoto pojmu se časem hodně měnil a i dnes je nejednoznačný.
 Nám je nejbližší, jak dialektiku vnímali antičtí filozofové:
-Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se střídají tvrzení a námitky, podepřené racionálními argumenty. Cílem takového rozhovoru je přiblížit se pravému poznání tím, že účastníci si navzájem vyvracejí nesprávná, neobhajitelná mínění. „Umění“ spočívá v tom, že každý účastník musí správně pochopit smysl tvrzení a odpovídat na ně v souladu s pravidly logiky.">
+
+Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se střídají tvrzení a námitky, podepřené racionálními argumenty. Cílem takového rozhovoru je přiblížit se pravému poznání tím, že účastníci si navzájem vyvracejí nesprávná, neobhajitelná mínění. „Umění“ spočívá v tom, že každý účastník musí správně pochopit smysl tvrzení a odpovídat na ně v souladu s pravidly logiky. [1]">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 
 <body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
@@ -45,9 +44,6 @@ Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se stř�
       <a href="/blog">Blog</a>
       
       <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
-      <a x-show="user_id" href="/organizace">Organizace</a>
-      <a x-show="user_id" href="/lide">Lidé</a>
-      <a x-show="user_id" href="/ja">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
       <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
@@ -91,12 +87,6 @@ Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se stř�
           <div x-show="user_id" class="space-y-2 py-6">
             <a href="/hlasovani-moje"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
-            <a href="/organizace"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
-            <a href="/lide"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
-            <a href="/ja"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
           </div>
           <div class="py-6">
             <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
@@ -130,7 +120,8 @@ Výraz dialektika znamenal původně umění rozhovoru či diskuse, kde se stř�
   
 </main><footer x-cloak class="print:hidden">
   
-  <div class="sharethis-inline-share-buttons grow"></div>
+  <div class="grow"></div>
+  
   
   <a href="/gdpr">Ochrana osobních údajů</a>
 </footer></body>

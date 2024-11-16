@@ -3,23 +3,39 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Ověření e-mailu | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" Ověření e-mailu Děkujeme, Váš e-mail byl ověřen. Na hlavní stránku ">
+<meta name="description" content="
+  
+    
+    
+      Ověření e-mailu
+    
+    
+    
+      
+      
+        Děkujeme, Váš e-mail byl ověřen.
+      
+      
+      
+        Na hlavní stránku
+      
+    
+  
+">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 <body x-data="common">
 <main x-cloak class="grid place-content-center h-full">
   
 
-<div @keyup.escape.window="back()" x-data="confirmEmail" @keydown.enter.prevent="next"
+<div @keyup.escape.window="window.location.replate('/')" x-data="confirmEmail" @keydown.enter.prevent="window.location.replace('/')"
   class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
   <div class="p-6 space-y-4">
     <!-- title -->

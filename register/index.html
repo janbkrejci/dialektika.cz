@@ -3,24 +3,82 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Registrace | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" Registrace Uživatel * E-mail * Heslo * Heslo podruhé * Registrovat Storno Máte už svůj účet? Přihlašte se Ztratili jste heslo? Obnovte si ho ">
+<meta name="description" content="
+  
+    
+    
+      Registrace
+    
+    
+    
+      
+      
+      
+      
+        
+          Přihlašovací jméno *
+          
+          
+        
+        
+          Příjmení *
+          
+          
+        
+        
+          Jméno *
+          
+          
+        
+        
+          E-mail *
+          
+          
+        
+        
+          Heslo *
+          
+          
+        
+        
+          Heslo podruhé *
+          
+          
+        
+      
+      
+      
+        
+          Registrovat
+        
+        Storno
+      
+      
+      
+        Máte už svůj účet? Přihlašte se
+      
+      
+        Ztratili jste heslo?
+        Obnovte si ho
+      
+    
+  
+">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 <body x-data="common">
 <main x-cloak class="grid place-content-center h-full">
   
 
-<div x-cloak @keyup.escape.window="history.back()" x-data="register" @keydown.enter.prevent="next"
-  class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
+<div x-cloak @keyup.escape.window="back" x-data="register" @keydown.enter.prevent="next"
+  class="w-96 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-xl>
   <div class="p-6 space-y-4">
     <!-- title -->
     <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
@@ -31,36 +89,50 @@
       <!-- results -->
       <div x-show="errors.registrationError" class="alert error p-2 text-sm" x-text="errors.registrationError"></div>
       <!-- inputs -->
-      <div>
-        <label for="alias">Uživatel *</label>
-        <input id="alias" :class="{'input': true, 'error': errors.aliasError}" type="text" x-model="fields.alias"
-          @input="fields.alias = $el.value">
-        <div class="error-text" x-text="errors.aliasError"></div>
-      </div>
-      <div>
-        <label for="email">E-mail *</label>
-        <input id="email" :class="{'input': true, 'error': errors.emailError}" type="text" x-model="fields.email"
-          :disabled="form == 'login'" @input="fields.email = $el.value">
-        <div class="error-text" x-text="errors.emailError"></div>
-      </div>
-      <div>
-        <label for="password">Heslo *</label>
-        <input id="password" :class="{'input': true, 'error': errors.passwordError}" type="password"
-          x-model="fields.password" @input="fields.password = $el.value" />
-        <div class="error-text" x-text="errors.passwordError"></div>
-      </div>
-      <div>
-        <label for="password2">Heslo podruhé *</label>
-        <input id="password2" :class="{'input': true, 'error': errors.password2Error}" type="password"
-          x-model="fields.password2" @input="fields.password2 = $el.value">
-        <div class="error-text" x-text="errors.password2Error"></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label for="alias">Přihlašovací jméno *</label>
+          <input id="alias" :class="{'input': true, 'error': errors.aliasError}" type="text" x-model="fields.alias"
+            @input="fields.alias = $el.value">
+          <div class="error-text" x-text="errors.aliasError"></div>
+        </div>
+        <div>
+          <label for="surname">Příjmení *</label>
+          <input id="surname" :class="{'input': true, 'error': errors.surnameError}" type="text" x-model="fields.surname"
+            @input="fields.surname = $el.value">
+          <div class="error-text" x-text="errors.surnameError"></div>
+        </div>
+        <div>
+          <label for="givenname">Jméno *</label>
+          <input id="givenname" :class="{'input': true, 'error': errors.givennameError}" type="text" x-model="fields.givenname"
+            @input="fields.givenname = $el.value">
+          <div class="error-text" x-text="errors.givennameError"></div>
+        </div>
+        <div class="col-span-2">
+          <label for="email">E-mail *</label>
+          <input id="email" :class="{'input': true, 'error': errors.emailError}" type="text" x-model="fields.email"
+            :disabled="form == 'login'" @input="fields.email = $el.value">
+          <div class="error-text" x-text="errors.emailError"></div>
+        </div>
+        <div>
+          <label for="password">Heslo *</label>
+          <input id="password" :class="{'input': true, 'error': errors.passwordError}" type="password"
+            x-model="fields.password" @input="fields.password = $el.value" />
+          <div class="error-text" x-text="errors.passwordError"></div>
+        </div>
+        <div>
+          <label for="password2">Heslo podruhé *</label>
+          <input id="password2" :class="{'input': true, 'error': errors.password2Error}" type="password"
+            x-model="fields.password2" @input="fields.password2 = $el.value">
+          <div class="error-text" x-text="errors.password2Error"></div>
+        </div>
       </div>
       <!-- submit buttons -->
       <div class="flex items-center justify-between">
         <button class="primary" :disabled="disabled" @click="doRegister">
           Registrovat
         </button>
-        <button class="transparent" @click="history.back()">Storno</button>
+        <button class="transparent" @click="back">Storno</button>
       </div>
       <!-- form switchers -->
       <div class="form-switch">

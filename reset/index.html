@@ -3,23 +3,53 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Obnovení hesla | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" Obnovení hesla Heslo * Heslo podruhé * Resetovat heslo Na hlavní stránku ">
+<meta name="description" content="
+  
+    
+    
+      Obnovení hesla
+    
+    
+    
+      
+      
+      
+      
+      
+      
+        Heslo *
+        
+        
+      
+      
+        Heslo podruhé *
+        
+        
+      
+      
+        Resetovat heslo
+      
+      
+        Na hlavní stránku
+      
+
+    
+  
+">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 <body x-data="common">
 <main x-cloak class="grid place-content-center h-full">
   
 
-<div @keyup.escape.window="back()" x-data="passwordReset" @keydown.enter.prevent="next"
+<div @keyup.escape.window="back" x-data="passwordReset" @keydown.enter.prevent="next"
   class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
   <div class="p-6 space-y-4">
     <!-- title -->
@@ -33,14 +63,14 @@
       </div>
       <div x-show="errors.resetError" class="alert error p-2 text-sm" x-text="errors.resetError"></div>
       <!-- inputs -->
-      <div>
+      <div x-show="!errors.resetSuccess">
         <label for="password">Heslo *</label>
         <input id="password" :class="{'input': true, 'error': errors.passwordError}" type="password"
           x-model="fields.password" @input="fields.password = $el.value"
           :disabled="disabled || !!errors.resetSuccess" />
         <div class="error-text" x-text="errors.passwordError"></div>
       </div>
-      <div>
+      <div x-show="!errors.resetSuccess">
         <label for="password2">Heslo podruhé *</label>
         <input id="password2" :class="{'input': true, 'error': errors.password2Error}" type="password"
           x-model="fields.password2" :disabled="disabled || !!errors.resetSuccess">

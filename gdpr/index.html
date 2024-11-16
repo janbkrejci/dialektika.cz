@@ -4,18 +4,31 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Ochrana osobních údajů | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" Tato stránka je v přípravě, prosíme o trpělivost. Poznámky:
-jaké osobní údaje jsou vyžadovány při registraci registrace = souhlas s těmito podmínkami jak s údaji nakládáme a komu je dáváme (např. ze zákona) jak zrušit svoje členství co se stane s osobními údaji při zrušení členství (co si necháme, co smažeme, jak budou zobrazovány příspěvky uživatele, který se smazal - text zůstane, jméno zmizí) jaká data (ne)ukládáme na počítač uživatele kvůli přihlášení že nepoužíváme cookies kam se obracet v případě problémů nebo při žádosti o výmaz dat ">
+<meta name="description" content="
+  
+    Tato stránka je v přípravě, prosíme o trpělivost.
+  
+
+
+Poznámky:
+
+jaké osobní údaje jsou vyžadovány při registraci
+registrace = souhlas s těmito podmínkami
+jak s údaji nakládáme a komu je dáváme (např. ze zákona)
+jak zrušit svoje členství
+co se stane s osobními údaji při zrušení členství (co si necháme, co smažeme, jak budou zobrazovány příspěvky uživatele, který se smazal - text zůstane, jméno zmizí)
+jaká data (ne)ukládáme na počítač uživatele kvůli přihlášení
+že nepoužíváme cookies
+kam se obracet v případě problémů nebo při žádosti o výmaz dat
+">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 
 <body x-data="common"><header x-cloak class="print:hidden text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
@@ -44,9 +57,6 @@ jaké osobní údaje jsou vyžadovány při registraci registrace = souhlas s t�
       <a href="/blog">Blog</a>
       
       <a x-show="user_id" href="/hlasovani-moje">Hlasování</a>
-      <a x-show="user_id" href="/organizace">Organizace</a>
-      <a x-show="user_id" href="/lide">Lidé</a>
-      <a x-show="user_id" href="/ja">Já</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
       <a x-show="!user_id" href="/login">Přihlášení <span aria-hidden="true">&rarr;</span></a>
@@ -90,12 +100,6 @@ jaké osobní údaje jsou vyžadovány při registraci registrace = souhlas s t�
           <div x-show="user_id" class="space-y-2 py-6">
             <a href="/hlasovani-moje"
               class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Hlasování</a>
-            <a href="/organizace"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Organizace</a>
-            <a href="/lide"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Lidé</a>
-            <a href="/ja"
-              class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700">Já</a>
           </div>
           <div class="py-6">
             <a x-show="!user_id" href="/login" @click.prevent="window.location.replace($el.href)"
@@ -131,7 +135,8 @@ jaké osobní údaje jsou vyžadovány při registraci registrace = souhlas s t�
 
 </main><footer x-cloak class="print:hidden">
   
-  <div class="sharethis-inline-share-buttons grow"></div>
+  <div class="grow"></div>
+  
   
   <a href="/gdpr">Ochrana osobních údajů</a>
 </footer></body>

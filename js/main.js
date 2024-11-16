@@ -5,7 +5,6 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
@@ -18,13 +17,13 @@
     return to;
   };
   var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
-  var __publicField = (obj, key, value) => {
-    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-    return value;
-  };
 
   // node_modules/lodash/lodash.js
   var require_lodash = __commonJS({
@@ -137,6 +136,7 @@
         cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
         cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
         var deburredLetters = {
+          // Latin-1 Supplement block.
           "\xC0": "A",
           "\xC1": "A",
           "\xC2": "A",
@@ -199,6 +199,7 @@
           "\xDE": "Th",
           "\xFE": "th",
           "\xDF": "ss",
+          // Latin Extended-A block.
           "\u0100": "A",
           "\u0102": "A",
           "\u0104": "A",
@@ -758,7 +759,7 @@
             }
             return new LodashWrapper(value);
           }
-          var baseCreate = function() {
+          var baseCreate = /* @__PURE__ */ function() {
             function object() {
             }
             return function(proto) {
@@ -784,11 +785,47 @@
             this.__values__ = undefined2;
           }
           lodash.templateSettings = {
+            /**
+             * Used to detect `data` property values to be HTML-escaped.
+             *
+             * @memberOf _.templateSettings
+             * @type {RegExp}
+             */
             "escape": reEscape,
+            /**
+             * Used to detect code to be evaluated.
+             *
+             * @memberOf _.templateSettings
+             * @type {RegExp}
+             */
             "evaluate": reEvaluate,
+            /**
+             * Used to detect `data` property values to inject.
+             *
+             * @memberOf _.templateSettings
+             * @type {RegExp}
+             */
             "interpolate": reInterpolate,
+            /**
+             * Used to reference the data object in the template text.
+             *
+             * @memberOf _.templateSettings
+             * @type {string}
+             */
             "variable": "",
+            /**
+             * Used to import variables into the compiled template.
+             *
+             * @memberOf _.templateSettings
+             * @type {Object}
+             */
             "imports": {
+              /**
+               * A reference to the `lodash` function.
+               *
+               * @memberOf _.templateSettings.imports
+               * @type {Function}
+               */
               "_": lodash
             }
           };
@@ -1038,7 +1075,11 @@
           function arrayLikeKeys(value, inherited) {
             var isArr = isArray2(value), isArg = !isArr && isArguments(value), isBuff = !isArr && !isArg && isBuffer(value), isType = !isArr && !isArg && !isBuff && isTypedArray(value), skipIndexes = isArr || isArg || isBuff || isType, result2 = skipIndexes ? baseTimes(value.length, String2) : [], length = result2.length;
             for (var key in value) {
-              if ((inherited || hasOwnProperty2.call(value, key)) && !(skipIndexes && (key == "length" || isBuff && (key == "offset" || key == "parent") || isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || isIndex(key, length)))) {
+              if ((inherited || hasOwnProperty2.call(value, key)) && !(skipIndexes && // Safari 9 has enumerable `arguments.length` in strict mode.
+              (key == "length" || // Node.js 0.10 has enumerable non-index properties on buffers.
+              isBuff && (key == "offset" || key == "parent") || // PhantomJS 2 has enumerable non-index properties on typed arrays.
+              isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || // Skip index properties.
+              isIndex(key, length)))) {
                 result2.push(key);
               }
             }
@@ -4025,7 +4066,7 @@
           var gte = createRelationalOperation(function(value, other) {
             return value >= other;
           });
-          var isArguments = baseIsArguments(function() {
+          var isArguments = baseIsArguments(/* @__PURE__ */ function() {
             return arguments;
           }()) ? baseIsArguments : function(value) {
             return isObjectLike(value) && hasOwnProperty2.call(value, "callee") && !propertyIsEnumerable.call(value, "callee");
@@ -5487,12 +5528,9 @@
           return _setPrototypeOf(o2, p2);
         }
         function _isNativeReflectConstruct() {
-          if (typeof Reflect === "undefined" || !Reflect.construct)
-            return false;
-          if (Reflect.construct.sham)
-            return false;
-          if (typeof Proxy === "function")
-            return true;
+          if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+          if (Reflect.construct.sham) return false;
+          if (typeof Proxy === "function") return true;
           try {
             Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
             }));
@@ -5510,8 +5548,7 @@
               a2.push.apply(a2, args2);
               var Constructor = Function.bind.apply(Parent2, a2);
               var instance = new Constructor();
-              if (Class2)
-                _setPrototypeOf(instance, Class2.prototype);
+              if (Class2) _setPrototypeOf(instance, Class2.prototype);
               return instance;
             };
           }
@@ -5524,21 +5561,17 @@
           return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
         }
         function _arrayWithoutHoles(arr) {
-          if (Array.isArray(arr))
-            return _arrayLikeToArray(arr);
+          if (Array.isArray(arr)) return _arrayLikeToArray(arr);
         }
         function _arrayWithHoles(arr) {
-          if (Array.isArray(arr))
-            return arr;
+          if (Array.isArray(arr)) return arr;
         }
         function _iterableToArray(iter) {
-          if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-            return Array.from(iter);
+          if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
         }
         function _iterableToArrayLimit(arr, i2) {
           var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-          if (_i == null)
-            return;
+          if (_i == null) return;
           var _arr = [];
           var _n = true;
           var _d = false;
@@ -5546,41 +5579,31 @@
           try {
             for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
               _arr.push(_s.value);
-              if (i2 && _arr.length === i2)
-                break;
+              if (i2 && _arr.length === i2) break;
             }
           } catch (err) {
             _d = true;
             _e = err;
           } finally {
             try {
-              if (!_n && _i["return"] != null)
-                _i["return"]();
+              if (!_n && _i["return"] != null) _i["return"]();
             } finally {
-              if (_d)
-                throw _e;
+              if (_d) throw _e;
             }
           }
           return _arr;
         }
         function _unsupportedIterableToArray(o2, minLen) {
-          if (!o2)
-            return;
-          if (typeof o2 === "string")
-            return _arrayLikeToArray(o2, minLen);
+          if (!o2) return;
+          if (typeof o2 === "string") return _arrayLikeToArray(o2, minLen);
           var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-          if (n2 === "Object" && o2.constructor)
-            n2 = o2.constructor.name;
-          if (n2 === "Map" || n2 === "Set")
-            return Array.from(o2);
-          if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-            return _arrayLikeToArray(o2, minLen);
+          if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+          if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+          if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray(o2, minLen);
         }
         function _arrayLikeToArray(arr, len) {
-          if (len == null || len > arr.length)
-            len = arr.length;
-          for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
-            arr2[i2] = arr[i2];
+          if (len == null || len > arr.length) len = arr.length;
+          for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) arr2[i2] = arr[i2];
           return arr2;
         }
         function _nonIterableSpread() {
@@ -5593,18 +5616,16 @@
           var it = typeof Symbol !== "undefined" && o2[Symbol.iterator] || o2["@@iterator"];
           if (!it) {
             if (Array.isArray(o2) || (it = _unsupportedIterableToArray(o2)) || allowArrayLike && o2 && typeof o2.length === "number") {
-              if (it)
-                o2 = it;
+              if (it) o2 = it;
               var i2 = 0;
               var F = function() {
               };
               return {
                 s: F,
                 n: function() {
-                  if (i2 >= o2.length)
-                    return {
-                      done: true
-                    };
+                  if (i2 >= o2.length) return {
+                    done: true
+                  };
                   return {
                     done: false,
                     value: o2[i2++]
@@ -5634,11 +5655,9 @@
             },
             f: function() {
               try {
-                if (!normalCompletion && it.return != null)
-                  it.return();
+                if (!normalCompletion && it.return != null) it.return();
               } finally {
-                if (didErr)
-                  throw err;
+                if (didErr) throw err;
               }
             }
           };
@@ -5766,10 +5785,12 @@
         var ARIA_ATTR = seal(/^aria-[\-\w]+$/);
         var IS_ALLOWED_URI = seal(
           /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+          // eslint-disable-line no-useless-escape
         );
         var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
         var ATTR_WHITESPACE = seal(
           /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g
+          // eslint-disable-line no-control-regex
         );
         var DOCTYPE_NAME = seal(/^html$/i);
         var getGlobal = function getGlobal2() {
@@ -5905,20 +5926,27 @@
               cfg = {};
             }
             cfg = clone2(cfg);
-            PARSER_MEDIA_TYPE = SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE;
+            PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
+            SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE;
             transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
             ALLOWED_TAGS = "ALLOWED_TAGS" in cfg ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
             ALLOWED_ATTR = "ALLOWED_ATTR" in cfg ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
             ALLOWED_NAMESPACES = "ALLOWED_NAMESPACES" in cfg ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
             URI_SAFE_ATTRIBUTES = "ADD_URI_SAFE_ATTR" in cfg ? addToSet(
               clone2(DEFAULT_URI_SAFE_ATTRIBUTES),
+              // eslint-disable-line indent
               cfg.ADD_URI_SAFE_ATTR,
+              // eslint-disable-line indent
               transformCaseFunc
+              // eslint-disable-line indent
             ) : DEFAULT_URI_SAFE_ATTRIBUTES;
             DATA_URI_TAGS = "ADD_DATA_URI_TAGS" in cfg ? addToSet(
               clone2(DEFAULT_DATA_URI_TAGS),
+              // eslint-disable-line indent
               cfg.ADD_DATA_URI_TAGS,
+              // eslint-disable-line indent
               transformCaseFunc
+              // eslint-disable-line indent
             ) : DEFAULT_DATA_URI_TAGS;
             FORBID_CONTENTS = "FORBID_CONTENTS" in cfg ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
             FORBID_TAGS = "FORBID_TAGS" in cfg ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : {};
@@ -6144,6 +6172,7 @@
             return createNodeIterator.call(
               root.ownerDocument || root,
               root,
+              // eslint-disable-next-line no-bitwise
               NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT,
               null,
               false
@@ -6181,10 +6210,8 @@
             }
             if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
               if (!FORBID_TAGS[tagName] && _basicCustomElementTest(tagName)) {
-                if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName))
-                  return false;
-                if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName))
-                  return false;
+                if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
+                if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) return false;
               }
               if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
                 var parentNode = getParentNode2(currentNode) || currentNode.parentNode;
@@ -6226,26 +6253,25 @@
             if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document2 || value in formElement)) {
               return false;
             }
-            if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR$1, lcName))
-              ;
-            else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName))
-              ;
+            if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR$1, lcName)) ;
+            else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName)) ;
             else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
-              if (_basicCustomElementTest(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value)))
-                ;
+              if (
+                // First condition does a very basic check if a) it's basically a valid custom element tagname AND
+                // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+                // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
+                _basicCustomElementTest(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
+                // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+                lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))
+              ) ;
               else {
                 return false;
               }
-            } else if (URI_SAFE_ATTRIBUTES[lcName])
-              ;
-            else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, "")))
-              ;
-            else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag])
-              ;
-            else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, "")))
-              ;
-            else if (!value)
-              ;
+            } else if (URI_SAFE_ATTRIBUTES[lcName]) ;
+            else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) ;
+            else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag]) ;
+            else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) ;
+            else if (!value) ;
             else {
               return false;
             }
@@ -6307,8 +6333,7 @@
                 value = SANITIZE_NAMED_PROPS_PREFIX + value;
               }
               if (trustedTypesPolicy && _typeof(trustedTypes) === "object" && typeof trustedTypes.getAttributeType === "function") {
-                if (namespaceURI)
-                  ;
+                if (namespaceURI) ;
                 else {
                   switch (trustedTypes.getAttributeType(lcTag, lcName)) {
                     case "TrustedHTML":
@@ -6396,7 +6421,8 @@
                 body.appendChild(importedNode);
               }
             } else {
-              if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && dirty.indexOf("<") === -1) {
+              if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
+              dirty.indexOf("<") === -1) {
                 return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
               }
               body = _initDocument(dirty);
@@ -7155,6 +7181,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       new CustomEvent(name, {
         detail,
         bubbles: true,
+        // Allows events to pass the shadow DOM barrier.
         composed: true,
         cancelable: true
       })
@@ -7947,8 +7974,11 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     closestRoot,
     destroyTree,
     interceptor,
+    // INTERNAL: not public API and is subject to change without major release.
     transition,
+    // INTERNAL
     setStyles,
+    // INTERNAL
     mutateDom,
     directive,
     throttle,
@@ -8332,7 +8362,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   var toShallow = (value) => value;
   var getProto = (v2) => Reflect.getPrototypeOf(v2);
   function get$1(target, key, isReadonly = false, isShallow = false) {
-    target = target["__v_raw"];
+    target = target[
+      "__v_raw"
+      /* RAW */
+    ];
     const rawTarget = toRaw(target);
     const rawKey = toRaw(key);
     if (key !== rawKey) {
@@ -8350,7 +8383,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
   }
   function has$1(key, isReadonly = false) {
-    const target = this["__v_raw"];
+    const target = this[
+      "__v_raw"
+      /* RAW */
+    ];
     const rawTarget = toRaw(target);
     const rawKey = toRaw(key);
     if (key !== rawKey) {
@@ -8360,7 +8396,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return key === rawKey ? target.has(key) : target.has(key) || target.has(rawKey);
   }
   function size(target, isReadonly = false) {
-    target = target["__v_raw"];
+    target = target[
+      "__v_raw"
+      /* RAW */
+    ];
     !isReadonly && track(toRaw(target), "iterate", ITERATE_KEY);
     return Reflect.get(target, "size", target);
   }
@@ -8425,7 +8464,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   function createForEach(isReadonly, isShallow) {
     return function forEach(callback, thisArg) {
       const observed = this;
-      const target = observed["__v_raw"];
+      const target = observed[
+        "__v_raw"
+        /* RAW */
+      ];
       const rawTarget = toRaw(target);
       const wrap = isShallow ? toShallow : isReadonly ? toReadonly : toReactive;
       !isReadonly && track(rawTarget, "iterate", ITERATE_KEY);
@@ -8436,7 +8478,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   function createIterableMethod(method, isReadonly, isShallow) {
     return function(...args) {
-      const target = this["__v_raw"];
+      const target = this[
+        "__v_raw"
+        /* RAW */
+      ];
       const rawTarget = toRaw(target);
       const targetIsMap = isMap(rawTarget);
       const isPair = method === "entries" || method === Symbol.iterator && targetIsMap;
@@ -8445,6 +8490,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       const wrap = isShallow ? toShallow : isReadonly ? toReadonly : toReactive;
       !isReadonly && track(rawTarget, "iterate", isKeyOnly ? MAP_KEY_ITERATE_KEY : ITERATE_KEY);
       return {
+        // iterator protocol
         next() {
           const { value, done } = innerIterator.next();
           return done ? { value, done } : {
@@ -8452,6 +8498,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             done
           };
         },
+        // iterable protocol
         [Symbol.iterator]() {
           return this;
         }
@@ -8507,15 +8554,19 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     },
     add: createReadonlyMethod(
       "add"
+      /* ADD */
     ),
     set: createReadonlyMethod(
       "set"
+      /* SET */
     ),
     delete: createReadonlyMethod(
       "delete"
+      /* DELETE */
     ),
     clear: createReadonlyMethod(
       "clear"
+      /* CLEAR */
     ),
     forEach: createForEach(true, false)
   };
@@ -8531,15 +8582,19 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     },
     add: createReadonlyMethod(
       "add"
+      /* ADD */
     ),
     set: createReadonlyMethod(
       "set"
+      /* SET */
     ),
     delete: createReadonlyMethod(
       "delete"
+      /* DELETE */
     ),
     clear: createReadonlyMethod(
       "clear"
+      /* CLEAR */
     ),
     forEach: createForEach(true, true)
   };
@@ -8601,10 +8656,16 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
   }
   function getTargetType(value) {
-    return value["__v_skip"] || !Object.isExtensible(value) ? 0 : targetTypeMap(toRawType(value));
+    return value[
+      "__v_skip"
+      /* SKIP */
+    ] || !Object.isExtensible(value) ? 0 : targetTypeMap(toRawType(value));
   }
   function reactive2(target) {
-    if (target && target["__v_isReadonly"]) {
+    if (target && target[
+      "__v_isReadonly"
+      /* IS_READONLY */
+    ]) {
       return target;
     }
     return createReactiveObject(target, false, mutableHandlers, mutableCollectionHandlers, reactiveMap);
@@ -8619,7 +8680,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
       return target;
     }
-    if (target["__v_raw"] && !(isReadonly && target["__v_isReactive"])) {
+    if (target[
+      "__v_raw"
+      /* RAW */
+    ] && !(isReadonly && target[
+      "__v_isReactive"
+      /* IS_REACTIVE */
+    ])) {
       return target;
     }
     const existingProxy = proxyMap.get(target);
@@ -8635,7 +8702,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return proxy;
   }
   function toRaw(observed) {
-    return observed && toRaw(observed["__v_raw"]) || observed;
+    return observed && toRaw(observed[
+      "__v_raw"
+      /* RAW */
+    ]) || observed;
   }
   function isRef(r2) {
     return Boolean(r2 && r2.__v_isRef === true);
@@ -9220,6 +9290,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     let evaluateItems = evaluateLater(el, iteratorNames.items);
     let evaluateKey = evaluateLater(
       el,
+      // the x-bind:key expression is stored for our use instead of evaluated.
       el._x_keyExpression || "index"
     );
     el._x_prevKeys = [];
@@ -9578,7 +9649,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return false;
   };
   var isNodeMatchingSelectorFocusable = function isNodeMatchingSelectorFocusable2(options2, node) {
-    if (node.disabled || isHiddenInput(node) || isHidden(node, options2.displayCheck) || isDetailsWithSummary(node) || isDisabledFromFieldset(node)) {
+    if (node.disabled || isHiddenInput(node) || isHidden(node, options2.displayCheck) || // For a details element with a summary, the summary element gets the focus
+    isDetailsWithSummary(node) || isDisabledFromFieldset(node)) {
       return false;
     }
     return true;
@@ -9670,7 +9742,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
     return obj;
   }
-  var activeFocusTraps = function() {
+  var activeFocusTraps = /* @__PURE__ */ function() {
     var trapQueue = [];
     return {
       activateTrap: function activateTrap(trap) {
@@ -9736,12 +9808,22 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       delayInitialFocus: true
     }, userOptions);
     var state = {
+      // @type {Array<HTMLElement>}
       containers: [],
+      // list of objects identifying the first and last tabbable nodes in all containers/groups in
+      //  the trap
+      // NOTE: it's possible that a group has no tabbable nodes if nodes get removed while the trap
+      //  is active, but the trap should never get to a state where there isn't at least one group
+      //  with at least one tabbable node in it (that would lead to an error condition that would
+      //  result in an error being thrown)
+      // @type {Array<{ container: HTMLElement, firstTabbableNode: HTMLElement|null, lastTabbableNode: HTMLElement|null }>}
       tabbableGroups: [],
       nodeFocusedBeforeActivation: null,
       mostRecentlyFocusedNode: null,
       active: false,
       paused: false,
+      // timer ID for when delayInitialFocus is true and initial focus in this trap
+      //  has been delayed during activation
       delayInitialFocusTimer: void 0
     };
     var trap;
@@ -9839,6 +9921,17 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
       if (valueOrHandler(config.clickOutsideDeactivates, e2)) {
         trap.deactivate({
+          // if, on deactivation, we should return focus to the node originally-focused
+          //  when the trap was activated (or the configured `setReturnFocus` node),
+          //  then assume it's also OK to return focus to the outside node that was
+          //  just clicked, causing deactivation, as long as that node is focusable;
+          //  if it isn't focusable, then return focus to the original node focused
+          //  on activation (or the configured `setReturnFocus` node)
+          // NOTE: by setting `returnFocus: false`, deactivate() will do nothing,
+          //  which will result in the outside click setting focus to the node
+          //  that was clicked, whether it's focusable or not; by setting
+          //  `returnFocus: true`, we'll attempt to re-focus the node originally-focused
+          //  on activation (or the configured `setReturnFocus` node)
           returnFocus: config.returnFocusOnDeactivate && !isFocusable(e2.target)
         });
         return;
@@ -10223,6 +10316,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }));
         cleanup2(releaseFocus);
       },
+      // When cloning, we only want to add aria-hidden attributes to the
+      // DOM and not try to actually trap, as trapping can mess with the
+      // live DOM and isn't just isolated to the cloned DOM.
       (el, { expression, modifiers }, { evaluate: evaluate2 }) => {
         if (modifiers.includes("inert") && evaluate2(expression))
           setInert(el);
@@ -10268,14 +10364,14 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   // <stdin>
   var import_lodash3 = __toESM(require_lodash());
 
-  // ns-hugo:/home/runner/dialektika/frontend/assets/js/validators.js
+  // ns-hugo:/Users/jbk/Documents/dialektika-devel/frontend/assets/js/validators.js
   var required = (val) => val ? null : "Povinn\xE9 pole";
   var validEmail = (val) => val.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ? null : "Neplatn\xFD e-mail";
   var minLength = (val, len, msg) => !!val && val.length >= len ? null : msg;
   var maxLength = (val, len, msg) => !!val && val.length <= len ? null : msg;
   var equalStrings = (val1, val2, msg) => val1 === val2 ? null : msg;
 
-  // ns-hugo:/home/runner/dialektika/frontend/assets/js/utils.js
+  // ns-hugo:/Users/jbk/Documents/dialektika-devel/frontend/assets/js/utils.js
   var import_dompurify = __toESM(require_purify());
 
   // node_modules/marked/lib/marked.esm.js
@@ -10335,8 +10431,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   function unescape(html) {
     return html.replace(unescapeTest, (_4, n2) => {
       n2 = n2.toLowerCase();
-      if (n2 === "colon")
-        return ":";
+      if (n2 === "colon") return ":";
       if (n2.charAt(0) === "#") {
         return n2.charAt(1) === "x" ? String.fromCharCode(parseInt(n2.substring(2), 16)) : String.fromCharCode(+n2.substring(1));
       }
@@ -10417,8 +10512,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   function splitCells(tableRow, count) {
     const row = tableRow.replace(/\|/g, (match, offset2, str) => {
       let escaped = false, curr = offset2;
-      while (--curr >= 0 && str[curr] === "\\")
-        escaped = !escaped;
+      while (--curr >= 0 && str[curr] === "\\") escaped = !escaped;
       if (escaped) {
         return "|";
       } else {
@@ -10435,8 +10529,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     if (cells.length > count) {
       cells.splice(count);
     } else {
-      while (cells.length < count)
-        cells.push("");
+      while (cells.length < count) cells.push("");
     }
     for (; i2 < cells.length; i2++) {
       cells[i2] = cells[i2].trim().replace(/\\\|/g, "|");
@@ -10981,10 +11074,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
     emStrong(src, maskedSrc, prevChar = "") {
       let match = this.rules.inline.emStrong.lDelim.exec(src);
-      if (!match)
-        return;
-      if (match[3] && prevChar.match(/[\p{L}\p{N}]/u))
-        return;
+      if (!match) return;
+      if (match[3] && prevChar.match(/[\p{L}\p{N}]/u)) return;
       const nextChar = match[1] || match[2] || "";
       if (!nextChar || nextChar && (prevChar === "" || this.rules.inline.punctuation.exec(prevChar))) {
         const lLength = match[0].length - 1;
@@ -10994,8 +11085,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
         while ((match = endReg.exec(maskedSrc)) != null) {
           rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
-          if (!rDelim)
-            continue;
+          if (!rDelim) continue;
           rLength = rDelim.length;
           if (match[3] || match[4]) {
             delimTotal += rLength;
@@ -11007,8 +11097,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
             }
           }
           delimTotal -= rLength;
-          if (delimTotal > 0)
-            continue;
+          if (delimTotal > 0) continue;
           rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
           const raw2 = src.slice(0, lLength + match.index + (match[0].length - rDelim.length) + rLength);
           if (Math.min(lLength, rLength) % 2) {
@@ -11157,6 +11246,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     def: /^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/,
     table: noopTest,
     lheading: /^((?:.|\n(?!\n))+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
+    // regex template, placeholders will be replaced according to different paragraph
+    // interruption rules of commonmark and the original markdown spec:
     _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,
     text: /^[^\n]+/
   };
@@ -11175,6 +11266,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   block.gfm = {
     ...block.normal,
     table: "^ *([^\\n ].*\\|.*)\\n {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)"
+    // Cells
   };
   block.gfm.table = edit(block.gfm.table).replace("hr", block.hr).replace("heading", " {0,3}#{1,6} ").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
   block.gfm.paragraph = edit(block._paragraph).replace("hr", block.hr).replace("heading", " {0,3}#{1,6} ").replace("|lheading", "").replace("table", block.gfm.table).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
@@ -11186,6 +11278,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
     heading: /^(#{1,6})(.*)(?:\n+|$)/,
     fences: noopTest,
+    // fences not supported
     lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
     paragraph: edit(block.normal._paragraph).replace("hr", block.hr).replace("heading", " *#{1,6} *[^\n]").replace("lheading", block.lheading).replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").getRegex()
   };
@@ -11194,14 +11287,18 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
     url: noopTest,
     tag: "^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>",
+    // CDATA section
     link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
     reflink: /^!?\[(label)\]\[(ref)\]/,
     nolink: /^!?\[(ref)\](?:\[\])?/,
     reflinkSearch: "reflink|nolink(?!\\()",
     emStrong: {
       lDelim: /^(?:\*+(?:([punct_])|[^\s*]))|^_+(?:([punct*])|([^\s_]))/,
+      //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
+      //          () Skip orphan inside strong                                      () Consume to delim     (1) #***                (2) a***#, a***                             (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
       rDelimAst: /^(?:[^_*\\]|\\.)*?\_\_(?:[^_*\\]|\\.)*?\*(?:[^_*\\]|\\.)*?(?=\_\_)|(?:[^*\\]|\\.)+(?=[^*])|[punct_](\*+)(?=[\s]|$)|(?:[^punct*_\s\\]|\\.)(\*+)(?=[punct_\s]|$)|[punct_\s](\*+)(?=[^punct*_\s])|[\s](\*+)(?=[punct_])|[punct_](\*+)(?=[punct_])|(?:[^punct*_\s\\]|\\.)(\*+)(?=[^punct*_\s])/,
       rDelimUnd: /^(?:[^_*\\]|\\.)*?\*\*(?:[^_*\\]|\\.)*?\_(?:[^_*\\]|\\.)*?(?=\*\*)|(?:[^_\\]|\\.)+(?=[^_])|[punct*](\_+)(?=[\s]|$)|(?:[^punct*_\s\\]|\\.)(\_+)(?=[punct*\s]|$)|[punct*\s](\_+)(?=[^punct*_\s])|[\s](\_+)(?=[punct*])|[punct*](\_+)(?=[punct*])/
+      // ^- Not allowed for _
     },
     code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
     br: /^( {2,}|\\)\n(?!\s*$)/,
@@ -11278,7 +11375,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
     return out;
   }
-  var Lexer = class {
+  var Lexer = class _Lexer {
     constructor(options2) {
       this.tokens = [];
       this.tokens.links = /* @__PURE__ */ Object.create(null);
@@ -11310,20 +11407,32 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
       this.tokenizer.rules = rules;
     }
+    /**
+     * Expose Rules
+     */
     static get rules() {
       return {
         block,
         inline
       };
     }
+    /**
+     * Static Lex Method
+     */
     static lex(src, options2) {
-      const lexer2 = new Lexer(options2);
+      const lexer2 = new _Lexer(options2);
       return lexer2.lex(src);
     }
+    /**
+     * Static Lex Inline Method
+     */
     static lexInline(src, options2) {
-      const lexer2 = new Lexer(options2);
+      const lexer2 = new _Lexer(options2);
       return lexer2.inlineTokens(src);
     }
+    /**
+     * Preprocessing
+     */
     lex(src) {
       src = src.replace(/\r\n|\r/g, "\n");
       this.blockTokens(src, this.tokens);
@@ -11333,6 +11442,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
       return this.tokens;
     }
+    /**
+     * Lexing
+     */
     blockTokens(src, tokens = []) {
       if (this.options.pedantic) {
         src = src.replace(/\t/g, "    ").replace(/^ +$/gm, "");
@@ -11488,6 +11600,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       this.inlineQueue.push({ src, tokens });
       return tokens;
     }
+    /**
+     * Lexing/Compiling
+     */
     inlineTokens(src, tokens = []) {
       let token, lastToken, cutSrc;
       let maskedSrc = src;
@@ -11649,6 +11764,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
       return '<pre><code class="' + this.options.langPrefix + escape(lang) + '">' + (escaped ? code : escape(code, true)) + "</code></pre>\n";
     }
+    /**
+     * @param {string} quote
+     */
     blockquote(quote) {
       return `<blockquote>
 ${quote}</blockquote>
@@ -11657,6 +11775,12 @@ ${quote}</blockquote>
     html(html) {
       return html;
     }
+    /**
+     * @param {string} text
+     * @param {string} level
+     * @param {string} raw
+     * @param {any} slugger
+     */
     heading(text, level, raw2, slugger) {
       if (this.options.headerIds) {
         const id = this.options.headerPrefix + slugger.slug(raw2);
@@ -11673,6 +11797,9 @@ ${quote}</blockquote>
       const type = ordered ? "ol" : "ul", startatt = ordered && start3 !== 1 ? ' start="' + start3 + '"' : "";
       return "<" + type + startatt + ">\n" + body + "</" + type + ">\n";
     }
+    /**
+     * @param {string} text
+     */
     listitem(text) {
       return `<li>${text}</li>
 `;
@@ -11680,15 +11807,24 @@ ${quote}</blockquote>
     checkbox(checked) {
       return "<input " + (checked ? 'checked="" ' : "") + 'disabled="" type="checkbox"' + (this.options.xhtml ? " /" : "") + "> ";
     }
+    /**
+     * @param {string} text
+     */
     paragraph(text) {
       return `<p>${text}</p>
 `;
     }
+    /**
+     * @param {string} header
+     * @param {string} body
+     */
     table(header, body) {
-      if (body)
-        body = `<tbody>${body}</tbody>`;
+      if (body) body = `<tbody>${body}</tbody>`;
       return "<table>\n<thead>\n" + header + "</thead>\n" + body + "</table>\n";
     }
+    /**
+     * @param {string} content
+     */
     tablerow(content) {
       return `<tr>
 ${content}</tr>
@@ -11700,21 +11836,39 @@ ${content}</tr>
       return tag + content + `</${type}>
 `;
     }
+    /**
+     * span level renderer
+     * @param {string} text
+     */
     strong(text) {
       return `<strong>${text}</strong>`;
     }
+    /**
+     * @param {string} text
+     */
     em(text) {
       return `<em>${text}</em>`;
     }
+    /**
+     * @param {string} text
+     */
     codespan(text) {
       return `<code>${text}</code>`;
     }
     br() {
       return this.options.xhtml ? "<br/>" : "<br>";
     }
+    /**
+     * @param {string} text
+     */
     del(text) {
       return `<del>${text}</del>`;
     }
+    /**
+     * @param {string} href
+     * @param {string} title
+     * @param {string} text
+     */
     link(href, title, text) {
       href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
       if (href === null) {
@@ -11727,6 +11881,11 @@ ${content}</tr>
       out += ">" + text + "</a>";
       return out;
     }
+    /**
+     * @param {string} href
+     * @param {string} title
+     * @param {string} text
+     */
     image(href, title, text) {
       href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
       if (href === null) {
@@ -11744,6 +11903,7 @@ ${content}</tr>
     }
   };
   var TextRenderer = class {
+    // no need for block level renderers
     strong(text) {
       return text;
     }
@@ -11776,9 +11936,17 @@ ${content}</tr>
     constructor() {
       this.seen = {};
     }
+    /**
+     * @param {string} value
+     */
     serialize(value) {
       return value.toLowerCase().trim().replace(/<[!\/a-z].*?>/ig, "").replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, "").replace(/\s/g, "-");
     }
+    /**
+     * Finds the next safe (unique) slug to use
+     * @param {string} originalSlug
+     * @param {boolean} isDryRun
+     */
     getNextSafeSlug(originalSlug, isDryRun) {
       let slug = originalSlug;
       let occurenceAccumulator = 0;
@@ -11795,12 +11963,18 @@ ${content}</tr>
       }
       return slug;
     }
+    /**
+     * Convert string to unique id
+     * @param {object} [options]
+     * @param {boolean} [options.dryrun] Generates the next unique slug without
+     * updating the internal accumulator.
+     */
     slug(value, options2 = {}) {
       const slug = this.serialize(value);
       return this.getNextSafeSlug(slug, options2.dryrun);
     }
   };
-  var Parser = class {
+  var Parser = class _Parser {
     constructor(options2) {
       this.options = options2 || defaults;
       this.options.renderer = this.options.renderer || new Renderer();
@@ -11809,14 +11983,23 @@ ${content}</tr>
       this.textRenderer = new TextRenderer();
       this.slugger = new Slugger();
     }
+    /**
+     * Static Parse Method
+     */
     static parse(tokens, options2) {
-      const parser2 = new Parser(options2);
+      const parser2 = new _Parser(options2);
       return parser2.parse(tokens);
     }
+    /**
+     * Static Parse Inline Method
+     */
     static parseInline(tokens, options2) {
-      const parser2 = new Parser(options2);
+      const parser2 = new _Parser(options2);
       return parser2.parseInline(tokens);
     }
+    /**
+     * Parse Loop
+     */
     parse(tokens, top2 = true) {
       let out = "", i2, j, k, l22, l32, row, cell, header, body, token, ordered, start3, loose, itemBody, item, checked, task, checkbox, ret;
       const l4 = tokens.length;
@@ -11952,6 +12135,9 @@ ${content}</tr>
       }
       return out;
     }
+    /**
+     * Parse Inline Tokens
+     */
     parseInline(tokens, renderer) {
       renderer = renderer || this.renderer;
       let out = "", i2, token, ret;
@@ -12024,17 +12210,23 @@ ${content}</tr>
     constructor(options2) {
       this.options = options2 || defaults;
     }
+    static passThroughHooks = /* @__PURE__ */ new Set([
+      "preprocess",
+      "postprocess"
+    ]);
+    /**
+     * Process markdown before marked
+     */
     preprocess(markdown) {
       return markdown;
     }
+    /**
+     * Process HTML after marked is finished
+     */
     postprocess(html) {
       return html;
     }
   };
-  __publicField(Hooks, "passThroughHooks", /* @__PURE__ */ new Set([
-    "preprocess",
-    "postprocess"
-  ]));
   function onError(silent, async, callback) {
     return (e2) => {
       e2.message += "\nPlease report this to https://github.com/markedjs/marked.";
@@ -12111,8 +12303,7 @@ ${content}</tr>
           return done();
         }
         delete opt.highlight;
-        if (!tokens.length)
-          return done();
+        if (!tokens.length) return done();
         let pending = 0;
         marked.walkTokens(tokens, function(token) {
           if (token.type === "code") {
@@ -12345,12 +12536,11 @@ ${content}</tr>
   var parser = Parser.parse;
   var lexer = Lexer.lex;
 
-  // ns-hugo:/home/runner/dialektika/frontend/assets/js/utils.js
+  // ns-hugo:/Users/jbk/Documents/dialektika-devel/frontend/assets/js/utils.js
   var import_lodash = __toESM(require_lodash());
   var utils_default = {
     boolToString(val, ifTrue, ifFalse, ifNil) {
-      if (import_lodash.default.isNil(val))
-        return ifNil;
+      if (import_lodash.default.isNil(val)) return ifNil;
       return val ? ifTrue : ifFalse;
     },
     formatDate(val) {
@@ -12361,7 +12551,7 @@ ${content}</tr>
       return val ? `${d2.toLocaleDateString()} ${d2.toLocaleTimeString()}` : "";
     },
     addWeek(date) {
-      const d2 = new Date(date || new Date());
+      const d2 = new Date(date || /* @__PURE__ */ new Date());
       d2.setDate(d2.getDate() + 7);
       return d2;
     },
@@ -12369,11 +12559,9 @@ ${content}</tr>
       return import_dompurify.default.sanitize(marked.parse(s2));
     },
     userName(id) {
-      if (!id)
-        return "";
+      if (!id) return "";
       const u2 = this.collections.users.find((u3) => u3.id === id);
-      if (!u2)
-        return "";
+      if (!u2) return "";
       const fullName = [u2.firstName, u2.lastName].join(" ").trim();
       return fullName || u2.username || "Anonym";
     }
@@ -12384,13 +12572,11 @@ ${content}</tr>
     return extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(e3, t3) {
       e3.__proto__ = t3;
     } || function(e3, t3) {
-      for (var n2 in t3)
-        Object.prototype.hasOwnProperty.call(t3, n2) && (e3[n2] = t3[n2]);
+      for (var n2 in t3) Object.prototype.hasOwnProperty.call(t3, n2) && (e3[n2] = t3[n2]);
     }, extendStatics(e2, t2);
   };
   function __extends(e2, t2) {
-    if ("function" != typeof t2 && null !== t2)
-      throw new TypeError("Class extends value " + String(t2) + " is not a constructor or null");
+    if ("function" != typeof t2 && null !== t2) throw new TypeError("Class extends value " + String(t2) + " is not a constructor or null");
     function __() {
       this.constructor = e2;
     }
@@ -12398,9 +12584,7 @@ ${content}</tr>
   }
   var __assign = function() {
     return __assign = Object.assign || function __assign13(e2) {
-      for (var t2, n2 = 1, i2 = arguments.length; n2 < i2; n2++)
-        for (var o2 in t2 = arguments[n2])
-          Object.prototype.hasOwnProperty.call(t2, o2) && (e2[o2] = t2[o2]);
+      for (var t2, n2 = 1, i2 = arguments.length; n2 < i2; n2++) for (var o2 in t2 = arguments[n2]) Object.prototype.hasOwnProperty.call(t2, o2) && (e2[o2] = t2[o2]);
       return e2;
     }, __assign.apply(this, arguments);
   };
@@ -12432,8 +12616,7 @@ ${content}</tr>
   }
   function __generator(e2, t2) {
     var n2, i2, o2, r2, s2 = { label: 0, sent: function() {
-      if (1 & o2[0])
-        throw o2[1];
+      if (1 & o2[0]) throw o2[1];
       return o2[1];
     }, trys: [], ops: [] };
     return r2 = { next: verb(0), throw: verb(1), return: verb(2) }, "function" == typeof Symbol && (r2[Symbol.iterator] = function() {
@@ -12442,53 +12625,49 @@ ${content}</tr>
     function verb(r3) {
       return function(a2) {
         return function step(r4) {
-          if (n2)
-            throw new TypeError("Generator is already executing.");
-          for (; s2; )
-            try {
-              if (n2 = 1, i2 && (o2 = 2 & r4[0] ? i2.return : r4[0] ? i2.throw || ((o2 = i2.return) && o2.call(i2), 0) : i2.next) && !(o2 = o2.call(i2, r4[1])).done)
-                return o2;
-              switch (i2 = 0, o2 && (r4 = [2 & r4[0], o2.value]), r4[0]) {
-                case 0:
-                case 1:
-                  o2 = r4;
+          if (n2) throw new TypeError("Generator is already executing.");
+          for (; s2; ) try {
+            if (n2 = 1, i2 && (o2 = 2 & r4[0] ? i2.return : r4[0] ? i2.throw || ((o2 = i2.return) && o2.call(i2), 0) : i2.next) && !(o2 = o2.call(i2, r4[1])).done) return o2;
+            switch (i2 = 0, o2 && (r4 = [2 & r4[0], o2.value]), r4[0]) {
+              case 0:
+              case 1:
+                o2 = r4;
+                break;
+              case 4:
+                return s2.label++, { value: r4[1], done: false };
+              case 5:
+                s2.label++, i2 = r4[1], r4 = [0];
+                continue;
+              case 7:
+                r4 = s2.ops.pop(), s2.trys.pop();
+                continue;
+              default:
+                if (!(o2 = s2.trys, (o2 = o2.length > 0 && o2[o2.length - 1]) || 6 !== r4[0] && 2 !== r4[0])) {
+                  s2 = 0;
+                  continue;
+                }
+                if (3 === r4[0] && (!o2 || r4[1] > o2[0] && r4[1] < o2[3])) {
+                  s2.label = r4[1];
                   break;
-                case 4:
-                  return s2.label++, { value: r4[1], done: false };
-                case 5:
-                  s2.label++, i2 = r4[1], r4 = [0];
-                  continue;
-                case 7:
-                  r4 = s2.ops.pop(), s2.trys.pop();
-                  continue;
-                default:
-                  if (!(o2 = s2.trys, (o2 = o2.length > 0 && o2[o2.length - 1]) || 6 !== r4[0] && 2 !== r4[0])) {
-                    s2 = 0;
-                    continue;
-                  }
-                  if (3 === r4[0] && (!o2 || r4[1] > o2[0] && r4[1] < o2[3])) {
-                    s2.label = r4[1];
-                    break;
-                  }
-                  if (6 === r4[0] && s2.label < o2[1]) {
-                    s2.label = o2[1], o2 = r4;
-                    break;
-                  }
-                  if (o2 && s2.label < o2[2]) {
-                    s2.label = o2[2], s2.ops.push(r4);
-                    break;
-                  }
-                  o2[2] && s2.ops.pop(), s2.trys.pop();
-                  continue;
-              }
-              r4 = t2.call(e2, s2);
-            } catch (e3) {
-              r4 = [6, e3], i2 = 0;
-            } finally {
-              n2 = o2 = 0;
+                }
+                if (6 === r4[0] && s2.label < o2[1]) {
+                  s2.label = o2[1], o2 = r4;
+                  break;
+                }
+                if (o2 && s2.label < o2[2]) {
+                  s2.label = o2[2], s2.ops.push(r4);
+                  break;
+                }
+                o2[2] && s2.ops.pop(), s2.trys.pop();
+                continue;
             }
-          if (5 & r4[0])
-            throw r4[1];
+            r4 = t2.call(e2, s2);
+          } catch (e3) {
+            r4 = [6, e3], i2 = 0;
+          } finally {
+            n2 = o2 = 0;
+          }
+          if (5 & r4[0]) throw r4[1];
           return { value: r4[0] ? r4[1] : void 0, done: true };
         }([r3, a2]);
       };
@@ -12509,66 +12688,58 @@ ${content}</tr>
   var n = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
   function cookieSerialize(e2, t2, i2) {
     var o2 = Object.assign({}, i2 || {}), r2 = o2.encode || defaultEncode;
-    if (!n.test(e2))
-      throw new TypeError("argument name is invalid");
+    if (!n.test(e2)) throw new TypeError("argument name is invalid");
     var s2 = r2(t2);
-    if (s2 && !n.test(s2))
-      throw new TypeError("argument val is invalid");
+    if (s2 && !n.test(s2)) throw new TypeError("argument val is invalid");
     var a2 = e2 + "=" + s2;
     if (null != o2.maxAge) {
       var c3 = o2.maxAge - 0;
-      if (isNaN(c3) || !isFinite(c3))
-        throw new TypeError("option maxAge is invalid");
+      if (isNaN(c3) || !isFinite(c3)) throw new TypeError("option maxAge is invalid");
       a2 += "; Max-Age=" + Math.floor(c3);
     }
     if (o2.domain) {
-      if (!n.test(o2.domain))
-        throw new TypeError("option domain is invalid");
+      if (!n.test(o2.domain)) throw new TypeError("option domain is invalid");
       a2 += "; Domain=" + o2.domain;
     }
     if (o2.path) {
-      if (!n.test(o2.path))
-        throw new TypeError("option path is invalid");
+      if (!n.test(o2.path)) throw new TypeError("option path is invalid");
       a2 += "; Path=" + o2.path;
     }
     if (o2.expires) {
       if (!function isDate(e3) {
         return "[object Date]" === Object.prototype.toString.call(e3) || e3 instanceof Date;
-      }(o2.expires) || isNaN(o2.expires.valueOf()))
-        throw new TypeError("option expires is invalid");
+      }(o2.expires) || isNaN(o2.expires.valueOf())) throw new TypeError("option expires is invalid");
       a2 += "; Expires=" + o2.expires.toUTCString();
     }
-    if (o2.httpOnly && (a2 += "; HttpOnly"), o2.secure && (a2 += "; Secure"), o2.priority)
-      switch ("string" == typeof o2.priority ? o2.priority.toLowerCase() : o2.priority) {
-        case "low":
-          a2 += "; Priority=Low";
-          break;
-        case "medium":
-          a2 += "; Priority=Medium";
-          break;
-        case "high":
-          a2 += "; Priority=High";
-          break;
-        default:
-          throw new TypeError("option priority is invalid");
-      }
-    if (o2.sameSite)
-      switch ("string" == typeof o2.sameSite ? o2.sameSite.toLowerCase() : o2.sameSite) {
-        case true:
-          a2 += "; SameSite=Strict";
-          break;
-        case "lax":
-          a2 += "; SameSite=Lax";
-          break;
-        case "strict":
-          a2 += "; SameSite=Strict";
-          break;
-        case "none":
-          a2 += "; SameSite=None";
-          break;
-        default:
-          throw new TypeError("option sameSite is invalid");
-      }
+    if (o2.httpOnly && (a2 += "; HttpOnly"), o2.secure && (a2 += "; Secure"), o2.priority) switch ("string" == typeof o2.priority ? o2.priority.toLowerCase() : o2.priority) {
+      case "low":
+        a2 += "; Priority=Low";
+        break;
+      case "medium":
+        a2 += "; Priority=Medium";
+        break;
+      case "high":
+        a2 += "; Priority=High";
+        break;
+      default:
+        throw new TypeError("option priority is invalid");
+    }
+    if (o2.sameSite) switch ("string" == typeof o2.sameSite ? o2.sameSite.toLowerCase() : o2.sameSite) {
+      case true:
+        a2 += "; SameSite=Strict";
+        break;
+      case "lax":
+        a2 += "; SameSite=Lax";
+        break;
+      case "strict":
+        a2 += "; SameSite=Strict";
+        break;
+      case "none":
+        a2 += "; SameSite=None";
+        break;
+      default:
+        throw new TypeError("option sameSite is invalid");
+    }
     return a2;
   }
   function defaultDecode(e2) {
@@ -12578,22 +12749,19 @@ ${content}</tr>
     return encodeURIComponent(e2);
   }
   function getTokenPayload(t2) {
-    if (t2)
-      try {
-        var n2 = decodeURIComponent(e(t2.split(".")[1]).split("").map(function(e2) {
-          return "%" + ("00" + e2.charCodeAt(0).toString(16)).slice(-2);
-        }).join(""));
-        return JSON.parse(n2) || {};
-      } catch (e2) {
-      }
+    if (t2) try {
+      var n2 = decodeURIComponent(e(t2.split(".")[1]).split("").map(function(e2) {
+        return "%" + ("00" + e2.charCodeAt(0).toString(16)).slice(-2);
+      }).join(""));
+      return JSON.parse(n2) || {};
+    } catch (e2) {
+    }
     return {};
   }
   e = "function" == typeof atob ? atob : function(e2) {
     var t2 = String(e2).replace(/=+$/, "");
-    if (t2.length % 4 == 1)
-      throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
-    for (var n2, i2, o2 = 0, r2 = 0, s2 = ""; i2 = t2.charAt(r2++); ~i2 && (n2 = o2 % 4 ? 64 * n2 + i2 : i2, o2++ % 4) ? s2 += String.fromCharCode(255 & n2 >> (-2 * o2 & 6)) : 0)
-      i2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(i2);
+    if (t2.length % 4 == 1) throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
+    for (var n2, i2, o2 = 0, r2 = 0, s2 = ""; i2 = t2.charAt(r2++); ~i2 && (n2 = o2 % 4 ? 64 * n2 + i2 : i2, o2++ % 4) ? s2 += String.fromCharCode(255 & n2 >> (-2 * o2 & 6)) : 0) i2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(i2);
     return s2;
   };
   var i = function() {
@@ -12622,10 +12790,9 @@ ${content}</tr>
     return __extends(Record, e2), Record.prototype.load = function(t2) {
       e2.prototype.load.call(this, t2), this.collectionId = "string" == typeof t2.collectionId ? t2.collectionId : "", this.collectionName = "string" == typeof t2.collectionName ? t2.collectionName : "", this.loadExpand(t2.expand);
     }, Record.prototype.loadExpand = function(e3) {
-      for (var t2 in e3 = e3 || {}, this.expand = {}, e3)
-        Array.isArray(e3[t2]) ? this.expand[t2] = e3[t2].map(function(e4) {
-          return new Record(e4 || {});
-        }) : this.expand[t2] = new Record(e3[t2] || {});
+      for (var t2 in e3 = e3 || {}, this.expand = {}, e3) Array.isArray(e3[t2]) ? this.expand[t2] = e3[t2].map(function(e4) {
+        return new Record(e4 || {});
+      }) : this.expand[t2] = new Record(e3[t2] || {});
     }, Record;
   }(i);
   var r = function(e2) {
@@ -12658,15 +12825,12 @@ ${content}</tr>
       void 0 === t2 && (t2 = "pb_auth");
       var n2 = function cookieParse(e3, t3) {
         var n3 = {};
-        if ("string" != typeof e3)
-          return n3;
+        if ("string" != typeof e3) return n3;
         for (var i3 = Object.assign({}, t3 || {}).decode || defaultDecode, o2 = 0; o2 < e3.length; ) {
           var r2 = e3.indexOf("=", o2);
-          if (-1 === r2)
-            break;
+          if (-1 === r2) break;
           var s2 = e3.indexOf(";", o2);
-          if (-1 === s2)
-            s2 = e3.length;
+          if (-1 === s2) s2 = e3.length;
           else if (s2 < r2) {
             o2 = e3.lastIndexOf(";", r2 - 1) + 1;
             continue;
@@ -12694,15 +12858,13 @@ ${content}</tr>
       var n2, i2, r2;
       void 0 === t2 && (t2 = "pb_auth");
       var s2 = { secure: true, sameSite: true, httpOnly: true, path: "/" }, a2 = getTokenPayload(this.token);
-      (null == a2 ? void 0 : a2.exp) ? s2.expires = new Date(1e3 * a2.exp) : s2.expires = new Date("1970-01-01"), e2 = Object.assign({}, s2, e2);
+      (null == a2 ? void 0 : a2.exp) ? s2.expires = new Date(1e3 * a2.exp) : s2.expires = /* @__PURE__ */ new Date("1970-01-01"), e2 = Object.assign({}, s2, e2);
       var c3 = { token: this.token, model: (null === (n2 = this.model) || void 0 === n2 ? void 0 : n2.export()) || null }, u2 = cookieSerialize(t2, JSON.stringify(c3), e2), l4 = "undefined" != typeof Blob ? new Blob([u2]).size : u2.length;
       return c3.model && l4 > 4096 && (c3.model = { id: null === (i2 = null == c3 ? void 0 : c3.model) || void 0 === i2 ? void 0 : i2.id, email: null === (r2 = null == c3 ? void 0 : c3.model) || void 0 === r2 ? void 0 : r2.email }, this.model instanceof o && (c3.model.username = this.model.username, c3.model.verified = this.model.verified, c3.model.collectionId = this.model.collectionId), u2 = cookieSerialize(t2, JSON.stringify(c3), e2)), u2;
     }, BaseAuthStore.prototype.onChange = function(e2, t2) {
       var n2 = this;
       return void 0 === t2 && (t2 = false), this._onChangeCallbacks.push(e2), t2 && e2(this.token, this.model), function() {
-        for (var t3 = n2._onChangeCallbacks.length - 1; t3 >= 0; t3--)
-          if (n2._onChangeCallbacks[t3] == e2)
-            return delete n2._onChangeCallbacks[t3], void n2._onChangeCallbacks.splice(t3, 1);
+        for (var t3 = n2._onChangeCallbacks.length - 1; t3 >= 0; t3--) if (n2._onChangeCallbacks[t3] == e2) return delete n2._onChangeCallbacks[t3], void n2._onChangeCallbacks.splice(t3, 1);
       };
     }, BaseAuthStore.prototype.triggerChange = function() {
       for (var e2 = 0, t2 = this._onChangeCallbacks; e2 < t2.length; e2++) {
@@ -12740,8 +12902,7 @@ ${content}</tr>
       if ("undefined" != typeof window && (null === window || void 0 === window ? void 0 : window.localStorage)) {
         var n2 = t2;
         "string" != typeof t2 && (n2 = JSON.stringify(t2)), window.localStorage.setItem(e3, n2);
-      } else
-        this.storageFallback[e3] = t2;
+      } else this.storageFallback[e3] = t2;
     }, LocalAuthStore.prototype._storageRemove = function(e3) {
       var t2;
       "undefined" != typeof window && (null === window || void 0 === window ? void 0 : window.localStorage) && (null === (t2 = window.localStorage) || void 0 === t2 || t2.removeItem(e3)), delete this.storageFallback[e3];
@@ -12782,8 +12943,7 @@ ${content}</tr>
       return null !== e2 && e2.apply(this, arguments) || this;
     }
     return __extends(CrudService, e2), CrudService.prototype.getFullList = function(e3, t2) {
-      if ("number" == typeof e3)
-        return this._getFullList(this.baseCrudPath, e3, t2);
+      if ("number" == typeof e3) return this._getFullList(this.baseCrudPath, e3, t2);
       var n2 = Object.assign({}, e3, t2);
       return this._getFullList(this.baseCrudPath, n2.batch || 200, n2);
     }, CrudService.prototype.getList = function(e3, t2, n2) {
@@ -12838,8 +12998,7 @@ ${content}</tr>
     }, BaseCrudService.prototype._getFirstListItem = function(e3, n2, i2) {
       return void 0 === i2 && (i2 = {}), i2 = Object.assign({ filter: n2, $cancelKey: "one_by_filter_" + e3 + "_" + n2 }, i2), this._getList(e3, 1, 1, i2).then(function(e4) {
         var n3;
-        if (!(null === (n3 = null == e4 ? void 0 : e4.items) || void 0 === n3 ? void 0 : n3.length))
-          throw new t({ status: 404, data: { code: 404, message: "The requested resource wasn't found.", data: {} } });
+        if (!(null === (n3 = null == e4 ? void 0 : e4.items) || void 0 === n3 ? void 0 : n3.length)) throw new t({ status: 404, data: { code: 404, message: "The requested resource wasn't found.", data: {} } });
         return e4.items[0];
       });
     }, BaseCrudService.prototype._create = function(e3, t2, n2) {
@@ -12924,12 +13083,9 @@ ${content}</tr>
       return __awaiter(this, void 0, void 0, function() {
         var n2;
         return __generator(this, function(i2) {
-          if ("function" == typeof e3)
-            return console.warn("PocketBase: subscribe(callback) is deprecated. Please replace it with subscribe('*', callback)."), [2, this.client.realtime.subscribe(this.collectionIdOrName, e3)];
-          if (!t2)
-            throw new Error("Missing subscription callback.");
-          if ("" === e3)
-            throw new Error("Missing topic.");
+          if ("function" == typeof e3) return console.warn("PocketBase: subscribe(callback) is deprecated. Please replace it with subscribe('*', callback)."), [2, this.client.realtime.subscribe(this.collectionIdOrName, e3)];
+          if (!t2) throw new Error("Missing subscription callback.");
+          if ("" === e3) throw new Error("Missing topic.");
           return n2 = this.collectionIdOrName, "*" !== e3 && (n2 += "/" + e3), [2, this.client.realtime.subscribe(n2, t2)];
         });
       });
@@ -12940,8 +13096,7 @@ ${content}</tr>
         });
       });
     }, RecordService.prototype.getFullList = function(t2, n2) {
-      if ("number" == typeof t2)
-        return e2.prototype.getFullList.call(this, t2, n2);
+      if ("number" == typeof t2) return e2.prototype.getFullList.call(this, t2, n2);
       var i2 = Object.assign({}, t2, n2);
       return e2.prototype.getFullList.call(this, i2);
     }, RecordService.prototype.getList = function(t2, n2, i2) {
@@ -13013,11 +13168,10 @@ ${content}</tr>
     }, RecordService.prototype.listExternalAuths = function(e3, t2) {
       return void 0 === t2 && (t2 = {}), this.client.send(this.baseCrudPath + "/" + encodeURIComponent(e3) + "/external-auths", { method: "GET", params: t2 }).then(function(e4) {
         var t3 = [];
-        if (Array.isArray(e4))
-          for (var n2 = 0, i2 = e4; n2 < i2.length; n2++) {
-            var o2 = i2[n2];
-            t3.push(new p(o2));
-          }
+        if (Array.isArray(e4)) for (var n2 = 0, i2 = e4; n2 < i2.length; n2++) {
+          var o2 = i2[n2];
+          t3.push(new p(o2));
+        }
         return t3;
       });
     }, RecordService.prototype.unlinkExternalAuth = function(e3, t2, n2) {
@@ -13118,8 +13272,7 @@ ${content}</tr>
         return __generator(this, function(r2) {
           switch (r2.label) {
             case 0:
-              if (!e3)
-                throw new Error("topic must be set.");
+              if (!e3) throw new Error("topic must be set.");
               return i2 = function(e4) {
                 var n3, i3 = e4;
                 try {
@@ -13154,14 +13307,11 @@ ${content}</tr>
         return __generator(this, function(r2) {
           switch (r2.label) {
             case 0:
-              if (!this.hasSubscriptionListeners(e3))
-                return [2];
+              if (!this.hasSubscriptionListeners(e3)) return [2];
               if (e3) {
-                for (n2 = 0, i2 = this.subscriptions[e3]; n2 < i2.length; n2++)
-                  o2 = i2[n2], null === (t2 = this.eventSource) || void 0 === t2 || t2.removeEventListener(e3, o2);
+                for (n2 = 0, i2 = this.subscriptions[e3]; n2 < i2.length; n2++) o2 = i2[n2], null === (t2 = this.eventSource) || void 0 === t2 || t2.removeEventListener(e3, o2);
                 delete this.subscriptions[e3];
-              } else
-                this.subscriptions = {};
+              } else this.subscriptions = {};
               return this.hasSubscriptionListeners() ? [3, 1] : (this.disconnect(), [3, 3]);
             case 1:
               return this.hasSubscriptionListeners(e3) ? [3, 3] : [4, this.submitSubscriptions()];
@@ -13179,12 +13329,10 @@ ${content}</tr>
         return __generator(this, function(a2) {
           switch (a2.label) {
             case 0:
-              for (i2 in n2 = false, this.subscriptions)
-                if (i2.startsWith(e3)) {
-                  for (n2 = true, o2 = 0, r2 = this.subscriptions[i2]; o2 < r2.length; o2++)
-                    s2 = r2[o2], null === (t2 = this.eventSource) || void 0 === t2 || t2.removeEventListener(i2, s2);
-                  delete this.subscriptions[i2];
-                }
+              for (i2 in n2 = false, this.subscriptions) if (i2.startsWith(e3)) {
+                for (n2 = true, o2 = 0, r2 = this.subscriptions[i2]; o2 < r2.length; o2++) s2 = r2[o2], null === (t2 = this.eventSource) || void 0 === t2 || t2.removeEventListener(i2, s2);
+                delete this.subscriptions[i2];
+              }
               return n2 ? this.hasSubscriptionListeners() ? [4, this.submitSubscriptions()] : [3, 2] : [2];
             case 1:
               return a2.sent(), [3, 3];
@@ -13202,10 +13350,8 @@ ${content}</tr>
         return __generator(this, function(r2) {
           switch (r2.label) {
             case 0:
-              if (!Array.isArray(this.subscriptions[e3]) || !this.subscriptions[e3].length)
-                return [2];
-              for (i2 = false, o2 = this.subscriptions[e3].length - 1; o2 >= 0; o2--)
-                this.subscriptions[e3][o2] === t2 && (i2 = true, delete this.subscriptions[e3][o2], this.subscriptions[e3].splice(o2, 1), null === (n2 = this.eventSource) || void 0 === n2 || n2.removeEventListener(e3, t2));
+              if (!Array.isArray(this.subscriptions[e3]) || !this.subscriptions[e3].length) return [2];
+              for (i2 = false, o2 = this.subscriptions[e3].length - 1; o2 >= 0; o2--) this.subscriptions[e3][o2] === t2 && (i2 = true, delete this.subscriptions[e3][o2], this.subscriptions[e3].splice(o2, 1), null === (n2 = this.eventSource) || void 0 === n2 || n2.removeEventListener(e3, t2));
               return i2 ? (this.subscriptions[e3].length || delete this.subscriptions[e3], this.hasSubscriptionListeners() ? [3, 1] : (this.disconnect(), [3, 3])) : [2];
             case 1:
               return this.hasSubscriptionListeners(e3) ? [3, 3] : [4, this.submitSubscriptions()];
@@ -13218,40 +13364,31 @@ ${content}</tr>
       });
     }, RealtimeService.prototype.hasSubscriptionListeners = function(e3) {
       var t2, n2;
-      if (this.subscriptions = this.subscriptions || {}, e3)
-        return !!(null === (t2 = this.subscriptions[e3]) || void 0 === t2 ? void 0 : t2.length);
-      for (var i2 in this.subscriptions)
-        if (null === (n2 = this.subscriptions[i2]) || void 0 === n2 ? void 0 : n2.length)
-          return true;
+      if (this.subscriptions = this.subscriptions || {}, e3) return !!(null === (t2 = this.subscriptions[e3]) || void 0 === t2 ? void 0 : t2.length);
+      for (var i2 in this.subscriptions) if (null === (n2 = this.subscriptions[i2]) || void 0 === n2 ? void 0 : n2.length) return true;
       return false;
     }, RealtimeService.prototype.submitSubscriptions = function() {
       return __awaiter(this, void 0, void 0, function() {
         return __generator(this, function(e3) {
           return this.clientId ? (this.addAllSubscriptionListeners(), this.lastSentTopics = this.getNonEmptySubscriptionTopics(), [2, this.client.send("/api/realtime", { method: "POST", body: { clientId: this.clientId, subscriptions: this.lastSentTopics }, params: { $cancelKey: "realtime_" + this.clientId } }).catch(function(e4) {
-            if (!(null == e4 ? void 0 : e4.isAbort))
-              throw e4;
+            if (!(null == e4 ? void 0 : e4.isAbort)) throw e4;
           })]) : [2];
         });
       });
     }, RealtimeService.prototype.getNonEmptySubscriptionTopics = function() {
       var e3 = [];
-      for (var t2 in this.subscriptions)
-        this.subscriptions[t2].length && e3.push(t2);
+      for (var t2 in this.subscriptions) this.subscriptions[t2].length && e3.push(t2);
       return e3;
     }, RealtimeService.prototype.addAllSubscriptionListeners = function() {
-      if (this.eventSource)
-        for (var e3 in this.removeAllSubscriptionListeners(), this.subscriptions)
-          for (var t2 = 0, n2 = this.subscriptions[e3]; t2 < n2.length; t2++) {
-            var i2 = n2[t2];
-            this.eventSource.addEventListener(e3, i2);
-          }
+      if (this.eventSource) for (var e3 in this.removeAllSubscriptionListeners(), this.subscriptions) for (var t2 = 0, n2 = this.subscriptions[e3]; t2 < n2.length; t2++) {
+        var i2 = n2[t2];
+        this.eventSource.addEventListener(e3, i2);
+      }
     }, RealtimeService.prototype.removeAllSubscriptionListeners = function() {
-      if (this.eventSource)
-        for (var e3 in this.subscriptions)
-          for (var t2 = 0, n2 = this.subscriptions[e3]; t2 < n2.length; t2++) {
-            var i2 = n2[t2];
-            this.eventSource.removeEventListener(e3, i2);
-          }
+      if (this.eventSource) for (var e3 in this.subscriptions) for (var t2 = 0, n2 = this.subscriptions[e3]; t2 < n2.length; t2++) {
+        var i2 = n2[t2];
+        this.eventSource.removeEventListener(e3, i2);
+      }
     }, RealtimeService.prototype.connect = function() {
       return __awaiter(this, void 0, void 0, function() {
         var e3 = this;
@@ -13296,12 +13433,10 @@ ${content}</tr>
       });
     }, RealtimeService.prototype.hasUnsentSubscriptions = function() {
       var e3 = this.getNonEmptySubscriptionTopics();
-      if (e3.length != this.lastSentTopics.length)
-        return true;
+      if (e3.length != this.lastSentTopics.length) return true;
       for (var t2 = 0, n2 = e3; t2 < n2.length; t2++) {
         var i2 = n2[t2];
-        if (!this.lastSentTopics.includes(i2))
-          return true;
+        if (!this.lastSentTopics.includes(i2)) return true;
       }
       return false;
     }, RealtimeService.prototype.connectErrorHandler = function(e3) {
@@ -13348,8 +13483,7 @@ ${content}</tr>
     }, Client.prototype.cancelRequest = function(e2) {
       return this.cancelControllers[e2] && (this.cancelControllers[e2].abort(), delete this.cancelControllers[e2]), this;
     }, Client.prototype.cancelAllRequests = function() {
-      for (var e2 in this.cancelControllers)
-        this.cancelControllers[e2].abort();
+      for (var e2 in this.cancelControllers) this.cancelControllers[e2].abort();
       return this.cancelControllers = {}, this;
     }, Client.prototype.send = function(e2, n2) {
       var i2, o2, r2, s2, a2, c3, u2, l4;
@@ -13370,8 +13504,7 @@ ${content}</tr>
                   case 3:
                     return i3.sent(), [3, 4];
                   case 4:
-                    if (this.afterSend && (n3 = this.afterSend(e3, n3)), e3.status >= 400)
-                      throw new t({ url: e3.url, status: e3.status, data: n3 });
+                    if (this.afterSend && (n3 = this.afterSend(e3, n3)), e3.status >= 400) throw new t({ url: e3.url, status: e3.status, data: n3 });
                     return [2, n3];
                 }
               });
@@ -13398,24 +13531,21 @@ ${content}</tr>
       return e2 && ("FormData" === e2.constructor.name || "undefined" != typeof FormData && e2 instanceof FormData);
     }, Client.prototype.serializeQueryParams = function(e2) {
       var t2 = [];
-      for (var n2 in e2)
-        if (null !== e2[n2]) {
-          var i2 = e2[n2], o2 = encodeURIComponent(n2);
-          if (Array.isArray(i2))
-            for (var r2 = 0, s2 = i2; r2 < s2.length; r2++) {
-              var a2 = s2[r2];
-              t2.push(o2 + "=" + encodeURIComponent(a2));
-            }
-          else
-            i2 instanceof Date ? t2.push(o2 + "=" + encodeURIComponent(i2.toISOString())) : null !== typeof i2 && "object" == typeof i2 ? t2.push(o2 + "=" + encodeURIComponent(JSON.stringify(i2))) : t2.push(o2 + "=" + encodeURIComponent(i2));
+      for (var n2 in e2) if (null !== e2[n2]) {
+        var i2 = e2[n2], o2 = encodeURIComponent(n2);
+        if (Array.isArray(i2)) for (var r2 = 0, s2 = i2; r2 < s2.length; r2++) {
+          var a2 = s2[r2];
+          t2.push(o2 + "=" + encodeURIComponent(a2));
         }
+        else i2 instanceof Date ? t2.push(o2 + "=" + encodeURIComponent(i2.toISOString())) : null !== typeof i2 && "object" == typeof i2 ? t2.push(o2 + "=" + encodeURIComponent(JSON.stringify(i2))) : t2.push(o2 + "=" + encodeURIComponent(i2));
+      }
       return t2.join("&");
     }, Client;
   }();
 
-  // ns-hugo:/home/runner/dialektika/frontend/assets/js/pocketbase.js
+  // ns-hugo:/Users/jbk/Documents/dialektika-devel/frontend/assets/js/pocketbase.js
   var import_lodash2 = __toESM(require_lodash());
-  var BACKEND_SERVER = !!window.location.host.match("dialektika") ? "https://dialektika.janbkrejci.repl.co" : window.location.origin;
+  var BACKEND_SERVER = window.location.origin;
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
   async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}, targetCollection = null) {
@@ -13429,8 +13559,7 @@ ${content}</tr>
     pb.collection("colName").unsubscribe();
     collection.splice(0, collection.length);
     collection.push(...import_lodash2.default.filter(await pb.collection(colName).getFullList(options2), (r2) => {
-      if (hooks.preCreate)
-        return filter(hooks.preCreate(r2));
+      if (hooks.preCreate) return filter(hooks.preCreate(r2));
       return filter(r2);
     }));
     pb.collection(colName).subscribe("*", async (e2) => {
@@ -13441,36 +13570,29 @@ ${content}</tr>
       }
       function tryAdd(rec) {
         let r2 = rec;
-        if (hooks.preCreate)
-          r2 = hooks.preCreate(r2);
+        if (hooks.preCreate) r2 = hooks.preCreate(r2);
         if (!!r2 && filter(r2)) {
           if (!collection.find((i2) => i2.id === r2.id)) {
             collection.push(r2);
           }
-          if (hooks.postCreate)
-            r2 = hooks.postCreate(r2);
+          if (hooks.postCreate) r2 = hooks.postCreate(r2);
         }
         return r2;
       }
       function tryDelete(rec) {
-        if (hooks.preDelete)
-          hooks.preDelete(rec);
+        if (hooks.preDelete) hooks.preDelete(rec);
         import_lodash2.default.remove(collection, (x) => x.id === rec.id);
-        if (hooks.postDelete)
-          hooks.postDelete(rec);
+        if (hooks.postDelete) hooks.postDelete(rec);
         return rec;
       }
       function tryUpdate(orig, rec) {
-        if (!orig)
-          return tryAdd(rec);
+        if (!orig) return tryAdd(rec);
         let r2 = rec;
-        if (hooks.preUpdate)
-          r2 = hooks.preUpdate(orig, r2);
+        if (hooks.preUpdate) r2 = hooks.preUpdate(orig, r2);
         if (!!r2 && filter(r2)) {
           const o2 = orig;
           r2 = Object.assign(orig, r2);
-          if (hooks.postUpdate)
-            r2 = hooks.postUpdate(o2, r2);
+          if (hooks.postUpdate) r2 = hooks.postUpdate(o2, r2);
         } else {
           r2 = null;
           return tryDelete(orig);
@@ -13495,24 +13617,27 @@ ${content}</tr>
   }
 
   // node_modules/flowbite/lib/esm/dom/events.js
-  var Events = function() {
-    function Events2(eventType, eventFunctions) {
-      if (eventFunctions === void 0) {
-        eventFunctions = [];
-      }
-      this._eventType = eventType;
-      this._eventFunctions = eventFunctions;
-    }
-    Events2.prototype.init = function() {
-      var _this = this;
-      this._eventFunctions.forEach(function(eventFunction) {
-        if (typeof window !== "undefined") {
-          window.addEventListener(_this._eventType, eventFunction);
+  var Events = (
+    /** @class */
+    function() {
+      function Events2(eventType, eventFunctions) {
+        if (eventFunctions === void 0) {
+          eventFunctions = [];
         }
-      });
-    };
-    return Events2;
-  }();
+        this._eventType = eventType;
+        this._eventFunctions = eventFunctions;
+      }
+      Events2.prototype.init = function() {
+        var _this = this;
+        this._eventFunctions.forEach(function(eventFunction) {
+          if (typeof window !== "undefined") {
+            window.addEventListener(_this._eventType, eventFunction);
+          }
+        });
+      };
+      return Events2;
+    }()
+  );
   var events_default = Events;
 
   // node_modules/flowbite/lib/esm/components/accordion/index.js
@@ -13520,9 +13645,8 @@ ${content}</tr>
     __assign2 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -13539,89 +13663,92 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Accordion = function() {
-    function Accordion2(items, options2) {
-      if (items === void 0) {
-        items = [];
+  var Accordion = (
+    /** @class */
+    function() {
+      function Accordion2(items, options2) {
+        if (items === void 0) {
+          items = [];
+        }
+        if (options2 === void 0) {
+          options2 = Default;
+        }
+        this._items = items;
+        this._options = __assign2(__assign2({}, Default), options2);
+        this._init();
       }
-      if (options2 === void 0) {
-        options2 = Default;
-      }
-      this._items = items;
-      this._options = __assign2(__assign2({}, Default), options2);
-      this._init();
-    }
-    Accordion2.prototype._init = function() {
-      var _this = this;
-      if (this._items.length) {
-        this._items.map(function(item) {
-          if (item.active) {
-            _this.open(item.id);
-          }
-          item.triggerEl.addEventListener("click", function() {
-            _this.toggle(item.id);
-          });
-        });
-      }
-    };
-    Accordion2.prototype.getItem = function(id) {
-      return this._items.filter(function(item) {
-        return item.id === id;
-      })[0];
-    };
-    Accordion2.prototype.open = function(id) {
-      var _a, _b;
-      var _this = this;
-      var item = this.getItem(id);
-      if (!this._options.alwaysOpen) {
-        this._items.map(function(i2) {
-          var _a2, _b2;
-          if (i2 !== item) {
-            (_a2 = i2.triggerEl.classList).remove.apply(_a2, _this._options.activeClasses.split(" "));
-            (_b2 = i2.triggerEl.classList).add.apply(_b2, _this._options.inactiveClasses.split(" "));
-            i2.targetEl.classList.add("hidden");
-            i2.triggerEl.setAttribute("aria-expanded", "false");
-            i2.active = false;
-            if (i2.iconEl) {
-              i2.iconEl.classList.remove("rotate-180");
+      Accordion2.prototype._init = function() {
+        var _this = this;
+        if (this._items.length) {
+          this._items.map(function(item) {
+            if (item.active) {
+              _this.open(item.id);
             }
-          }
-        });
-      }
-      (_a = item.triggerEl.classList).add.apply(_a, this._options.activeClasses.split(" "));
-      (_b = item.triggerEl.classList).remove.apply(_b, this._options.inactiveClasses.split(" "));
-      item.triggerEl.setAttribute("aria-expanded", "true");
-      item.targetEl.classList.remove("hidden");
-      item.active = true;
-      if (item.iconEl) {
-        item.iconEl.classList.add("rotate-180");
-      }
-      this._options.onOpen(this, item);
-    };
-    Accordion2.prototype.toggle = function(id) {
-      var item = this.getItem(id);
-      if (item.active) {
-        this.close(id);
-      } else {
-        this.open(id);
-      }
-      this._options.onToggle(this, item);
-    };
-    Accordion2.prototype.close = function(id) {
-      var _a, _b;
-      var item = this.getItem(id);
-      (_a = item.triggerEl.classList).remove.apply(_a, this._options.activeClasses.split(" "));
-      (_b = item.triggerEl.classList).add.apply(_b, this._options.inactiveClasses.split(" "));
-      item.targetEl.classList.add("hidden");
-      item.triggerEl.setAttribute("aria-expanded", "false");
-      item.active = false;
-      if (item.iconEl) {
-        item.iconEl.classList.remove("rotate-180");
-      }
-      this._options.onClose(this, item);
-    };
-    return Accordion2;
-  }();
+            item.triggerEl.addEventListener("click", function() {
+              _this.toggle(item.id);
+            });
+          });
+        }
+      };
+      Accordion2.prototype.getItem = function(id) {
+        return this._items.filter(function(item) {
+          return item.id === id;
+        })[0];
+      };
+      Accordion2.prototype.open = function(id) {
+        var _a, _b;
+        var _this = this;
+        var item = this.getItem(id);
+        if (!this._options.alwaysOpen) {
+          this._items.map(function(i2) {
+            var _a2, _b2;
+            if (i2 !== item) {
+              (_a2 = i2.triggerEl.classList).remove.apply(_a2, _this._options.activeClasses.split(" "));
+              (_b2 = i2.triggerEl.classList).add.apply(_b2, _this._options.inactiveClasses.split(" "));
+              i2.targetEl.classList.add("hidden");
+              i2.triggerEl.setAttribute("aria-expanded", "false");
+              i2.active = false;
+              if (i2.iconEl) {
+                i2.iconEl.classList.remove("rotate-180");
+              }
+            }
+          });
+        }
+        (_a = item.triggerEl.classList).add.apply(_a, this._options.activeClasses.split(" "));
+        (_b = item.triggerEl.classList).remove.apply(_b, this._options.inactiveClasses.split(" "));
+        item.triggerEl.setAttribute("aria-expanded", "true");
+        item.targetEl.classList.remove("hidden");
+        item.active = true;
+        if (item.iconEl) {
+          item.iconEl.classList.add("rotate-180");
+        }
+        this._options.onOpen(this, item);
+      };
+      Accordion2.prototype.toggle = function(id) {
+        var item = this.getItem(id);
+        if (item.active) {
+          this.close(id);
+        } else {
+          this.open(id);
+        }
+        this._options.onToggle(this, item);
+      };
+      Accordion2.prototype.close = function(id) {
+        var _a, _b;
+        var item = this.getItem(id);
+        (_a = item.triggerEl.classList).remove.apply(_a, this._options.activeClasses.split(" "));
+        (_b = item.triggerEl.classList).add.apply(_b, this._options.inactiveClasses.split(" "));
+        item.targetEl.classList.add("hidden");
+        item.triggerEl.setAttribute("aria-expanded", "false");
+        item.active = false;
+        if (item.iconEl) {
+          item.iconEl.classList.remove("rotate-180");
+        }
+        this._options.onClose(this, item);
+      };
+      return Accordion2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Accordion = Accordion;
   }
@@ -13654,9 +13781,8 @@ ${content}</tr>
     __assign3 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -13670,62 +13796,65 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Collapse = function() {
-    function Collapse2(targetEl, triggerEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
-      }
-      if (triggerEl === void 0) {
-        triggerEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default2;
-      }
-      this._targetEl = targetEl;
-      this._triggerEl = triggerEl;
-      this._options = __assign3(__assign3({}, Default2), options2);
-      this._visible = false;
-      this._init();
-    }
-    Collapse2.prototype._init = function() {
-      var _this = this;
-      if (this._triggerEl) {
-        if (this._triggerEl.hasAttribute("aria-expanded")) {
-          this._visible = this._triggerEl.getAttribute("aria-expanded") === "true";
-        } else {
-          this._visible = !this._targetEl.classList.contains("hidden");
+  var Collapse = (
+    /** @class */
+    function() {
+      function Collapse2(targetEl, triggerEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
         }
-        this._triggerEl.addEventListener("click", function() {
-          _this.toggle();
-        });
+        if (triggerEl === void 0) {
+          triggerEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default2;
+        }
+        this._targetEl = targetEl;
+        this._triggerEl = triggerEl;
+        this._options = __assign3(__assign3({}, Default2), options2);
+        this._visible = false;
+        this._init();
       }
-    };
-    Collapse2.prototype.collapse = function() {
-      this._targetEl.classList.add("hidden");
-      if (this._triggerEl) {
-        this._triggerEl.setAttribute("aria-expanded", "false");
-      }
-      this._visible = false;
-      this._options.onCollapse(this);
-    };
-    Collapse2.prototype.expand = function() {
-      this._targetEl.classList.remove("hidden");
-      if (this._triggerEl) {
-        this._triggerEl.setAttribute("aria-expanded", "true");
-      }
-      this._visible = true;
-      this._options.onExpand(this);
-    };
-    Collapse2.prototype.toggle = function() {
-      if (this._visible) {
-        this.collapse();
-      } else {
-        this.expand();
-      }
-      this._options.onToggle(this);
-    };
-    return Collapse2;
-  }();
+      Collapse2.prototype._init = function() {
+        var _this = this;
+        if (this._triggerEl) {
+          if (this._triggerEl.hasAttribute("aria-expanded")) {
+            this._visible = this._triggerEl.getAttribute("aria-expanded") === "true";
+          } else {
+            this._visible = !this._targetEl.classList.contains("hidden");
+          }
+          this._triggerEl.addEventListener("click", function() {
+            _this.toggle();
+          });
+        }
+      };
+      Collapse2.prototype.collapse = function() {
+        this._targetEl.classList.add("hidden");
+        if (this._triggerEl) {
+          this._triggerEl.setAttribute("aria-expanded", "false");
+        }
+        this._visible = false;
+        this._options.onCollapse(this);
+      };
+      Collapse2.prototype.expand = function() {
+        this._targetEl.classList.remove("hidden");
+        if (this._triggerEl) {
+          this._triggerEl.setAttribute("aria-expanded", "true");
+        }
+        this._visible = true;
+        this._options.onExpand(this);
+      };
+      Collapse2.prototype.toggle = function() {
+        if (this._visible) {
+          this.collapse();
+        } else {
+          this.expand();
+        }
+        this._options.onToggle(this);
+      };
+      return Collapse2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Collapse = Collapse;
   }
@@ -13746,9 +13875,8 @@ ${content}</tr>
     __assign4 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -13769,122 +13897,125 @@ ${content}</tr>
     onChange: function() {
     }
   };
-  var Carousel = function() {
-    function Carousel2(items, options2) {
-      if (items === void 0) {
-        items = [];
+  var Carousel = (
+    /** @class */
+    function() {
+      function Carousel2(items, options2) {
+        if (items === void 0) {
+          items = [];
+        }
+        if (options2 === void 0) {
+          options2 = Default3;
+        }
+        this._items = items;
+        this._options = __assign4(__assign4(__assign4({}, Default3), options2), { indicators: __assign4(__assign4({}, Default3.indicators), options2.indicators) });
+        this._activeItem = this.getItem(this._options.defaultPosition);
+        this._indicators = this._options.indicators.items;
+        this._intervalDuration = this._options.interval;
+        this._intervalInstance = null;
+        this._init();
       }
-      if (options2 === void 0) {
-        options2 = Default3;
-      }
-      this._items = items;
-      this._options = __assign4(__assign4(__assign4({}, Default3), options2), { indicators: __assign4(__assign4({}, Default3.indicators), options2.indicators) });
-      this._activeItem = this.getItem(this._options.defaultPosition);
-      this._indicators = this._options.indicators.items;
-      this._intervalDuration = this._options.interval;
-      this._intervalInstance = null;
-      this._init();
-    }
-    Carousel2.prototype._init = function() {
-      var _this = this;
-      this._items.map(function(item) {
-        item.el.classList.add("absolute", "inset-0", "transition-transform", "transform");
-      });
-      if (this._getActiveItem()) {
-        this.slideTo(this._getActiveItem().position);
-      } else {
-        this.slideTo(0);
-      }
-      this._indicators.map(function(indicator, position) {
-        indicator.el.addEventListener("click", function() {
-          _this.slideTo(position);
+      Carousel2.prototype._init = function() {
+        var _this = this;
+        this._items.map(function(item) {
+          item.el.classList.add("absolute", "inset-0", "transition-transform", "transform");
         });
-      });
-    };
-    Carousel2.prototype.getItem = function(position) {
-      return this._items[position];
-    };
-    Carousel2.prototype.slideTo = function(position) {
-      var nextItem = this._items[position];
-      var rotationItems = {
-        left: nextItem.position === 0 ? this._items[this._items.length - 1] : this._items[nextItem.position - 1],
-        middle: nextItem,
-        right: nextItem.position === this._items.length - 1 ? this._items[0] : this._items[nextItem.position + 1]
+        if (this._getActiveItem()) {
+          this.slideTo(this._getActiveItem().position);
+        } else {
+          this.slideTo(0);
+        }
+        this._indicators.map(function(indicator, position) {
+          indicator.el.addEventListener("click", function() {
+            _this.slideTo(position);
+          });
+        });
       };
-      this._rotate(rotationItems);
-      this._setActiveItem(nextItem);
-      if (this._intervalInstance) {
-        this.pause();
-        this.cycle();
-      }
-      this._options.onChange(this);
-    };
-    Carousel2.prototype.next = function() {
-      var activeItem = this._getActiveItem();
-      var nextItem = null;
-      if (activeItem.position === this._items.length - 1) {
-        nextItem = this._items[0];
-      } else {
-        nextItem = this._items[activeItem.position + 1];
-      }
-      this.slideTo(nextItem.position);
-      this._options.onNext(this);
-    };
-    Carousel2.prototype.prev = function() {
-      var activeItem = this._getActiveItem();
-      var prevItem = null;
-      if (activeItem.position === 0) {
-        prevItem = this._items[this._items.length - 1];
-      } else {
-        prevItem = this._items[activeItem.position - 1];
-      }
-      this.slideTo(prevItem.position);
-      this._options.onPrev(this);
-    };
-    Carousel2.prototype._rotate = function(rotationItems) {
-      this._items.map(function(item) {
-        item.el.classList.add("hidden");
-      });
-      rotationItems.left.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-20");
-      rotationItems.left.el.classList.add("-translate-x-full", "z-10");
-      rotationItems.middle.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-10");
-      rotationItems.middle.el.classList.add("translate-x-0", "z-20");
-      rotationItems.right.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-20");
-      rotationItems.right.el.classList.add("translate-x-full", "z-10");
-    };
-    Carousel2.prototype.cycle = function() {
-      var _this = this;
-      if (typeof window !== "undefined") {
-        this._intervalInstance = window.setInterval(function() {
-          _this.next();
-        }, this._intervalDuration);
-      }
-    };
-    Carousel2.prototype.pause = function() {
-      clearInterval(this._intervalInstance);
-    };
-    Carousel2.prototype._getActiveItem = function() {
-      return this._activeItem;
-    };
-    Carousel2.prototype._setActiveItem = function(item) {
-      var _a, _b;
-      var _this = this;
-      this._activeItem = item;
-      var position = item.position;
-      if (this._indicators.length) {
-        this._indicators.map(function(indicator) {
-          var _a2, _b2;
-          indicator.el.setAttribute("aria-current", "false");
-          (_a2 = indicator.el.classList).remove.apply(_a2, _this._options.indicators.activeClasses.split(" "));
-          (_b2 = indicator.el.classList).add.apply(_b2, _this._options.indicators.inactiveClasses.split(" "));
+      Carousel2.prototype.getItem = function(position) {
+        return this._items[position];
+      };
+      Carousel2.prototype.slideTo = function(position) {
+        var nextItem = this._items[position];
+        var rotationItems = {
+          left: nextItem.position === 0 ? this._items[this._items.length - 1] : this._items[nextItem.position - 1],
+          middle: nextItem,
+          right: nextItem.position === this._items.length - 1 ? this._items[0] : this._items[nextItem.position + 1]
+        };
+        this._rotate(rotationItems);
+        this._setActiveItem(nextItem);
+        if (this._intervalInstance) {
+          this.pause();
+          this.cycle();
+        }
+        this._options.onChange(this);
+      };
+      Carousel2.prototype.next = function() {
+        var activeItem = this._getActiveItem();
+        var nextItem = null;
+        if (activeItem.position === this._items.length - 1) {
+          nextItem = this._items[0];
+        } else {
+          nextItem = this._items[activeItem.position + 1];
+        }
+        this.slideTo(nextItem.position);
+        this._options.onNext(this);
+      };
+      Carousel2.prototype.prev = function() {
+        var activeItem = this._getActiveItem();
+        var prevItem = null;
+        if (activeItem.position === 0) {
+          prevItem = this._items[this._items.length - 1];
+        } else {
+          prevItem = this._items[activeItem.position - 1];
+        }
+        this.slideTo(prevItem.position);
+        this._options.onPrev(this);
+      };
+      Carousel2.prototype._rotate = function(rotationItems) {
+        this._items.map(function(item) {
+          item.el.classList.add("hidden");
         });
-        (_a = this._indicators[position].el.classList).add.apply(_a, this._options.indicators.activeClasses.split(" "));
-        (_b = this._indicators[position].el.classList).remove.apply(_b, this._options.indicators.inactiveClasses.split(" "));
-        this._indicators[position].el.setAttribute("aria-current", "true");
-      }
-    };
-    return Carousel2;
-  }();
+        rotationItems.left.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-20");
+        rotationItems.left.el.classList.add("-translate-x-full", "z-10");
+        rotationItems.middle.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-10");
+        rotationItems.middle.el.classList.add("translate-x-0", "z-20");
+        rotationItems.right.el.classList.remove("-translate-x-full", "translate-x-full", "translate-x-0", "hidden", "z-20");
+        rotationItems.right.el.classList.add("translate-x-full", "z-10");
+      };
+      Carousel2.prototype.cycle = function() {
+        var _this = this;
+        if (typeof window !== "undefined") {
+          this._intervalInstance = window.setInterval(function() {
+            _this.next();
+          }, this._intervalDuration);
+        }
+      };
+      Carousel2.prototype.pause = function() {
+        clearInterval(this._intervalInstance);
+      };
+      Carousel2.prototype._getActiveItem = function() {
+        return this._activeItem;
+      };
+      Carousel2.prototype._setActiveItem = function(item) {
+        var _a, _b;
+        var _this = this;
+        this._activeItem = item;
+        var position = item.position;
+        if (this._indicators.length) {
+          this._indicators.map(function(indicator) {
+            var _a2, _b2;
+            indicator.el.setAttribute("aria-current", "false");
+            (_a2 = indicator.el.classList).remove.apply(_a2, _this._options.indicators.activeClasses.split(" "));
+            (_b2 = indicator.el.classList).add.apply(_b2, _this._options.indicators.inactiveClasses.split(" "));
+          });
+          (_a = this._indicators[position].el.classList).add.apply(_a, this._options.indicators.activeClasses.split(" "));
+          (_b = this._indicators[position].el.classList).remove.apply(_b, this._options.indicators.inactiveClasses.split(" "));
+          this._indicators[position].el.setAttribute("aria-current", "true");
+        }
+      };
+      return Carousel2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Carousel = Carousel;
   }
@@ -13944,9 +14075,8 @@ ${content}</tr>
     __assign5 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -13959,40 +14089,43 @@ ${content}</tr>
     onHide: function() {
     }
   };
-  var Dismiss = function() {
-    function Dismiss2(targetEl, triggerEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
+  var Dismiss = (
+    /** @class */
+    function() {
+      function Dismiss2(targetEl, triggerEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
+        }
+        if (triggerEl === void 0) {
+          triggerEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default4;
+        }
+        this._targetEl = targetEl;
+        this._triggerEl = triggerEl;
+        this._options = __assign5(__assign5({}, Default4), options2);
+        this._init();
       }
-      if (triggerEl === void 0) {
-        triggerEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default4;
-      }
-      this._targetEl = targetEl;
-      this._triggerEl = triggerEl;
-      this._options = __assign5(__assign5({}, Default4), options2);
-      this._init();
-    }
-    Dismiss2.prototype._init = function() {
-      var _this = this;
-      if (this._triggerEl) {
-        this._triggerEl.addEventListener("click", function() {
-          _this.hide();
-        });
-      }
-    };
-    Dismiss2.prototype.hide = function() {
-      var _this = this;
-      this._targetEl.classList.add(this._options.transition, "duration-".concat(this._options.duration), this._options.timing, "opacity-0");
-      setTimeout(function() {
-        _this._targetEl.classList.add("hidden");
-      }, this._options.duration);
-      this._options.onHide(this, this._targetEl);
-    };
-    return Dismiss2;
-  }();
+      Dismiss2.prototype._init = function() {
+        var _this = this;
+        if (this._triggerEl) {
+          this._triggerEl.addEventListener("click", function() {
+            _this.hide();
+          });
+        }
+      };
+      Dismiss2.prototype.hide = function() {
+        var _this = this;
+        this._targetEl.classList.add(this._options.transition, "duration-".concat(this._options.duration), this._options.timing, "opacity-0");
+        setTimeout(function() {
+          _this._targetEl.classList.add("hidden");
+        }, this._options.duration);
+        this._options.onHide(this, this._targetEl);
+      };
+      return Dismiss2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Dismiss = Dismiss;
   }
@@ -14247,7 +14380,10 @@ ${content}</tr>
 
   // node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
   function getDocumentElement(element) {
-    return ((isElement(element) ? element.ownerDocument : element.document) || window.document).documentElement;
+    return ((isElement(element) ? element.ownerDocument : (
+      // $FlowFixMe[prop-missing]
+      element.document
+    )) || window.document).documentElement;
   }
 
   // node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
@@ -14255,12 +14391,22 @@ ${content}</tr>
     if (getNodeName(element) === "html") {
       return element;
     }
-    return element.assignedSlot || element.parentNode || (isShadowRoot(element) ? element.host : null) || getDocumentElement(element);
+    return (
+      // this is a quicker (but less type safe) way to save quite some bytes from the bundle
+      // $FlowFixMe[incompatible-return]
+      // $FlowFixMe[prop-missing]
+      element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+      element.parentNode || // DOM Element detected
+      (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+      // $FlowFixMe[incompatible-call]: HTMLElement is a Node
+      getDocumentElement(element)
+    );
   }
 
   // node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
   function getTrueOffsetParent(element) {
-    if (!isHTMLElement(element) || getComputedStyle2(element).position === "fixed") {
+    if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
+    getComputedStyle2(element).position === "fixed") {
       return null;
     }
     return element.offsetParent;
@@ -14459,13 +14605,19 @@ ${content}</tr>
       offsetParent = offsetParent;
       if (placement === top || (placement === left || placement === right) && variation === end) {
         sideY = bottom;
-        var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : offsetParent[heightProp];
+        var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[heightProp]
+        );
         y2 -= offsetY - popperRect.height;
         y2 *= gpuAcceleration ? 1 : -1;
       }
       if (placement === left || (placement === top || placement === bottom) && variation === end) {
         sideX = right;
-        var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : offsetParent[widthProp];
+        var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[widthProp]
+        );
         x -= offsetX - popperRect.width;
         x *= gpuAcceleration ? 1 : -1;
       }
@@ -14688,7 +14840,10 @@ ${content}</tr>
     var win = getWindow(scrollParent);
     var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
     var updatedList = list.concat(target);
-    return isBody ? updatedList : updatedList.concat(listScrollParents(getParentNode(target)));
+    return isBody ? updatedList : (
+      // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+      updatedList.concat(listScrollParents(getParentNode(target)))
+    );
   }
 
   // node_modules/@popperjs/core/lib/utils/rectToClientRect.js
@@ -14958,8 +15113,7 @@ ${content}</tr>
       };
       for (var _i = numberOfChecks; _i > 0; _i--) {
         var _ret = _loop(_i);
-        if (_ret === "break")
-          break;
+        if (_ret === "break") break;
       }
     }
     if (state.placement !== firstFittingPlacement) {
@@ -15229,7 +15383,8 @@ ${content}</tr>
       y: 0
     };
     if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-      if (getNodeName(offsetParent) !== "body" || isScrollParent(documentElement)) {
+      if (getNodeName(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
+      isScrollParent(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
       if (isHTMLElement(offsetParent)) {
@@ -15480,6 +15635,11 @@ ${content}</tr>
           runModifierEffects();
           return instance.update();
         },
+        // Sync update – it will always be executed, even if not necessary. This
+        // is useful for low frequency updates where sync behavior simplifies the
+        // logic.
+        // For high frequency updates (e.g. `resize` and `scroll` events), always
+        // prefer the async Popper#update method
         forceUpdate: function forceUpdate() {
           if (isDestroyed) {
             return;
@@ -15525,6 +15685,8 @@ ${content}</tr>
             }
           }
         },
+        // Async and optimistically optimized update – it will not be executed if
+        // not necessary (debounced to run at most once-per-tick)
         update: debounce2(function() {
           return new Promise(function(resolve) {
             instance.forceUpdate();
@@ -15584,23 +15746,20 @@ ${content}</tr>
     __assign6 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
     return __assign6.apply(this, arguments);
   };
   var __spreadArray = function(to, from, pack) {
-    if (pack || arguments.length === 2)
-      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
-        if (ar || !(i2 in from)) {
-          if (!ar)
-            ar = Array.prototype.slice.call(from, 0, i2);
-          ar[i2] = from[i2];
-        }
+    if (pack || arguments.length === 2) for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
+      if (ar || !(i2 in from)) {
+        if (!ar) ar = Array.prototype.slice.call(from, 0, i2);
+        ar[i2] = from[i2];
       }
+    }
     return to.concat(ar || Array.prototype.slice.call(from));
   };
   var Default5 = {
@@ -15616,166 +15775,169 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Dropdown = function() {
-    function Dropdown2(targetElement, triggerElement, options2) {
-      if (targetElement === void 0) {
-        targetElement = null;
+  var Dropdown = (
+    /** @class */
+    function() {
+      function Dropdown2(targetElement, triggerElement, options2) {
+        if (targetElement === void 0) {
+          targetElement = null;
+        }
+        if (triggerElement === void 0) {
+          triggerElement = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default5;
+        }
+        this._targetEl = targetElement;
+        this._triggerEl = triggerElement;
+        this._options = __assign6(__assign6({}, Default5), options2);
+        this._popperInstance = this._createPopperInstance();
+        this._visible = false;
+        this._init();
       }
-      if (triggerElement === void 0) {
-        triggerElement = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default5;
-      }
-      this._targetEl = targetElement;
-      this._triggerEl = triggerElement;
-      this._options = __assign6(__assign6({}, Default5), options2);
-      this._popperInstance = this._createPopperInstance();
-      this._visible = false;
-      this._init();
-    }
-    Dropdown2.prototype._init = function() {
-      if (this._triggerEl) {
-        this._setupEventListeners();
-      }
-    };
-    Dropdown2.prototype._setupEventListeners = function() {
-      var _this = this;
-      var triggerEvents = this._getTriggerEvents();
-      if (this._options.triggerType === "click") {
-        triggerEvents.showEvents.forEach(function(ev) {
-          _this._triggerEl.addEventListener(ev, function() {
-            _this.toggle();
-          });
-        });
-      }
-      if (this._options.triggerType === "hover") {
-        triggerEvents.showEvents.forEach(function(ev) {
-          _this._triggerEl.addEventListener(ev, function() {
-            if (ev === "click") {
-              _this.toggle();
-            } else {
-              setTimeout(function() {
-                _this.show();
-              }, _this._options.delay);
-            }
-          });
-          _this._targetEl.addEventListener(ev, function() {
-            _this.show();
-          });
-        });
-        triggerEvents.hideEvents.forEach(function(ev) {
-          _this._triggerEl.addEventListener(ev, function() {
-            setTimeout(function() {
-              if (!_this._targetEl.matches(":hover")) {
-                _this.hide();
-              }
-            }, _this._options.delay);
-          });
-          _this._targetEl.addEventListener(ev, function() {
-            setTimeout(function() {
-              if (!_this._triggerEl.matches(":hover")) {
-                _this.hide();
-              }
-            }, _this._options.delay);
-          });
-        });
-      }
-    };
-    Dropdown2.prototype._createPopperInstance = function() {
-      return createPopper(this._triggerEl, this._targetEl, {
-        placement: this._options.placement,
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: [
-                this._options.offsetSkidding,
-                this._options.offsetDistance
-              ]
-            }
-          }
-        ]
-      });
-    };
-    Dropdown2.prototype._setupClickOutsideListener = function() {
-      var _this = this;
-      this._clickOutsideEventListener = function(ev) {
-        _this._handleClickOutside(ev, _this._targetEl);
+      Dropdown2.prototype._init = function() {
+        if (this._triggerEl) {
+          this._setupEventListeners();
+        }
       };
-      document.body.addEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Dropdown2.prototype._removeClickOutsideListener = function() {
-      document.body.removeEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Dropdown2.prototype._handleClickOutside = function(ev, targetEl) {
-      var clickedEl = ev.target;
-      if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
-        this.hide();
-      }
-    };
-    Dropdown2.prototype._getTriggerEvents = function() {
-      switch (this._options.triggerType) {
-        case "hover":
-          return {
-            showEvents: ["mouseenter", "click"],
-            hideEvents: ["mouseleave"]
-          };
-        case "click":
-          return {
-            showEvents: ["click"],
-            hideEvents: []
-          };
-        case "none":
-          return {
-            showEvents: [],
-            hideEvents: []
-          };
-        default:
-          return {
-            showEvents: ["click"],
-            hideEvents: []
-          };
-      }
-    };
-    Dropdown2.prototype.toggle = function() {
-      if (this.isVisible()) {
-        this.hide();
-      } else {
-        this.show();
-      }
-      this._options.onToggle(this);
-    };
-    Dropdown2.prototype.isVisible = function() {
-      return this._visible;
-    };
-    Dropdown2.prototype.show = function() {
-      this._targetEl.classList.remove("hidden");
-      this._targetEl.classList.add("block");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign6(__assign6({}, options2), { modifiers: __spreadArray(__spreadArray([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: true }
-        ], false) });
-      });
-      this._setupClickOutsideListener();
-      this._popperInstance.update();
-      this._visible = true;
-      this._options.onShow(this);
-    };
-    Dropdown2.prototype.hide = function() {
-      this._targetEl.classList.remove("block");
-      this._targetEl.classList.add("hidden");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign6(__assign6({}, options2), { modifiers: __spreadArray(__spreadArray([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: false }
-        ], false) });
-      });
-      this._visible = false;
-      this._removeClickOutsideListener();
-      this._options.onHide(this);
-    };
-    return Dropdown2;
-  }();
+      Dropdown2.prototype._setupEventListeners = function() {
+        var _this = this;
+        var triggerEvents = this._getTriggerEvents();
+        if (this._options.triggerType === "click") {
+          triggerEvents.showEvents.forEach(function(ev) {
+            _this._triggerEl.addEventListener(ev, function() {
+              _this.toggle();
+            });
+          });
+        }
+        if (this._options.triggerType === "hover") {
+          triggerEvents.showEvents.forEach(function(ev) {
+            _this._triggerEl.addEventListener(ev, function() {
+              if (ev === "click") {
+                _this.toggle();
+              } else {
+                setTimeout(function() {
+                  _this.show();
+                }, _this._options.delay);
+              }
+            });
+            _this._targetEl.addEventListener(ev, function() {
+              _this.show();
+            });
+          });
+          triggerEvents.hideEvents.forEach(function(ev) {
+            _this._triggerEl.addEventListener(ev, function() {
+              setTimeout(function() {
+                if (!_this._targetEl.matches(":hover")) {
+                  _this.hide();
+                }
+              }, _this._options.delay);
+            });
+            _this._targetEl.addEventListener(ev, function() {
+              setTimeout(function() {
+                if (!_this._triggerEl.matches(":hover")) {
+                  _this.hide();
+                }
+              }, _this._options.delay);
+            });
+          });
+        }
+      };
+      Dropdown2.prototype._createPopperInstance = function() {
+        return createPopper(this._triggerEl, this._targetEl, {
+          placement: this._options.placement,
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [
+                  this._options.offsetSkidding,
+                  this._options.offsetDistance
+                ]
+              }
+            }
+          ]
+        });
+      };
+      Dropdown2.prototype._setupClickOutsideListener = function() {
+        var _this = this;
+        this._clickOutsideEventListener = function(ev) {
+          _this._handleClickOutside(ev, _this._targetEl);
+        };
+        document.body.addEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Dropdown2.prototype._removeClickOutsideListener = function() {
+        document.body.removeEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Dropdown2.prototype._handleClickOutside = function(ev, targetEl) {
+        var clickedEl = ev.target;
+        if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
+          this.hide();
+        }
+      };
+      Dropdown2.prototype._getTriggerEvents = function() {
+        switch (this._options.triggerType) {
+          case "hover":
+            return {
+              showEvents: ["mouseenter", "click"],
+              hideEvents: ["mouseleave"]
+            };
+          case "click":
+            return {
+              showEvents: ["click"],
+              hideEvents: []
+            };
+          case "none":
+            return {
+              showEvents: [],
+              hideEvents: []
+            };
+          default:
+            return {
+              showEvents: ["click"],
+              hideEvents: []
+            };
+        }
+      };
+      Dropdown2.prototype.toggle = function() {
+        if (this.isVisible()) {
+          this.hide();
+        } else {
+          this.show();
+        }
+        this._options.onToggle(this);
+      };
+      Dropdown2.prototype.isVisible = function() {
+        return this._visible;
+      };
+      Dropdown2.prototype.show = function() {
+        this._targetEl.classList.remove("hidden");
+        this._targetEl.classList.add("block");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign6(__assign6({}, options2), { modifiers: __spreadArray(__spreadArray([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: true }
+          ], false) });
+        });
+        this._setupClickOutsideListener();
+        this._popperInstance.update();
+        this._visible = true;
+        this._options.onShow(this);
+      };
+      Dropdown2.prototype.hide = function() {
+        this._targetEl.classList.remove("block");
+        this._targetEl.classList.add("hidden");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign6(__assign6({}, options2), { modifiers: __spreadArray(__spreadArray([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: false }
+          ], false) });
+        });
+        this._visible = false;
+        this._removeClickOutsideListener();
+        this._options.onHide(this);
+      };
+      return Dropdown2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Dropdown = Dropdown;
   }
@@ -15807,9 +15969,8 @@ ${content}</tr>
     __assign7 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -15827,141 +15988,147 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Modal = function() {
-    function Modal2(targetEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
+  var Modal = (
+    /** @class */
+    function() {
+      function Modal2(targetEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default6;
+        }
+        this._targetEl = targetEl;
+        this._options = __assign7(__assign7({}, Default6), options2);
+        this._isHidden = true;
+        this._backdropEl = null;
+        this._init();
       }
-      if (options2 === void 0) {
-        options2 = Default6;
-      }
-      this._targetEl = targetEl;
-      this._options = __assign7(__assign7({}, Default6), options2);
-      this._isHidden = true;
-      this._backdropEl = null;
-      this._init();
-    }
-    Modal2.prototype._init = function() {
-      var _this = this;
-      if (this._targetEl) {
-        this._getPlacementClasses().map(function(c3) {
-          _this._targetEl.classList.add(c3);
-        });
-      }
-    };
-    Modal2.prototype._createBackdrop = function() {
-      var _a;
-      if (this._isHidden) {
-        var backdropEl = document.createElement("div");
-        backdropEl.setAttribute("modal-backdrop", "");
-        (_a = backdropEl.classList).add.apply(_a, this._options.backdropClasses.split(" "));
-        document.querySelector("body").append(backdropEl);
-        this._backdropEl = backdropEl;
-      }
-    };
-    Modal2.prototype._destroyBackdropEl = function() {
-      if (!this._isHidden) {
-        document.querySelector("[modal-backdrop]").remove();
-      }
-    };
-    Modal2.prototype._setupModalCloseEventListeners = function() {
-      var _this = this;
-      if (this._options.backdrop === "dynamic") {
-        this._clickOutsideEventListener = function(ev) {
-          _this._handleOutsideClick(ev.target);
-        };
-        this._targetEl.addEventListener("click", this._clickOutsideEventListener, true);
-      }
-      this._keydownEventListener = function(ev) {
-        if (ev.key === "Escape") {
-          _this.hide();
+      Modal2.prototype._init = function() {
+        var _this = this;
+        if (this._targetEl) {
+          this._getPlacementClasses().map(function(c3) {
+            _this._targetEl.classList.add(c3);
+          });
         }
       };
-      document.body.addEventListener("keydown", this._keydownEventListener, true);
-    };
-    Modal2.prototype._removeModalCloseEventListeners = function() {
-      if (this._options.backdrop === "dynamic") {
-        this._targetEl.removeEventListener("click", this._clickOutsideEventListener, true);
-      }
-      document.body.removeEventListener("keydown", this._keydownEventListener, true);
-    };
-    Modal2.prototype._handleOutsideClick = function(target) {
-      if (target === this._targetEl || target === this._backdropEl && this.isVisible()) {
-        this.hide();
-      }
-    };
-    Modal2.prototype._getPlacementClasses = function() {
-      switch (this._options.placement) {
-        case "top-left":
-          return ["justify-start", "items-start"];
-        case "top-center":
-          return ["justify-center", "items-start"];
-        case "top-right":
-          return ["justify-end", "items-start"];
-        case "center-left":
-          return ["justify-start", "items-center"];
-        case "center":
-          return ["justify-center", "items-center"];
-        case "center-right":
-          return ["justify-end", "items-center"];
-        case "bottom-left":
-          return ["justify-start", "items-end"];
-        case "bottom-center":
-          return ["justify-center", "items-end"];
-        case "bottom-right":
-          return ["justify-end", "items-end"];
-        default:
-          return ["justify-center", "items-center"];
-      }
-    };
-    Modal2.prototype.toggle = function() {
-      if (this._isHidden) {
-        this.show();
-      } else {
-        this.hide();
-      }
-      this._options.onToggle(this);
-    };
-    Modal2.prototype.show = function() {
-      if (this.isHidden) {
-        this._targetEl.classList.add("flex");
-        this._targetEl.classList.remove("hidden");
-        this._targetEl.setAttribute("aria-modal", "true");
-        this._targetEl.setAttribute("role", "dialog");
-        this._targetEl.removeAttribute("aria-hidden");
-        this._createBackdrop();
-        this._isHidden = false;
-        document.body.classList.add("overflow-hidden");
-        if (this._options.closable) {
-          this._setupModalCloseEventListeners();
+      Modal2.prototype._createBackdrop = function() {
+        var _a;
+        if (this._isHidden) {
+          var backdropEl = document.createElement("div");
+          backdropEl.setAttribute("modal-backdrop", "");
+          (_a = backdropEl.classList).add.apply(_a, this._options.backdropClasses.split(" "));
+          document.querySelector("body").append(backdropEl);
+          this._backdropEl = backdropEl;
         }
-        this._options.onShow(this);
-      }
-    };
-    Modal2.prototype.hide = function() {
-      if (this.isVisible) {
-        this._targetEl.classList.add("hidden");
-        this._targetEl.classList.remove("flex");
-        this._targetEl.setAttribute("aria-hidden", "true");
-        this._targetEl.removeAttribute("aria-modal");
-        this._targetEl.removeAttribute("role");
-        this._destroyBackdropEl();
-        this._isHidden = true;
-        document.body.classList.remove("overflow-hidden");
-        if (this._options.closable) {
-          this._removeModalCloseEventListeners();
+      };
+      Modal2.prototype._destroyBackdropEl = function() {
+        if (!this._isHidden) {
+          document.querySelector("[modal-backdrop]").remove();
         }
-        this._options.onHide(this);
-      }
-    };
-    Modal2.prototype.isVisible = function() {
-      return !this._isHidden;
-    };
-    Modal2.prototype.isHidden = function() {
-      return this._isHidden;
-    };
-    return Modal2;
-  }();
+      };
+      Modal2.prototype._setupModalCloseEventListeners = function() {
+        var _this = this;
+        if (this._options.backdrop === "dynamic") {
+          this._clickOutsideEventListener = function(ev) {
+            _this._handleOutsideClick(ev.target);
+          };
+          this._targetEl.addEventListener("click", this._clickOutsideEventListener, true);
+        }
+        this._keydownEventListener = function(ev) {
+          if (ev.key === "Escape") {
+            _this.hide();
+          }
+        };
+        document.body.addEventListener("keydown", this._keydownEventListener, true);
+      };
+      Modal2.prototype._removeModalCloseEventListeners = function() {
+        if (this._options.backdrop === "dynamic") {
+          this._targetEl.removeEventListener("click", this._clickOutsideEventListener, true);
+        }
+        document.body.removeEventListener("keydown", this._keydownEventListener, true);
+      };
+      Modal2.prototype._handleOutsideClick = function(target) {
+        if (target === this._targetEl || target === this._backdropEl && this.isVisible()) {
+          this.hide();
+        }
+      };
+      Modal2.prototype._getPlacementClasses = function() {
+        switch (this._options.placement) {
+          // top
+          case "top-left":
+            return ["justify-start", "items-start"];
+          case "top-center":
+            return ["justify-center", "items-start"];
+          case "top-right":
+            return ["justify-end", "items-start"];
+          // center
+          case "center-left":
+            return ["justify-start", "items-center"];
+          case "center":
+            return ["justify-center", "items-center"];
+          case "center-right":
+            return ["justify-end", "items-center"];
+          // bottom
+          case "bottom-left":
+            return ["justify-start", "items-end"];
+          case "bottom-center":
+            return ["justify-center", "items-end"];
+          case "bottom-right":
+            return ["justify-end", "items-end"];
+          default:
+            return ["justify-center", "items-center"];
+        }
+      };
+      Modal2.prototype.toggle = function() {
+        if (this._isHidden) {
+          this.show();
+        } else {
+          this.hide();
+        }
+        this._options.onToggle(this);
+      };
+      Modal2.prototype.show = function() {
+        if (this.isHidden) {
+          this._targetEl.classList.add("flex");
+          this._targetEl.classList.remove("hidden");
+          this._targetEl.setAttribute("aria-modal", "true");
+          this._targetEl.setAttribute("role", "dialog");
+          this._targetEl.removeAttribute("aria-hidden");
+          this._createBackdrop();
+          this._isHidden = false;
+          document.body.classList.add("overflow-hidden");
+          if (this._options.closable) {
+            this._setupModalCloseEventListeners();
+          }
+          this._options.onShow(this);
+        }
+      };
+      Modal2.prototype.hide = function() {
+        if (this.isVisible) {
+          this._targetEl.classList.add("hidden");
+          this._targetEl.classList.remove("flex");
+          this._targetEl.setAttribute("aria-hidden", "true");
+          this._targetEl.removeAttribute("aria-modal");
+          this._targetEl.removeAttribute("role");
+          this._destroyBackdropEl();
+          this._isHidden = true;
+          document.body.classList.remove("overflow-hidden");
+          if (this._options.closable) {
+            this._removeModalCloseEventListeners();
+          }
+          this._options.onHide(this);
+        }
+      };
+      Modal2.prototype.isVisible = function() {
+        return !this._isHidden;
+      };
+      Modal2.prototype.isHidden = function() {
+        return this._isHidden;
+      };
+      return Modal2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Modal = Modal;
   }
@@ -16063,9 +16230,8 @@ ${content}</tr>
     __assign8 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -16085,167 +16251,170 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Drawer = function() {
-    function Drawer2(targetEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default7;
-      }
-      this._targetEl = targetEl;
-      this._options = __assign8(__assign8({}, Default7), options2);
-      this._visible = false;
-      this._init();
-    }
-    Drawer2.prototype._init = function() {
-      var _this = this;
-      if (this._targetEl) {
-        this._targetEl.setAttribute("aria-hidden", "true");
-        this._targetEl.classList.add("transition-transform");
-      }
-      this._getPlacementClasses(this._options.placement).base.map(function(c3) {
-        _this._targetEl.classList.add(c3);
-      });
-      document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-          if (_this.isVisible()) {
-            _this.hide();
-          }
+  var Drawer = (
+    /** @class */
+    function() {
+      function Drawer2(targetEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
         }
-      });
-    };
-    Drawer2.prototype.hide = function() {
-      var _this = this;
-      if (this._options.edge) {
-        this._getPlacementClasses(this._options.placement + "-edge").active.map(function(c3) {
-          _this._targetEl.classList.remove(c3);
-        });
-        this._getPlacementClasses(this._options.placement + "-edge").inactive.map(function(c3) {
+        if (options2 === void 0) {
+          options2 = Default7;
+        }
+        this._targetEl = targetEl;
+        this._options = __assign8(__assign8({}, Default7), options2);
+        this._visible = false;
+        this._init();
+      }
+      Drawer2.prototype._init = function() {
+        var _this = this;
+        if (this._targetEl) {
+          this._targetEl.setAttribute("aria-hidden", "true");
+          this._targetEl.classList.add("transition-transform");
+        }
+        this._getPlacementClasses(this._options.placement).base.map(function(c3) {
           _this._targetEl.classList.add(c3);
         });
-      } else {
-        this._getPlacementClasses(this._options.placement).active.map(function(c3) {
-          _this._targetEl.classList.remove(c3);
+        document.addEventListener("keydown", function(event) {
+          if (event.key === "Escape") {
+            if (_this.isVisible()) {
+              _this.hide();
+            }
+          }
         });
-        this._getPlacementClasses(this._options.placement).inactive.map(function(c3) {
-          _this._targetEl.classList.add(c3);
-        });
-      }
-      this._targetEl.setAttribute("aria-hidden", "true");
-      this._targetEl.removeAttribute("aria-modal");
-      this._targetEl.removeAttribute("role");
-      if (!this._options.bodyScrolling) {
-        document.body.classList.remove("overflow-hidden");
-      }
-      if (this._options.backdrop) {
-        this._destroyBackdropEl();
-      }
-      this._visible = false;
-      this._options.onHide(this);
-    };
-    Drawer2.prototype.show = function() {
-      var _this = this;
-      if (this._options.edge) {
-        this._getPlacementClasses(this._options.placement + "-edge").active.map(function(c3) {
-          _this._targetEl.classList.add(c3);
-        });
-        this._getPlacementClasses(this._options.placement + "-edge").inactive.map(function(c3) {
-          _this._targetEl.classList.remove(c3);
-        });
-      } else {
-        this._getPlacementClasses(this._options.placement).active.map(function(c3) {
-          _this._targetEl.classList.add(c3);
-        });
-        this._getPlacementClasses(this._options.placement).inactive.map(function(c3) {
-          _this._targetEl.classList.remove(c3);
-        });
-      }
-      this._targetEl.setAttribute("aria-modal", "true");
-      this._targetEl.setAttribute("role", "dialog");
-      this._targetEl.removeAttribute("aria-hidden");
-      if (!this._options.bodyScrolling) {
-        document.body.classList.add("overflow-hidden");
-      }
-      if (this._options.backdrop) {
-        this._createBackdrop();
-      }
-      this._visible = true;
-      this._options.onShow(this);
-    };
-    Drawer2.prototype.toggle = function() {
-      if (this.isVisible()) {
-        this.hide();
-      } else {
-        this.show();
-      }
-    };
-    Drawer2.prototype._createBackdrop = function() {
-      var _a;
-      var _this = this;
-      if (!this._visible) {
-        var backdropEl = document.createElement("div");
-        backdropEl.setAttribute("drawer-backdrop", "");
-        (_a = backdropEl.classList).add.apply(_a, this._options.backdropClasses.split(" "));
-        document.querySelector("body").append(backdropEl);
-        backdropEl.addEventListener("click", function() {
-          _this.hide();
-        });
-      }
-    };
-    Drawer2.prototype._destroyBackdropEl = function() {
-      if (this._visible) {
-        document.querySelector("[drawer-backdrop]").remove();
-      }
-    };
-    Drawer2.prototype._getPlacementClasses = function(placement) {
-      switch (placement) {
-        case "top":
-          return {
-            base: ["top-0", "left-0", "right-0"],
-            active: ["transform-none"],
-            inactive: ["-translate-y-full"]
-          };
-        case "right":
-          return {
-            base: ["right-0", "top-0"],
-            active: ["transform-none"],
-            inactive: ["translate-x-full"]
-          };
-        case "bottom":
-          return {
-            base: ["bottom-0", "left-0", "right-0"],
-            active: ["transform-none"],
-            inactive: ["translate-y-full"]
-          };
-        case "left":
-          return {
-            base: ["left-0", "top-0"],
-            active: ["transform-none"],
-            inactive: ["-translate-x-full"]
-          };
-        case "bottom-edge":
-          return {
-            base: ["left-0", "top-0"],
-            active: ["transform-none"],
-            inactive: ["translate-y-full", this._options.edgeOffset]
-          };
-        default:
-          return {
-            base: ["left-0", "top-0"],
-            active: ["transform-none"],
-            inactive: ["-translate-x-full"]
-          };
-      }
-    };
-    Drawer2.prototype.isHidden = function() {
-      return !this._visible;
-    };
-    Drawer2.prototype.isVisible = function() {
-      return this._visible;
-    };
-    return Drawer2;
-  }();
+      };
+      Drawer2.prototype.hide = function() {
+        var _this = this;
+        if (this._options.edge) {
+          this._getPlacementClasses(this._options.placement + "-edge").active.map(function(c3) {
+            _this._targetEl.classList.remove(c3);
+          });
+          this._getPlacementClasses(this._options.placement + "-edge").inactive.map(function(c3) {
+            _this._targetEl.classList.add(c3);
+          });
+        } else {
+          this._getPlacementClasses(this._options.placement).active.map(function(c3) {
+            _this._targetEl.classList.remove(c3);
+          });
+          this._getPlacementClasses(this._options.placement).inactive.map(function(c3) {
+            _this._targetEl.classList.add(c3);
+          });
+        }
+        this._targetEl.setAttribute("aria-hidden", "true");
+        this._targetEl.removeAttribute("aria-modal");
+        this._targetEl.removeAttribute("role");
+        if (!this._options.bodyScrolling) {
+          document.body.classList.remove("overflow-hidden");
+        }
+        if (this._options.backdrop) {
+          this._destroyBackdropEl();
+        }
+        this._visible = false;
+        this._options.onHide(this);
+      };
+      Drawer2.prototype.show = function() {
+        var _this = this;
+        if (this._options.edge) {
+          this._getPlacementClasses(this._options.placement + "-edge").active.map(function(c3) {
+            _this._targetEl.classList.add(c3);
+          });
+          this._getPlacementClasses(this._options.placement + "-edge").inactive.map(function(c3) {
+            _this._targetEl.classList.remove(c3);
+          });
+        } else {
+          this._getPlacementClasses(this._options.placement).active.map(function(c3) {
+            _this._targetEl.classList.add(c3);
+          });
+          this._getPlacementClasses(this._options.placement).inactive.map(function(c3) {
+            _this._targetEl.classList.remove(c3);
+          });
+        }
+        this._targetEl.setAttribute("aria-modal", "true");
+        this._targetEl.setAttribute("role", "dialog");
+        this._targetEl.removeAttribute("aria-hidden");
+        if (!this._options.bodyScrolling) {
+          document.body.classList.add("overflow-hidden");
+        }
+        if (this._options.backdrop) {
+          this._createBackdrop();
+        }
+        this._visible = true;
+        this._options.onShow(this);
+      };
+      Drawer2.prototype.toggle = function() {
+        if (this.isVisible()) {
+          this.hide();
+        } else {
+          this.show();
+        }
+      };
+      Drawer2.prototype._createBackdrop = function() {
+        var _a;
+        var _this = this;
+        if (!this._visible) {
+          var backdropEl = document.createElement("div");
+          backdropEl.setAttribute("drawer-backdrop", "");
+          (_a = backdropEl.classList).add.apply(_a, this._options.backdropClasses.split(" "));
+          document.querySelector("body").append(backdropEl);
+          backdropEl.addEventListener("click", function() {
+            _this.hide();
+          });
+        }
+      };
+      Drawer2.prototype._destroyBackdropEl = function() {
+        if (this._visible) {
+          document.querySelector("[drawer-backdrop]").remove();
+        }
+      };
+      Drawer2.prototype._getPlacementClasses = function(placement) {
+        switch (placement) {
+          case "top":
+            return {
+              base: ["top-0", "left-0", "right-0"],
+              active: ["transform-none"],
+              inactive: ["-translate-y-full"]
+            };
+          case "right":
+            return {
+              base: ["right-0", "top-0"],
+              active: ["transform-none"],
+              inactive: ["translate-x-full"]
+            };
+          case "bottom":
+            return {
+              base: ["bottom-0", "left-0", "right-0"],
+              active: ["transform-none"],
+              inactive: ["translate-y-full"]
+            };
+          case "left":
+            return {
+              base: ["left-0", "top-0"],
+              active: ["transform-none"],
+              inactive: ["-translate-x-full"]
+            };
+          case "bottom-edge":
+            return {
+              base: ["left-0", "top-0"],
+              active: ["transform-none"],
+              inactive: ["translate-y-full", this._options.edgeOffset]
+            };
+          default:
+            return {
+              base: ["left-0", "top-0"],
+              active: ["transform-none"],
+              inactive: ["-translate-x-full"]
+            };
+        }
+      };
+      Drawer2.prototype.isHidden = function() {
+        return !this._visible;
+      };
+      Drawer2.prototype.isVisible = function() {
+        return this._visible;
+      };
+      return Drawer2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Drawer = Drawer;
   }
@@ -16340,9 +16509,8 @@ ${content}</tr>
     __assign9 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -16355,72 +16523,75 @@ ${content}</tr>
     onShow: function() {
     }
   };
-  var Tabs = function() {
-    function Tabs2(items, options2) {
-      if (items === void 0) {
-        items = [];
-      }
-      if (options2 === void 0) {
-        options2 = Default8;
-      }
-      this._items = items;
-      this._activeTab = options2 ? this.getTab(options2.defaultTabId) : null;
-      this._options = __assign9(__assign9({}, Default8), options2);
-      this._init();
-    }
-    Tabs2.prototype._init = function() {
-      var _this = this;
-      if (this._items.length) {
-        if (!this._activeTab) {
-          this._setActiveTab(this._items[0]);
+  var Tabs = (
+    /** @class */
+    function() {
+      function Tabs2(items, options2) {
+        if (items === void 0) {
+          items = [];
         }
-        this.show(this._activeTab.id, true);
-        this._items.map(function(tab) {
-          tab.triggerEl.addEventListener("click", function() {
-            _this.show(tab.id);
+        if (options2 === void 0) {
+          options2 = Default8;
+        }
+        this._items = items;
+        this._activeTab = options2 ? this.getTab(options2.defaultTabId) : null;
+        this._options = __assign9(__assign9({}, Default8), options2);
+        this._init();
+      }
+      Tabs2.prototype._init = function() {
+        var _this = this;
+        if (this._items.length) {
+          if (!this._activeTab) {
+            this._setActiveTab(this._items[0]);
+          }
+          this.show(this._activeTab.id, true);
+          this._items.map(function(tab) {
+            tab.triggerEl.addEventListener("click", function() {
+              _this.show(tab.id);
+            });
           });
-        });
-      }
-    };
-    Tabs2.prototype.getActiveTab = function() {
-      return this._activeTab;
-    };
-    Tabs2.prototype._setActiveTab = function(tab) {
-      this._activeTab = tab;
-    };
-    Tabs2.prototype.getTab = function(id) {
-      return this._items.filter(function(t2) {
-        return t2.id === id;
-      })[0];
-    };
-    Tabs2.prototype.show = function(id, forceShow) {
-      var _a, _b;
-      var _this = this;
-      if (forceShow === void 0) {
-        forceShow = false;
-      }
-      var tab = this.getTab(id);
-      if (tab === this._activeTab && !forceShow) {
-        return;
-      }
-      this._items.map(function(t2) {
-        var _a2, _b2;
-        if (t2 !== tab) {
-          (_a2 = t2.triggerEl.classList).remove.apply(_a2, _this._options.activeClasses.split(" "));
-          (_b2 = t2.triggerEl.classList).add.apply(_b2, _this._options.inactiveClasses.split(" "));
-          t2.targetEl.classList.add("hidden");
-          t2.triggerEl.setAttribute("aria-selected", "false");
         }
-      });
-      (_a = tab.triggerEl.classList).add.apply(_a, this._options.activeClasses.split(" "));
-      (_b = tab.triggerEl.classList).remove.apply(_b, this._options.inactiveClasses.split(" "));
-      tab.triggerEl.setAttribute("aria-selected", "true");
-      tab.targetEl.classList.remove("hidden");
-      this._setActiveTab(tab);
-      this._options.onShow(this, tab);
-    };
-    return Tabs2;
-  }();
+      };
+      Tabs2.prototype.getActiveTab = function() {
+        return this._activeTab;
+      };
+      Tabs2.prototype._setActiveTab = function(tab) {
+        this._activeTab = tab;
+      };
+      Tabs2.prototype.getTab = function(id) {
+        return this._items.filter(function(t2) {
+          return t2.id === id;
+        })[0];
+      };
+      Tabs2.prototype.show = function(id, forceShow) {
+        var _a, _b;
+        var _this = this;
+        if (forceShow === void 0) {
+          forceShow = false;
+        }
+        var tab = this.getTab(id);
+        if (tab === this._activeTab && !forceShow) {
+          return;
+        }
+        this._items.map(function(t2) {
+          var _a2, _b2;
+          if (t2 !== tab) {
+            (_a2 = t2.triggerEl.classList).remove.apply(_a2, _this._options.activeClasses.split(" "));
+            (_b2 = t2.triggerEl.classList).add.apply(_b2, _this._options.inactiveClasses.split(" "));
+            t2.targetEl.classList.add("hidden");
+            t2.triggerEl.setAttribute("aria-selected", "false");
+          }
+        });
+        (_a = tab.triggerEl.classList).add.apply(_a, this._options.activeClasses.split(" "));
+        (_b = tab.triggerEl.classList).remove.apply(_b, this._options.inactiveClasses.split(" "));
+        tab.triggerEl.setAttribute("aria-selected", "true");
+        tab.targetEl.classList.remove("hidden");
+        this._setActiveTab(tab);
+        this._options.onShow(this, tab);
+      };
+      return Tabs2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Tabs = Tabs;
   }
@@ -16451,23 +16622,20 @@ ${content}</tr>
     __assign10 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
     return __assign10.apply(this, arguments);
   };
   var __spreadArray2 = function(to, from, pack) {
-    if (pack || arguments.length === 2)
-      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
-        if (ar || !(i2 in from)) {
-          if (!ar)
-            ar = Array.prototype.slice.call(from, 0, i2);
-          ar[i2] = from[i2];
-        }
+    if (pack || arguments.length === 2) for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
+      if (ar || !(i2 in from)) {
+        if (!ar) ar = Array.prototype.slice.call(from, 0, i2);
+        ar[i2] = from[i2];
       }
+    }
     return to.concat(ar || Array.prototype.slice.call(from));
   };
   var Default9 = {
@@ -16480,147 +16648,150 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Tooltip = function() {
-    function Tooltip2(targetEl, triggerEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
+  var Tooltip = (
+    /** @class */
+    function() {
+      function Tooltip2(targetEl, triggerEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
+        }
+        if (triggerEl === void 0) {
+          triggerEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default9;
+        }
+        this._targetEl = targetEl;
+        this._triggerEl = triggerEl;
+        this._options = __assign10(__assign10({}, Default9), options2);
+        this._popperInstance = this._createPopperInstance();
+        this._visible = false;
+        this._init();
       }
-      if (triggerEl === void 0) {
-        triggerEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default9;
-      }
-      this._targetEl = targetEl;
-      this._triggerEl = triggerEl;
-      this._options = __assign10(__assign10({}, Default9), options2);
-      this._popperInstance = this._createPopperInstance();
-      this._visible = false;
-      this._init();
-    }
-    Tooltip2.prototype._init = function() {
-      if (this._triggerEl) {
-        this._setupEventListeners();
-      }
-    };
-    Tooltip2.prototype._setupEventListeners = function() {
-      var _this = this;
-      var triggerEvents = this._getTriggerEvents();
-      triggerEvents.showEvents.forEach(function(ev) {
-        _this._triggerEl.addEventListener(ev, function() {
-          _this.show();
-        });
-      });
-      triggerEvents.hideEvents.forEach(function(ev) {
-        _this._triggerEl.addEventListener(ev, function() {
-          _this.hide();
-        });
-      });
-    };
-    Tooltip2.prototype._createPopperInstance = function() {
-      return createPopper(this._triggerEl, this._targetEl, {
-        placement: this._options.placement,
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: [0, 8]
-            }
-          }
-        ]
-      });
-    };
-    Tooltip2.prototype._getTriggerEvents = function() {
-      switch (this._options.triggerType) {
-        case "hover":
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-        case "click":
-          return {
-            showEvents: ["click", "focus"],
-            hideEvents: ["focusout", "blur"]
-          };
-        case "none":
-          return {
-            showEvents: [],
-            hideEvents: []
-          };
-        default:
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-      }
-    };
-    Tooltip2.prototype._setupKeydownListener = function() {
-      var _this = this;
-      this._keydownEventListener = function(ev) {
-        if (ev.key === "Escape") {
-          _this.hide();
+      Tooltip2.prototype._init = function() {
+        if (this._triggerEl) {
+          this._setupEventListeners();
         }
       };
-      document.body.addEventListener("keydown", this._keydownEventListener, true);
-    };
-    Tooltip2.prototype._removeKeydownListener = function() {
-      document.body.removeEventListener("keydown", this._keydownEventListener, true);
-    };
-    Tooltip2.prototype._setupClickOutsideListener = function() {
-      var _this = this;
-      this._clickOutsideEventListener = function(ev) {
-        _this._handleClickOutside(ev, _this._targetEl);
+      Tooltip2.prototype._setupEventListeners = function() {
+        var _this = this;
+        var triggerEvents = this._getTriggerEvents();
+        triggerEvents.showEvents.forEach(function(ev) {
+          _this._triggerEl.addEventListener(ev, function() {
+            _this.show();
+          });
+        });
+        triggerEvents.hideEvents.forEach(function(ev) {
+          _this._triggerEl.addEventListener(ev, function() {
+            _this.hide();
+          });
+        });
       };
-      document.body.addEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Tooltip2.prototype._removeClickOutsideListener = function() {
-      document.body.removeEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Tooltip2.prototype._handleClickOutside = function(ev, targetEl) {
-      var clickedEl = ev.target;
-      if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
-        this.hide();
-      }
-    };
-    Tooltip2.prototype.isVisible = function() {
-      return this._visible;
-    };
-    Tooltip2.prototype.toggle = function() {
-      if (this.isVisible()) {
-        this.hide();
-      } else {
-        this.show();
-      }
-    };
-    Tooltip2.prototype.show = function() {
-      this._targetEl.classList.remove("opacity-0", "invisible");
-      this._targetEl.classList.add("opacity-100", "visible");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign10(__assign10({}, options2), { modifiers: __spreadArray2(__spreadArray2([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: true }
-        ], false) });
-      });
-      this._setupClickOutsideListener();
-      this._setupKeydownListener();
-      this._popperInstance.update();
-      this._visible = true;
-      this._options.onShow(this);
-    };
-    Tooltip2.prototype.hide = function() {
-      this._targetEl.classList.remove("opacity-100", "visible");
-      this._targetEl.classList.add("opacity-0", "invisible");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign10(__assign10({}, options2), { modifiers: __spreadArray2(__spreadArray2([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: false }
-        ], false) });
-      });
-      this._removeClickOutsideListener();
-      this._removeKeydownListener();
-      this._visible = false;
-      this._options.onHide(this);
-    };
-    return Tooltip2;
-  }();
+      Tooltip2.prototype._createPopperInstance = function() {
+        return createPopper(this._triggerEl, this._targetEl, {
+          placement: this._options.placement,
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [0, 8]
+              }
+            }
+          ]
+        });
+      };
+      Tooltip2.prototype._getTriggerEvents = function() {
+        switch (this._options.triggerType) {
+          case "hover":
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+          case "click":
+            return {
+              showEvents: ["click", "focus"],
+              hideEvents: ["focusout", "blur"]
+            };
+          case "none":
+            return {
+              showEvents: [],
+              hideEvents: []
+            };
+          default:
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+        }
+      };
+      Tooltip2.prototype._setupKeydownListener = function() {
+        var _this = this;
+        this._keydownEventListener = function(ev) {
+          if (ev.key === "Escape") {
+            _this.hide();
+          }
+        };
+        document.body.addEventListener("keydown", this._keydownEventListener, true);
+      };
+      Tooltip2.prototype._removeKeydownListener = function() {
+        document.body.removeEventListener("keydown", this._keydownEventListener, true);
+      };
+      Tooltip2.prototype._setupClickOutsideListener = function() {
+        var _this = this;
+        this._clickOutsideEventListener = function(ev) {
+          _this._handleClickOutside(ev, _this._targetEl);
+        };
+        document.body.addEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Tooltip2.prototype._removeClickOutsideListener = function() {
+        document.body.removeEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Tooltip2.prototype._handleClickOutside = function(ev, targetEl) {
+        var clickedEl = ev.target;
+        if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
+          this.hide();
+        }
+      };
+      Tooltip2.prototype.isVisible = function() {
+        return this._visible;
+      };
+      Tooltip2.prototype.toggle = function() {
+        if (this.isVisible()) {
+          this.hide();
+        } else {
+          this.show();
+        }
+      };
+      Tooltip2.prototype.show = function() {
+        this._targetEl.classList.remove("opacity-0", "invisible");
+        this._targetEl.classList.add("opacity-100", "visible");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign10(__assign10({}, options2), { modifiers: __spreadArray2(__spreadArray2([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: true }
+          ], false) });
+        });
+        this._setupClickOutsideListener();
+        this._setupKeydownListener();
+        this._popperInstance.update();
+        this._visible = true;
+        this._options.onShow(this);
+      };
+      Tooltip2.prototype.hide = function() {
+        this._targetEl.classList.remove("opacity-100", "visible");
+        this._targetEl.classList.add("opacity-0", "invisible");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign10(__assign10({}, options2), { modifiers: __spreadArray2(__spreadArray2([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: false }
+          ], false) });
+        });
+        this._removeClickOutsideListener();
+        this._removeKeydownListener();
+        this._visible = false;
+        this._options.onHide(this);
+      };
+      return Tooltip2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Tooltip = Tooltip;
   }
@@ -16646,23 +16817,20 @@ ${content}</tr>
     __assign11 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
     return __assign11.apply(this, arguments);
   };
   var __spreadArray3 = function(to, from, pack) {
-    if (pack || arguments.length === 2)
-      for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
-        if (ar || !(i2 in from)) {
-          if (!ar)
-            ar = Array.prototype.slice.call(from, 0, i2);
-          ar[i2] = from[i2];
-        }
+    if (pack || arguments.length === 2) for (var i2 = 0, l4 = from.length, ar; i2 < l4; i2++) {
+      if (ar || !(i2 in from)) {
+        if (!ar) ar = Array.prototype.slice.call(from, 0, i2);
+        ar[i2] = from[i2];
       }
+    }
     return to.concat(ar || Array.prototype.slice.call(from));
   };
   var Default10 = {
@@ -16676,162 +16844,165 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Popover = function() {
-    function Popover2(targetEl, triggerEl, options2) {
-      if (targetEl === void 0) {
-        targetEl = null;
+  var Popover = (
+    /** @class */
+    function() {
+      function Popover2(targetEl, triggerEl, options2) {
+        if (targetEl === void 0) {
+          targetEl = null;
+        }
+        if (triggerEl === void 0) {
+          triggerEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default10;
+        }
+        this._targetEl = targetEl;
+        this._triggerEl = triggerEl;
+        this._options = __assign11(__assign11({}, Default10), options2);
+        this._popperInstance = this._createPopperInstance();
+        this._visible = false;
+        this._init();
       }
-      if (triggerEl === void 0) {
-        triggerEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default10;
-      }
-      this._targetEl = targetEl;
-      this._triggerEl = triggerEl;
-      this._options = __assign11(__assign11({}, Default10), options2);
-      this._popperInstance = this._createPopperInstance();
-      this._visible = false;
-      this._init();
-    }
-    Popover2.prototype._init = function() {
-      if (this._triggerEl) {
-        this._setupEventListeners();
-      }
-    };
-    Popover2.prototype._setupEventListeners = function() {
-      var _this = this;
-      var triggerEvents = this._getTriggerEvents();
-      triggerEvents.showEvents.forEach(function(ev) {
-        _this._triggerEl.addEventListener(ev, function() {
-          _this.show();
-        });
-        _this._targetEl.addEventListener(ev, function() {
-          _this.show();
-        });
-      });
-      triggerEvents.hideEvents.forEach(function(ev) {
-        _this._triggerEl.addEventListener(ev, function() {
-          setTimeout(function() {
-            if (!_this._targetEl.matches(":hover")) {
-              _this.hide();
-            }
-          }, 100);
-        });
-        _this._targetEl.addEventListener(ev, function() {
-          setTimeout(function() {
-            if (!_this._triggerEl.matches(":hover")) {
-              _this.hide();
-            }
-          }, 100);
-        });
-      });
-    };
-    Popover2.prototype._createPopperInstance = function() {
-      return createPopper(this._triggerEl, this._targetEl, {
-        placement: this._options.placement,
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: [0, this._options.offset]
-            }
-          }
-        ]
-      });
-    };
-    Popover2.prototype._getTriggerEvents = function() {
-      switch (this._options.triggerType) {
-        case "hover":
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-        case "click":
-          return {
-            showEvents: ["click", "focus"],
-            hideEvents: ["focusout", "blur"]
-          };
-        case "none":
-          return {
-            showEvents: [],
-            hideEvents: []
-          };
-        default:
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-      }
-    };
-    Popover2.prototype._setupKeydownListener = function() {
-      var _this = this;
-      this._keydownEventListener = function(ev) {
-        if (ev.key === "Escape") {
-          _this.hide();
+      Popover2.prototype._init = function() {
+        if (this._triggerEl) {
+          this._setupEventListeners();
         }
       };
-      document.body.addEventListener("keydown", this._keydownEventListener, true);
-    };
-    Popover2.prototype._removeKeydownListener = function() {
-      document.body.removeEventListener("keydown", this._keydownEventListener, true);
-    };
-    Popover2.prototype._setupClickOutsideListener = function() {
-      var _this = this;
-      this._clickOutsideEventListener = function(ev) {
-        _this._handleClickOutside(ev, _this._targetEl);
+      Popover2.prototype._setupEventListeners = function() {
+        var _this = this;
+        var triggerEvents = this._getTriggerEvents();
+        triggerEvents.showEvents.forEach(function(ev) {
+          _this._triggerEl.addEventListener(ev, function() {
+            _this.show();
+          });
+          _this._targetEl.addEventListener(ev, function() {
+            _this.show();
+          });
+        });
+        triggerEvents.hideEvents.forEach(function(ev) {
+          _this._triggerEl.addEventListener(ev, function() {
+            setTimeout(function() {
+              if (!_this._targetEl.matches(":hover")) {
+                _this.hide();
+              }
+            }, 100);
+          });
+          _this._targetEl.addEventListener(ev, function() {
+            setTimeout(function() {
+              if (!_this._triggerEl.matches(":hover")) {
+                _this.hide();
+              }
+            }, 100);
+          });
+        });
       };
-      document.body.addEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Popover2.prototype._removeClickOutsideListener = function() {
-      document.body.removeEventListener("click", this._clickOutsideEventListener, true);
-    };
-    Popover2.prototype._handleClickOutside = function(ev, targetEl) {
-      var clickedEl = ev.target;
-      if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
-        this.hide();
-      }
-    };
-    Popover2.prototype.isVisible = function() {
-      return this._visible;
-    };
-    Popover2.prototype.toggle = function() {
-      if (this.isVisible()) {
-        this.hide();
-      } else {
-        this.show();
-      }
-      this._options.onToggle(this);
-    };
-    Popover2.prototype.show = function() {
-      this._targetEl.classList.remove("opacity-0", "invisible");
-      this._targetEl.classList.add("opacity-100", "visible");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign11(__assign11({}, options2), { modifiers: __spreadArray3(__spreadArray3([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: true }
-        ], false) });
-      });
-      this._setupClickOutsideListener();
-      this._setupKeydownListener();
-      this._popperInstance.update();
-      this._visible = true;
-      this._options.onShow(this);
-    };
-    Popover2.prototype.hide = function() {
-      this._targetEl.classList.remove("opacity-100", "visible");
-      this._targetEl.classList.add("opacity-0", "invisible");
-      this._popperInstance.setOptions(function(options2) {
-        return __assign11(__assign11({}, options2), { modifiers: __spreadArray3(__spreadArray3([], options2.modifiers, true), [
-          { name: "eventListeners", enabled: false }
-        ], false) });
-      });
-      this._removeClickOutsideListener();
-      this._removeKeydownListener();
-      this._visible = false;
-      this._options.onHide(this);
-    };
-    return Popover2;
-  }();
+      Popover2.prototype._createPopperInstance = function() {
+        return createPopper(this._triggerEl, this._targetEl, {
+          placement: this._options.placement,
+          modifiers: [
+            {
+              name: "offset",
+              options: {
+                offset: [0, this._options.offset]
+              }
+            }
+          ]
+        });
+      };
+      Popover2.prototype._getTriggerEvents = function() {
+        switch (this._options.triggerType) {
+          case "hover":
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+          case "click":
+            return {
+              showEvents: ["click", "focus"],
+              hideEvents: ["focusout", "blur"]
+            };
+          case "none":
+            return {
+              showEvents: [],
+              hideEvents: []
+            };
+          default:
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+        }
+      };
+      Popover2.prototype._setupKeydownListener = function() {
+        var _this = this;
+        this._keydownEventListener = function(ev) {
+          if (ev.key === "Escape") {
+            _this.hide();
+          }
+        };
+        document.body.addEventListener("keydown", this._keydownEventListener, true);
+      };
+      Popover2.prototype._removeKeydownListener = function() {
+        document.body.removeEventListener("keydown", this._keydownEventListener, true);
+      };
+      Popover2.prototype._setupClickOutsideListener = function() {
+        var _this = this;
+        this._clickOutsideEventListener = function(ev) {
+          _this._handleClickOutside(ev, _this._targetEl);
+        };
+        document.body.addEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Popover2.prototype._removeClickOutsideListener = function() {
+        document.body.removeEventListener("click", this._clickOutsideEventListener, true);
+      };
+      Popover2.prototype._handleClickOutside = function(ev, targetEl) {
+        var clickedEl = ev.target;
+        if (clickedEl !== targetEl && !targetEl.contains(clickedEl) && !this._triggerEl.contains(clickedEl) && this.isVisible()) {
+          this.hide();
+        }
+      };
+      Popover2.prototype.isVisible = function() {
+        return this._visible;
+      };
+      Popover2.prototype.toggle = function() {
+        if (this.isVisible()) {
+          this.hide();
+        } else {
+          this.show();
+        }
+        this._options.onToggle(this);
+      };
+      Popover2.prototype.show = function() {
+        this._targetEl.classList.remove("opacity-0", "invisible");
+        this._targetEl.classList.add("opacity-100", "visible");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign11(__assign11({}, options2), { modifiers: __spreadArray3(__spreadArray3([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: true }
+          ], false) });
+        });
+        this._setupClickOutsideListener();
+        this._setupKeydownListener();
+        this._popperInstance.update();
+        this._visible = true;
+        this._options.onShow(this);
+      };
+      Popover2.prototype.hide = function() {
+        this._targetEl.classList.remove("opacity-100", "visible");
+        this._targetEl.classList.add("opacity-0", "invisible");
+        this._popperInstance.setOptions(function(options2) {
+          return __assign11(__assign11({}, options2), { modifiers: __spreadArray3(__spreadArray3([], options2.modifiers, true), [
+            { name: "eventListeners", enabled: false }
+          ], false) });
+        });
+        this._removeClickOutsideListener();
+        this._removeKeydownListener();
+        this._visible = false;
+        this._options.onHide(this);
+      };
+      return Popover2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Popover = Popover;
   }
@@ -16859,9 +17030,8 @@ ${content}</tr>
     __assign12 = Object.assign || function(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2))
-            t2[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
+          t2[p2] = s2[p2];
       }
       return t2;
     };
@@ -16876,103 +17046,106 @@ ${content}</tr>
     onToggle: function() {
     }
   };
-  var Dial = function() {
-    function Dial2(parentEl, triggerEl, targetEl, options2) {
-      if (parentEl === void 0) {
-        parentEl = null;
+  var Dial = (
+    /** @class */
+    function() {
+      function Dial2(parentEl, triggerEl, targetEl, options2) {
+        if (parentEl === void 0) {
+          parentEl = null;
+        }
+        if (triggerEl === void 0) {
+          triggerEl = null;
+        }
+        if (targetEl === void 0) {
+          targetEl = null;
+        }
+        if (options2 === void 0) {
+          options2 = Default11;
+        }
+        this._parentEl = parentEl;
+        this._triggerEl = triggerEl;
+        this._targetEl = targetEl;
+        this._options = __assign12(__assign12({}, Default11), options2);
+        this._visible = false;
+        this._init();
       }
-      if (triggerEl === void 0) {
-        triggerEl = null;
-      }
-      if (targetEl === void 0) {
-        targetEl = null;
-      }
-      if (options2 === void 0) {
-        options2 = Default11;
-      }
-      this._parentEl = parentEl;
-      this._triggerEl = triggerEl;
-      this._targetEl = targetEl;
-      this._options = __assign12(__assign12({}, Default11), options2);
-      this._visible = false;
-      this._init();
-    }
-    Dial2.prototype._init = function() {
-      var _this = this;
-      if (this._triggerEl) {
-        var triggerEventTypes = this._getTriggerEventTypes(this._options.triggerType);
-        triggerEventTypes.showEvents.forEach(function(ev) {
-          _this._triggerEl.addEventListener(ev, function() {
-            _this.show();
+      Dial2.prototype._init = function() {
+        var _this = this;
+        if (this._triggerEl) {
+          var triggerEventTypes = this._getTriggerEventTypes(this._options.triggerType);
+          triggerEventTypes.showEvents.forEach(function(ev) {
+            _this._triggerEl.addEventListener(ev, function() {
+              _this.show();
+            });
+            _this._targetEl.addEventListener(ev, function() {
+              _this.show();
+            });
           });
-          _this._targetEl.addEventListener(ev, function() {
-            _this.show();
+          triggerEventTypes.hideEvents.forEach(function(ev) {
+            _this._parentEl.addEventListener(ev, function() {
+              if (!_this._parentEl.matches(":hover")) {
+                _this.hide();
+              }
+            });
           });
-        });
-        triggerEventTypes.hideEvents.forEach(function(ev) {
-          _this._parentEl.addEventListener(ev, function() {
-            if (!_this._parentEl.matches(":hover")) {
-              _this.hide();
-            }
-          });
-        });
-      }
-    };
-    Dial2.prototype.hide = function() {
-      this._targetEl.classList.add("hidden");
-      if (this._triggerEl) {
-        this._triggerEl.setAttribute("aria-expanded", "false");
-      }
-      this._visible = false;
-      this._options.onHide(this);
-    };
-    Dial2.prototype.show = function() {
-      this._targetEl.classList.remove("hidden");
-      if (this._triggerEl) {
-        this._triggerEl.setAttribute("aria-expanded", "true");
-      }
-      this._visible = true;
-      this._options.onShow(this);
-    };
-    Dial2.prototype.toggle = function() {
-      if (this._visible) {
-        this.hide();
-      } else {
-        this.show();
-      }
-    };
-    Dial2.prototype.isHidden = function() {
-      return !this._visible;
-    };
-    Dial2.prototype.isVisible = function() {
-      return this._visible;
-    };
-    Dial2.prototype._getTriggerEventTypes = function(triggerType) {
-      switch (triggerType) {
-        case "hover":
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-        case "click":
-          return {
-            showEvents: ["click", "focus"],
-            hideEvents: ["focusout", "blur"]
-          };
-        case "none":
-          return {
-            showEvents: [],
-            hideEvents: []
-          };
-        default:
-          return {
-            showEvents: ["mouseenter", "focus"],
-            hideEvents: ["mouseleave", "blur"]
-          };
-      }
-    };
-    return Dial2;
-  }();
+        }
+      };
+      Dial2.prototype.hide = function() {
+        this._targetEl.classList.add("hidden");
+        if (this._triggerEl) {
+          this._triggerEl.setAttribute("aria-expanded", "false");
+        }
+        this._visible = false;
+        this._options.onHide(this);
+      };
+      Dial2.prototype.show = function() {
+        this._targetEl.classList.remove("hidden");
+        if (this._triggerEl) {
+          this._triggerEl.setAttribute("aria-expanded", "true");
+        }
+        this._visible = true;
+        this._options.onShow(this);
+      };
+      Dial2.prototype.toggle = function() {
+        if (this._visible) {
+          this.hide();
+        } else {
+          this.show();
+        }
+      };
+      Dial2.prototype.isHidden = function() {
+        return !this._visible;
+      };
+      Dial2.prototype.isVisible = function() {
+        return this._visible;
+      };
+      Dial2.prototype._getTriggerEventTypes = function(triggerType) {
+        switch (triggerType) {
+          case "hover":
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+          case "click":
+            return {
+              showEvents: ["click", "focus"],
+              hideEvents: ["focusout", "blur"]
+            };
+          case "none":
+            return {
+              showEvents: [],
+              hideEvents: []
+            };
+          default:
+            return {
+              showEvents: ["mouseenter", "focus"],
+              hideEvents: ["mouseleave", "blur"]
+            };
+        }
+      };
+      return Dial2;
+    }()
+  );
   if (typeof window !== "undefined") {
     window.Dial = Dial;
   }
@@ -17035,6 +17208,73 @@ ${content}</tr>
   window._ = import_lodash3.default;
   module_default.plugin(module_default2);
   module_default.plugin(M);
+  var formValidators = {
+    alias: (fields) => required(fields.alias) || minLength(fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky"),
+    password: (fields) => required(fields.password) || minLength(fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F"),
+    password2: (fields) => required(fields.password2) || equalStrings(fields.password, fields.password2, "Hesla se neshoduj\xED"),
+    email: (fields) => required(fields.email) || validEmail(fields.email),
+    subject: (voting) => required(voting?.subject?.trim()),
+    description: (voting) => required(voting?.description?.trim()),
+    finalSubject: (voting) => required(voting?.finalSubject?.trim()),
+    finalStatement: (voting) => required(voting?.finalStatement?.trim()),
+    surname: (fields) => required(fields.surname) || minLength(fields.surname, 2, "Minim\xE1ln\xED d\xE9lka jsou 2 znaky"),
+    givenname: (fields) => required(fields.givenname) || minLength(fields.givenname, 2, "Minim\xE1ln\xED d\xE9lka jsou 2 znaky"),
+    validateForm(form, fields) {
+      switch (form) {
+        case "login":
+          return ["alias", "password"];
+        case "register":
+          return ["alias", "email", "surname", "givenname", "password", "password2"];
+        case "reset":
+          return ["email"];
+        case "doreset":
+          return ["password", "password2"];
+        case "new":
+          return ["subject", "description"];
+        case "elaborating":
+          return ["finalSubject", "finalStatement"];
+        default:
+          return [];
+      }
+    }
+  };
+  var commonMethods = {
+    reset() {
+      this.errors = {};
+    },
+    validate(id = null) {
+      if (id && formValidators[id]) {
+        const source = ["subject", "description", "finalSubject", "finalStatement"].includes(id) ? this.voting : this.fields;
+        this.errors[`${id}Error`] = formValidators[id](source);
+      } else if (!id) {
+        this.reset();
+        const form = this.form || this.voting?.state;
+        const fieldsToValidate = formValidators.validateForm(form);
+        fieldsToValidate.forEach((field) => this.validate(field));
+      }
+      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
+    },
+    focusFirstError() {
+      const form = this.form || this.voting?.state;
+      const fieldsToCheck = formValidators.validateForm(form);
+      const first = fieldsToCheck.find((field) => this.errors[`${field}Error`]);
+      if (first) {
+        this.$focus.focus(document.getElementById(first));
+      } else {
+        this.$focus.first();
+      }
+    }
+  };
+  var filterVotingsByState = (votings, state) => {
+    const sortFields = {
+      closed: "votingClosed",
+      rejected: "preselectionClosed",
+      elaborating: "preselectionClosed",
+      suggested: "preselectionDeadline",
+      voting: "votingDeadline"
+    };
+    return import_lodash3.default.chain(votings).filter((v2) => v2.state === state).sortBy(sortFields[state]).reverse().value();
+  };
   module_default.data("common", () => ({
     user_showMenu: false,
     user_showSidebar: false,
@@ -17043,12 +17283,15 @@ ${content}</tr>
     user_model: pb.authStore.model,
     fields: {},
     errors: {},
+    back() {
+      window.history.go(-1);
+    },
     reset() {
       this.errors = {};
     },
-    user_name() {
-      if (!this.user_model)
-        return "Nep\u0159ihl\xE1\u0161en\xFD u\u017Eivatel";
+    // TODO check if still needed
+    get user_name() {
+      if (!this.user_model) return "Nep\u0159ihl\xE1\u0161en\xFD u\u017Eivatel";
       return this.userName(this.user_model.id);
     },
     get user_email() {
@@ -17083,27 +17326,19 @@ ${content}</tr>
       pb.authStore.onChange(() => {
         this.user_model = pb.authStore.model;
       });
-      this.subscribe("users");
+      await this.subscribe("users");
     },
     async onPageShow() {
       this.user_model = pb.authStore.model;
     },
     backIfLoggedIn() {
       if (pb.authStore.model) {
-        if (document.referrer) {
-          window.history.back();
-        } else {
-          window.location.replace("/");
-        }
+        window.history.go(-1);
       }
     },
     backIfNotLoggedIn() {
       if (!pb.authStore.model) {
-        if (document.referrer) {
-          window.history.back();
-        } else {
-          window.location.replace("/");
-        }
+        window.history.go(-1);
       }
     },
     logout() {
@@ -17111,25 +17346,8 @@ ${content}</tr>
     }
   }));
   module_default.data("login", () => ({
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "alias":
-            this.errors.aliasError = required(this.fields.alias) || minLength(this.fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky");
-            break;
-          case "password":
-            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
-            break;
-          default:
-            break;
-        }
-      } else {
-        this.reset();
-        this.validate("alias");
-        this.validate("password");
-      }
-      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
-    },
+    ...commonMethods,
+    form: "login",
     init() {
       window.addEventListener("pageshow", this.backIfLoggedIn);
       this.$focus.first();
@@ -17140,23 +17358,9 @@ ${content}</tr>
         this.validate(id);
       }
       if (id === "password") {
-        if (!this.disabled)
-          this.doLogin();
+        if (!this.disabled) this.doLogin();
       } else {
         this.$focus.next();
-      }
-    },
-    focusFirstError() {
-      let first = null;
-      if (this.errors.aliasError) {
-        first = "alias";
-      } else if (this.errors.passwordError) {
-        first = "password";
-      }
-      if (first) {
-        this.$focus.focus(document.getElementById(first));
-      } else {
-        this.$focus.first();
       }
     },
     async doLogin() {
@@ -17164,7 +17368,7 @@ ${content}</tr>
       if (this.validate()) {
         try {
           await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          window.history.back();
+          window.location.replace("/");
           this.disabled = false;
         } catch (err) {
           this.errors.loginError = "Ne\xFAsp\u011B\u0161n\xFD pokus o p\u0159ihl\xE1\u0161en\xED";
@@ -17178,46 +17382,8 @@ ${content}</tr>
     }
   }));
   module_default.data("register", () => ({
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "alias":
-            this.errors.aliasError = required(this.fields.alias) || minLength(this.fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky");
-            break;
-          case "password":
-            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
-            break;
-          case "password2":
-            this.errors.password2Error = required(this.fields.password2) || equalStrings(this.fields.password, this.fields.password2, "Hesla se neshoduj\xED");
-            break;
-          case "email":
-            this.errors.emailError = required(this.fields.email) || validEmail(this.fields.email);
-            break;
-          default:
-            break;
-        }
-      } else {
-        this.reset();
-        switch (this.form) {
-          case "reset":
-            this.validate("email");
-            break;
-          case "login":
-            this.validate("alias");
-            this.validate("password");
-            break;
-          case "register":
-            this.validate("alias");
-            this.validate("email");
-            this.validate("password");
-            this.validate("password2");
-            break;
-          default:
-            break;
-        }
-      }
-      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
-    },
+    ...commonMethods,
+    form: "register",
     init() {
       this.$focus.first();
       window.addEventListener("pageshow", this.backIfLoggedIn);
@@ -17228,27 +17394,9 @@ ${content}</tr>
         this.validate(id);
       }
       if (id === "password2") {
-        if (!this.disabled)
-          this.doRegister();
+        if (!this.disabled) this.doRegister();
       } else {
         this.$focus.next();
-      }
-    },
-    focusFirstError() {
-      let first = null;
-      if (this.errors.aliasError) {
-        first = "alias";
-      } else if (this.errors.emailError) {
-        first = "email";
-      } else if (this.errors.passwordError) {
-        first = "password";
-      } else if (this.errors.password2Error) {
-        first = "password2";
-      }
-      if (first) {
-        this.$focus.focus(document.getElementById(first));
-      } else {
-        this.$focus.first();
       }
     },
     async doRegister() {
@@ -17259,11 +17407,15 @@ ${content}</tr>
             username: this.fields.alias,
             email: this.fields.email,
             password: this.fields.password,
-            passwordConfirm: this.fields.password2
+            passwordConfirm: this.fields.password2,
+            firstName: this.fields.givenname,
+            // Fixed: was lastName
+            lastName: this.fields.surname
+            // Fixed: was firstName
           });
           await pb.collection("users").requestVerification(this.fields.email);
           await pb.collection("users").authWithPassword(this.fields.alias, this.fields.password);
-          window.history.back();
+          window.location.replace("/");
           this.disabled = false;
         } catch (err) {
           this.errors.registrationError = "Ne\xFAsp\u011B\u0161n\xE1 registrace";
@@ -17285,46 +17437,8 @@ ${content}</tr>
     }
   }));
   module_default.data("forgottenPassword", () => ({
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "alias":
-            this.errors.aliasError = required(this.fields.alias) || minLength(this.fields.alias, 3, "Minim\xE1ln\xED d\xE9lka jsou 3 znaky");
-            break;
-          case "password":
-            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
-            break;
-          case "password2":
-            this.errors.password2Error = required(this.fields.password2) || equalStrings(this.fields.password, this.fields.password2, "Hesla se neshoduj\xED");
-            break;
-          case "email":
-            this.errors.emailError = required(this.fields.email) || validEmail(this.fields.email);
-            break;
-          default:
-            break;
-        }
-      } else {
-        this.reset();
-        switch (this.form) {
-          case "reset":
-            this.validate("email");
-            break;
-          case "login":
-            this.validate("alias");
-            this.validate("password");
-            break;
-          case "register":
-            this.validate("alias");
-            this.validate("email");
-            this.validate("password");
-            this.validate("password2");
-            break;
-          default:
-            break;
-        }
-      }
-      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
-    },
+    ...commonMethods,
+    form: "reset",
     init() {
       this.$focus.first();
       window.addEventListener("pageshow", this.backIfLoggedIn);
@@ -17335,21 +17449,9 @@ ${content}</tr>
         this.validate(id);
       }
       if (id === "email") {
-        if (!this.disabled)
-          this.doReset();
+        if (!this.disabled) this.doReset();
       } else {
         this.$focus.next();
-      }
-    },
-    focusFirstError() {
-      let first = null;
-      if (this.errors.emailError) {
-        first = "email";
-      }
-      if (first) {
-        this.$focus.focus(document.getElementById(first));
-      } else {
-        this.$focus.first();
       }
     },
     async doReset() {
@@ -17372,31 +17474,14 @@ ${content}</tr>
     }
   }));
   module_default.data("passwordReset", () => ({
+    ...commonMethods,
+    form: "doreset",
     token: null,
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "password":
-            this.errors.passwordError = required(this.fields.password) || minLength(this.fields.password, 6, "Minim\xE1ln\xED d\xE9lka hesla je 6 znak\u016F") || maxLength(this.fields.password, 72, "Maxim\xE1ln\xED d\xE9lka hesla je 72 znak\u016F");
-            break;
-          case "password2":
-            this.errors.password2Error = required(this.fields.password2) || equalStrings(this.fields.password, this.fields.password2, "Hesla se neshoduj\xED");
-            break;
-          default:
-            break;
-        }
-      } else {
-        this.reset();
-        this.validate("password");
-        this.validate("password2");
-      }
-      return import_lodash3.default.isEmpty(import_lodash3.default.omitBy(this.errors, import_lodash3.default.isNil));
-    },
     init() {
       window.addEventListener("pageshow", this.backIfLoggedIn);
       this.token = window.location.hash.substring(1);
       if (this.token === "") {
-        window.back();
+        this.back();
       }
       this.$focus.first();
     },
@@ -17411,19 +17496,6 @@ ${content}</tr>
         }
       } else {
         this.$focus.next();
-      }
-    },
-    focusFirstError() {
-      let first = null;
-      if (this.errors.passwordError) {
-        first = "password";
-      } else if (this.errors.password2Error) {
-        first = "password2";
-      }
-      if (first) {
-        this.$focus.focus(document.getElementById(first));
-      } else {
-        this.$focus.first();
       }
     },
     async doReset() {
@@ -17454,7 +17526,7 @@ ${content}</tr>
     async init() {
       this.token = window.location.hash.substring(1);
       if (this.token === "") {
-        window.back();
+        this.back();
       }
       try {
         await pb.collection("users").confirmVerification(this.token);
@@ -17467,15 +17539,15 @@ ${content}</tr>
     }
   }));
   module_default.data("myVotings", () => ({
-    onPageShow() {
+    async onPageShow() {
       this.backIfNotLoggedIn();
     },
     async init() {
       const b2 = this.onPageShow.bind(this);
       window.addEventListener("pageshow", b2);
+      await this.subscribe("votes");
+      await this.subscribe("votings");
       pb.authStore.onChange(this.backIfNotLoggedIn);
-      this.subscribe("votes");
-      this.subscribe("votings");
     },
     get myVotes() {
       return import_lodash3.default.chain(this.collections.votes).filter((v2) => v2.user == pb.authStore.model.id).value();
@@ -17485,25 +17557,32 @@ ${content}</tr>
       return import_lodash3.default.chain(this.collections.votings).filter((v2) => myVotings.includes(v2.id)).value();
     },
     get finishedVotings() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "closed").sortBy("votingClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "closed");
     },
     get rejectedSuggestions() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "rejected").sortBy("preselectionClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "rejected");
     },
     get elaborations() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "elaborating").sortBy("preselectionClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "elaborating");
     },
     get suggestions() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "suggested").sortBy("preselectionDeadline").reverse().value();
+      return filterVotingsByState(this.myVotings, "suggested");
     },
     get votings() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "voting").sortBy("votingDeadline").reverse().value();
+      return filterVotingsByState(this.myVotings, "voting");
     },
     async reOpen(id) {
       window.location.href = "/hlasovani-detail?reOpen=" + id;
     },
     myVoteForVoting(voting) {
       return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting") && v2.user === pb.authStore.model.id);
+    },
+    didIVoteFor(voting) {
+      return this.myVoteForVoting(voting)?.voted;
+    },
+    shouldIVoteFor(voting) {
+      const myVote = this.myVoteForVoting(voting);
+      return myVote ? !myVote.voted : false;
     },
     async vote(voting, vote) {
       await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
@@ -17517,8 +17596,8 @@ ${content}</tr>
       const b2 = this.onPageShow.bind(this);
       window.addEventListener("pageshow", b2);
       pb.authStore.onChange(this.backIfNotLoggedIn);
-      this.subscribe("votes");
-      this.subscribe("votings");
+      await this.subscribe("votes");
+      await this.subscribe("votings");
     },
     get myVotes() {
       return this.collections.votes;
@@ -17527,19 +17606,19 @@ ${content}</tr>
       return this.collections.votings;
     },
     get finishedVotings() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "closed").sortBy("votingClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "closed");
     },
     get rejectedSuggestions() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "rejected").sortBy("preselectionClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "rejected");
     },
     get elaborations() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "elaborating").sortBy("preselectionClosed").reverse().value();
+      return filterVotingsByState(this.myVotings, "elaborating");
     },
     get suggestions() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "suggested").sortBy("preselectionDeadline").reverse().value();
+      return filterVotingsByState(this.myVotings, "suggested");
     },
     get votings() {
-      return import_lodash3.default.chain(this.myVotings).filter((v2) => v2.state === "voting").sortBy("votingDeadline").reverse().value();
+      return filterVotingsByState(this.myVotings, "voting");
     },
     async reOpen(id) {
       window.location.href = "/hlasovani-detail?reOpen=" + id;
@@ -17547,15 +17626,19 @@ ${content}</tr>
     myVoteForVoting(voting) {
       return this.myVotes.find((v2) => v2.voting === voting.id && v2.isVote === (voting.state === "voting") && v2.user === pb.authStore.model.id);
     },
+    didIVoteFor(voting) {
+      return this.myVoteForVoting(voting)?.voted;
+    },
     shouldIVoteFor(voting) {
-      debugger;
-      return !!this.myVoteForVoting(voting);
+      const myVote = this.myVoteForVoting(voting);
+      return myVote ? !myVote.voted : false;
     },
     async vote(voting, vote) {
       await pb.collection("votes").update(this.myVoteForVoting(voting).id, { vote });
     }
   }));
   module_default.data("oneVoting", () => ({
+    ...commonMethods,
     unfoldVoting: false,
     unfoldDiscussion: true,
     id: null,
@@ -17570,13 +17653,19 @@ ${content}</tr>
       return this.votings.find((v2) => v2.id === id) || {};
     },
     positiveVotes() {
+      const isVotingPhase = ["voting", "closed"].includes(this.voting.state);
       return [
-        ...Object.values(this.votes || {}).filter((vote) => vote.vote && vote.voted)
+        ...Object.values(this.votes || {}).filter(
+          (vote) => vote.vote && vote.voted && vote.isVote === isVotingPhase
+        )
       ].length || 0;
     },
     negativeVotes() {
+      const isVotingPhase = ["voting", "closed"].includes(this.voting.state);
       return [
-        ...Object.values(this.votes || {}).filter((vote) => !vote.vote && vote.voted)
+        ...Object.values(this.votes || {}).filter(
+          (vote) => !vote.vote && vote.voted && vote.isVote === isVotingPhase
+        )
       ].length || 0;
     },
     votesForVoting() {
@@ -17593,8 +17682,11 @@ ${content}</tr>
       let result = !!this.getMyVote()?.voted;
       return result;
     },
-    shouldIVote() {
+    isForMe() {
       return !!this.getMyVote();
+    },
+    shouldIVote() {
+      return this.isForMe() && !this.didIVote();
     },
     get sortedComments() {
       return import_lodash3.default.chain(this.comments).sortBy("created").reverse().value();
@@ -17617,7 +17709,7 @@ ${content}</tr>
       if (this.id) {
         await self2.subscribe("votings", (x) => x.id === self2.id, {}, {}, self2.votings);
         await self2.subscribe("votes", (x) => x.voting === self2.id, {}, {}, self2.votes);
-        self2.subscribe("discussions", (x) => x.relatedCollection === "votings" && x.relatedRecordID === self2.id, {}, {}, self2.comments);
+        await self2.subscribe("discussions", (x) => x.relatedCollection === "votings" && x.relatedRecordID === self2.id, {}, {}, self2.comments);
         self2.unfoldVoting = ["suggested", "voting"].includes(self2.voting.state);
         self2.unfoldDiscussion = ["elaborating"].includes(self2.voting.state);
       }
@@ -17628,27 +17720,35 @@ ${content}</tr>
       }
     },
     async vote(vote) {
-      await pb.collection("votes").update(await this.getMyVoteID(), { vote });
+      this.disabled = true;
+      try {
+        await pb.collection("votes").update(await this.getMyVoteID(), { vote, voted: true });
+        window.location.reload();
+      } finally {
+        this.disabled = false;
+      }
     },
     async doCreateTopic() {
       this.disabled = true;
-      if (this.validate()) {
-        try {
-          this.voting.author = pb.authStore.model.id;
-          this.voting.scope = (await pb.collection("districts").getList(null, null, {
-            filter: "code = '9'"
-          })).items[0].id;
-          const rec = import_lodash3.default.omit(this.voting, "id");
-          rec.state = "suggested";
-          const newItem = await pb.collection("votings").create(rec);
-          window.location.replace(`/hlasovani-detail?id=${newItem.id}`);
-        } catch (err) {
-          this.errors.submitError = JSON.stringify(err, 2, null);
-        } finally {
-          this.disabled = false;
-        }
-      } else {
+      this.voting = this.voting || {};
+      this.voting.subject = this.voting.subject || "";
+      this.voting.description = this.voting.description || "";
+      if (!this.validate()) {
         this.focusFirstError();
+        this.disabled = false;
+        return;
+      }
+      try {
+        this.voting.author = pb.authStore.model.id;
+        this.voting.scope = (await pb.collection("districts").getList(null, null, {
+          filter: "code = '9'"
+        })).items[0].id;
+        const rec = import_lodash3.default.omit(this.voting, "id");
+        rec.state = "suggested";
+        const newItem = await pb.collection("votings").create(rec);
+        window.location.replace(`/hlasovani-detail?id=${newItem.id}`);
+      } catch (err) {
+        this.errors.submitError = JSON.stringify(err, 2, null);
         this.disabled = false;
       }
     },
@@ -17700,59 +17800,7 @@ ${content}</tr>
         default:
           break;
       }
-      if (nxt)
-        this.$focus.focus(document.getElementById(nxt));
-    },
-    focusFirstError() {
-      let first = null;
-      if (this.errors.subjectError) {
-        first = "subject";
-      } else if (this.errors.descriptionError) {
-        first = "description";
-      } else if (this.errors.finalSubjectError) {
-        first = "finalSubject";
-      } else if (this.errors.finalStatementError) {
-        first = "finalStatement";
-      }
-      if (first) {
-        this.$focus.focus(document.getElementById(first));
-      }
-    },
-    validate(id = null) {
-      if (id) {
-        switch (id) {
-          case "subject":
-            this.errors.subjectError = required(this.voting.subject?.trim());
-            break;
-          case "finalSubject":
-            this.errors.finalSubjectError = required(this.voting.finalSubject?.trim());
-            break;
-          case "description":
-            this.errors.descriptionError = required(this.voting.description?.trim());
-            break;
-          case "finalStatement":
-            this.errors.finalStatementError = required(this.voting.finalStatement?.trim());
-            break;
-          default:
-            this.submitError = `Nenastaven\xE1 validace pro pole'${id}'`;
-            break;
-        }
-      } else {
-        this.reset();
-        switch (this.voting.state) {
-          case "new":
-            this.validate("subject");
-            this.validate("description");
-            break;
-          case "elaborating":
-            this.validate("finalSubject");
-            this.validate("finalStatement");
-            break;
-          default:
-            break;
-        }
-      }
-      return !(this.errors.subjectError || this.errors.descriptionError);
+      if (nxt) this.$focus.focus(document.getElementById(nxt));
     },
     firstInput() {
       function e2(id) {
@@ -17790,26 +17838,34 @@ ${content}</tr>
   }));
   module_default.start();
 })();
-/*! @license DOMPurify 3.0.1 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.1/LICENSE */
 /*! Bundled license information:
 
-tabbable/dist/index.esm.js:
-  (*!
-  * tabbable 5.2.1
-  * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
-  *)
+lodash/lodash.js:
+  (**
+   * @license
+   * Lodash <https://lodash.com/>
+   * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   *)
 
-focus-trap/dist/focus-trap.esm.js:
-  (*!
-  * focus-trap 6.6.1
-  * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
+dompurify/dist/purify.js:
+  (*! @license DOMPurify 3.0.1 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.1/LICENSE *)
+
+@alpinejs/focus/dist/module.esm.js:
+  (*! Bundled license information:
+  
+  tabbable/dist/index.esm.js:
+    (*!
+    * tabbable 5.2.1
+    * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
+    *)
+  
+  focus-trap/dist/focus-trap.esm.js:
+    (*!
+    * focus-trap 6.6.1
+    * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
+    *)
   *)
 */
-/**
- * @license
- * Lodash <https://lodash.com/>
- * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */

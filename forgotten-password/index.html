@@ -3,23 +3,54 @@
 <head>
 <link href="/css/main.min.css" rel="stylesheet" />
 <script src="/js/main.js" defer></script><title>Obnovení hesla | Dialektika</title>
-<link rel="canonical" href="">
+<link rel="canonical" href="/">
 <link rel='alternate' type='application/rss+xml' title="Dialektika RSS" href='/blog/index.xml'>
 <link rel="icon" href="/img/logo.svg">
-<meta name="description" content=" Obnovení hesla E-mail * Odeslat kód Storno Máte už svůj účet? Přihlašte se Nemáte ještě účet? Registrujte se ">
+<meta name="description" content="
+  
+    
+    
+      Obnovení hesla
+    
+    
+    
+      
+      
+      
+      
+      
+        E-mail *
+        
+        
+      
+      
+      
+        
+          Odeslat kód
+        
+        Storno
+      
+      
+      
+        Máte už svůj účet? Přihlašte se
+      
+      
+        Nemáte ještě účet? Registrujte se
+      
+    
+  
+">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow">
 <meta charset="utf-8">
-<script type='text/javascript'
-  src='https://platform-api.sharethis.com/js/sharethis.js#property=602a9e560cf79300112b0f9c&product=inline-share-buttons'
-  async='async'></script>
+
 </head>
 <body x-data="common">
 <main x-cloak class="grid place-content-center h-full">
   
 
-<div x-cloak @keyup.escape.window="history.back()" x-data="forgottenPassword" @keydown.enter.prevent="next"
+<div x-cloak @keyup.escape.window="back" x-data="forgottenPassword" @keydown.enter.prevent="next"
   class="w-80 bg-white dark:bg-gray-800 rounded-lg shadow border dark:border-gray-700" sm:max-w-md>
   <div class="p-6 space-y-4">
     <!-- title -->
@@ -42,7 +73,7 @@
         <button class="primary" :disabled="disabled" @click="doReset">
           Odeslat kód
         </button>
-        <button class="transparent" @click="history.back()">Storno</button>
+        <button class="transparent" @click="back">Storno</button>
       </div>
       <!-- form switchers -->
       <div class="form-switch">
