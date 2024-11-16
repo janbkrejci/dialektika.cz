@@ -13545,7 +13545,7 @@ ${content}</tr>
 
   // ns-hugo:/Users/jbk/Documents/dialektika-devel/frontend/assets/js/pocketbase.js
   var import_lodash2 = __toESM(require_lodash());
-  var BACKEND_SERVER = window.location.origin;
+  var BACKEND_SERVER = "https://dialektika.online";
   var pb = new C(BACKEND_SERVER);
   pb.autoCancellation(false);
   async function subscribe(colName, filter = (x) => !!x, hooks = {}, options2 = {}, targetCollection = null) {
